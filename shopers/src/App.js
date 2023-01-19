@@ -10,6 +10,7 @@ import HomeAndKitchen from './pages/HomeAndKitchen';
 import Jewellery from './pages/Jewellery';
 import Kids from './pages/Kids';
 import Mens from './pages/Mens';
+import Signup from './pages/Signup';
 import WomenEthnic from './pages/WomenEthnic';
 import WomenWestern from './pages/WomenWestern';
 
@@ -29,6 +30,7 @@ function App() {
         <Route path='/bags-&-footwear' element={<Bags />} />
         <Route path='/electronics' element={<Electronics />} />
         <Route path='/single-prod/:user_id' element={<SingleProduct />} />
+        <Route path='/sign-up' element={<Signup />} />
       </Routes>
     </div>
   );

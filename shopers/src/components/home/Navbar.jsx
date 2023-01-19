@@ -6,9 +6,11 @@ import {
   InputGroup,
   InputLeftElement,
 } from "@chakra-ui/react";
-
+import { ImMobile } from "react-icons/im";
+import { CgProfile } from "react-icons/cg";
+import { AiOutlineShoppingCart } from "react-icons/ai";
 import shoperzLogo from "../images/shoperzLogo.png";
-import { SearchIcon, StarIcon } from "@chakra-ui/icons";
+import { SearchIcon } from "@chakra-ui/icons";
 import NavLinks from "./Navlinks";
 import { useNavigate } from "react-router-dom";
 
@@ -17,6 +19,7 @@ export default function Navbar() {
   return (
     <Box
       // border={"1px solid red"}
+      zIndex={"2"}
       color="white"
       h={"126px"}
       position={{ base: "none", sm: "none", md: "sticky", lg: "sticky" }}
@@ -49,7 +52,13 @@ export default function Navbar() {
               height={"50px"}
               w={"136px"}
               mt={"10px"}
-              onClick={() => navigate("/")}
+              onClick={() => {
+                window.scroll({
+                  top: 0,
+                  left: 0,
+                });
+                navigate("/");
+              }}
             />
             <InputGroup ml={"2%"} alignItems={"center"}>
               <InputLeftElement
@@ -75,23 +84,28 @@ export default function Navbar() {
             width={{ base: "100%", sm: "100%", md: "50%", lg: "50%" }}
             bgColor={"white"}
           >
-            <Box display={"flex"} bgColor={"white"}>
-              <SearchIcon mt={"5px"} mr={"5px"} />
+            <Box display={"flex"} bgColor={"white"} alignItems={"center"}>
+              <ImMobile mt={"5px"} mr={"5px"} size="25px" />
               Download App
             </Box>
-            <Box h={"100%"} fontSize={"4xl"}>
-              |
-            </Box>
+            <Box
+              h={"100%"}
+              fontSize={"4xl"}
+              borderRight={"1px solid grey"}
+            ></Box>
             <Box>Become a Supplier</Box>
-            <Box h={"100%"} fontSize={"4xl"}>
-              |
-            </Box>
-            <Box>
-              <StarIcon ml={"15px"} />
+            <Box
+              h={"100%"}
+              fontSize={"4xl"}
+              fontWeight={100}
+              borderRight={"1px solid grey"}
+            ></Box>
+            <Box textAlign={"center"}>
+              <CgProfile style={{ marginLeft: "12px" }} size="20px" />
               <Box>Profile</Box>
             </Box>
             <Box ml={"5px"}>
-              <StarIcon ml={"7px"} />
+              <AiOutlineShoppingCart size="25px" />
               <Box>Cart</Box>
             </Box>
           </Flex>
@@ -102,8 +116,8 @@ export default function Navbar() {
         color="black"
         h={{ base: "230px", sm: "230px", md: "52px", lg: "52px" }}
         bgColor={"white"}
-        borderTop={"1px solid black"}
-        borderBottom={"1px solid black"}
+        borderTop={"1px solid rgb(223, 223, 223)"}
+        borderBottom={"1px solid rgb(223, 223, 223)"}
       >
         <NavLinks />
       </Box>

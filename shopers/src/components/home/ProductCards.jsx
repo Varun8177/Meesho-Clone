@@ -3,6 +3,7 @@ import { StarIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { ApiContext } from "../../context/ApiContext";
+import { useEffect } from "react";
 
 export default function ProductCards({
   images,
@@ -13,9 +14,11 @@ export default function ProductCards({
   reviews,
   onwards,
   api,
+  endpoint,
 }) {
   const navigate = useNavigate();
   const { handleApi } = useContext(ApiContext);
+
   return (
     <Box
       maxW="sm"
@@ -23,7 +26,7 @@ export default function ProductCards({
       borderRadius="lg"
       overflow="hidden"
       onClick={() => {
-        handleApi(api);
+        handleApi(api, endpoint);
         navigate(`/single-prod/${id}`);
       }}
     >

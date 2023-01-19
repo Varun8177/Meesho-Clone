@@ -64,6 +64,10 @@ export default function WomenWestern() {
   const handleClick = (val, limit) => {
     setpage(page + val);
     setLimit(limitShownm + limit);
+    window.scroll({
+      top: 0,
+      left: 0,
+    });
   };
 
   return (
@@ -71,7 +75,7 @@ export default function WomenWestern() {
       <Stack>
         <Stack spacing={8} direction="row">
           <Box p={5}>
-            <Heading fontSize="xl">Women Ethnic Wear</Heading>
+            <Heading fontSize="xl">Women Western Wear</Heading>
             <Text mt={4}>
               Showing {limitShownm}-{limitShownm + 9} out of 10000 products
             </Text>
@@ -186,6 +190,7 @@ export default function WomenWestern() {
                         "https://63c6ba9bd307b769673fb1fa.mockapi.io/women-western"
                       }
                       key={i}
+                      endpoint={"women-western"}
                     />
                   );
                 })}

@@ -61,178 +61,12 @@ export default function WomenEthnic() {
   const handleClick = (val, limit) => {
     setpage(page + val);
     setLimit(limitShownm + limit);
+    window.scroll({
+      top: 0,
+      left: 0,
+      // behavior: "smooth",
+    });
   };
-
-  // function postreq() {
-  //   const mydata = [
-  //     {
-  //       images:
-  //         "https://images.meesho.com/images/products/66460699/iwvu5_400.jpg",
-  //       title: "Unique Face Makeup Combo",
-  //       price: "₹163",
-  //       onwards: "onwards",
-  //       delivery: "Free Delivery",
-  //       rating: "3.5",
-  //       reviews: "1837 Reviews",
-  //     },
-  //     {
-  //       images:
-  //         "https://images.meesho.com/images/products/124914009/8mnxm_400.jpg",
-  //       title: "Useful Face Makeup Combo",
-  //       price: "₹198",
-  //       onwards: "onwards",
-  //       delivery: "Free Delivery",
-  //       rating: "3.7",
-  //       reviews: "92 Reviews",
-  //     },
-  //     {
-  //       images:
-  //         "https://images.meesho.com/images/products/156076638/wzxme_400.jpg",
-  //       title: "New Collections Of Face Makeup Combo",
-  //       price: "₹162",
-  //       onwards: "onwards",
-  //       delivery: "Free Delivery",
-  //       rating: "3.5",
-  //       reviews: "22 Reviews",
-  //     },
-  //     {
-  //       images:
-  //         "https://images.meesho.com/images/products/139548846/zb76k_400.jpg",
-  //       title: "Proffesional Intense  Face Makeup Combo",
-  //       price: "₹184",
-  //       onwards: "onwards",
-  //       delivery: "Free Delivery",
-  //       rating: "3.4",
-  //       reviews: "18 Reviews",
-  //     },
-  //     {
-  //       images:
-  //         "https://images.meesho.com/images/products/50239976/flnw0_400.jpg",
-  //       title: "Fancy Face Makeup Combo",
-  //       price: "₹125",
-  //       onwards: "11h : 40m : 29s",
-  //       delivery: "Free Delivery",
-  //       rating: "3.6",
-  //       reviews: "1210 Reviews",
-  //     },
-  //     {
-  //       images:
-  //         "https://images.meesho.com/images/products/158350864/a42z7_400.jpg",
-  //       title: "Unique Face Makeup Combo",
-  //       price: "₹262",
-  //       onwards: "onwards",
-  //       delivery: "Free Delivery",
-  //       rating: "3.7",
-  //       reviews: "13 Reviews",
-  //     },
-  //     {
-  //       images:
-  //         "https://images.meesho.com/images/products/128761219/abhuh_400.jpg",
-  //       title: "New Collections Of Face Makeup Combo",
-  //       price: "₹342",
-  //       onwards: "onwards",
-  //       delivery: "Free Delivery",
-  //       rating: "3.7",
-  //       reviews: "108 Reviews",
-  //     },
-  //     {
-  //       images:
-  //         "https://images.meesho.com/images/products/70683238/djwyf_400.jpg",
-  //       title: "Classic Face Makeup Combo",
-  //       price: "₹461",
-  //       onwards: "onwards",
-  //       delivery: "Free Delivery",
-  //       rating: "3.9",
-  //       reviews: "536 Reviews",
-  //     },
-  //     {
-  //       images:
-  //         "https://images.meesho.com/images/products/71059776/a5wyl_400.jpg",
-  //       title: "Unique Face Makeup Combo",
-  //       price: "₹353",
-  //       onwards: "onwards",
-  //       delivery: "Free Delivery",
-  //       rating: "3.9",
-  //       reviews: "14 Reviews",
-  //     },
-  //     {
-  //       images:
-  //         "https://images.meesho.com/images/products/160368110/j4w5v_400.jpg",
-  //       title: "Classy Face Makeup Combo",
-  //       price: "₹289",
-  //       onwards: "onwards",
-  //       delivery: "Free Delivery",
-  //       rating: "3.8",
-  //       reviews: "86 Reviews",
-  //     },
-  //     {
-  //       images:
-  //         "https://images.meesho.com/images/products/148441853/uzqr4_400.jpg",
-  //       title: "Everyday Face Makeup Combo",
-  //       price: "₹148",
-  //       onwards: "onwards",
-  //       delivery: "Free Delivery",
-  //       rating: "3.4",
-  //       reviews: "128 Reviews",
-  //     },
-  //     {
-  //       images:
-  //         "https://images.meesho.com/images/products/151115943/kbtik_400.jpg",
-  //       title: "Face Makeup Combo",
-  //       price: "₹259",
-  //       onwards: "onwards",
-  //       delivery: "Free Delivery",
-  //       rating: "3.0",
-  //       reviews: "7 Reviews",
-  //     },
-  //     {
-  //       images:
-  //         "https://images.meesho.com/images/products/45609293/g1ojg_400.jpg",
-  //       title: "Useful Face Makeup Combo",
-  //       price: "₹342",
-  //       onwards: "onwards",
-  //       delivery: "Free Delivery",
-  //       rating: "3.9",
-  //       reviews: "957 Reviews",
-  //     },
-  //     {
-  //       images:
-  //         "https://images.meesho.com/images/products/137982948/ixn8p_400.jpg",
-  //       title: "Classy face Makeup Combo",
-  //       price: "₹183",
-  //       onwards: "onwards",
-  //       delivery: "Free Delivery",
-  //       rating: "3.9",
-  //       reviews: "7 Reviews",
-  //     },
-  //     {
-  //       images:
-  //         "https://images.meesho.com/images/products/142813804/gqzlf_400.jpg",
-  //       title: "Fancy Face Makeup Combo",
-  //       price: "₹202",
-  //       onwards: "onwards",
-  //       delivery: "Free Delivery",
-  //       rating: "3.9",
-  //       reviews: "301 Reviews",
-  //     },
-  //     {
-  //       images:
-  //         "https://images.meesho.com/images/products/144403441/khlfl_400.jpg",
-  //       title: "Talcum Powder",
-  //       price: "₹215",
-  //       onwards: "onwards",
-  //       delivery: "Delivery ₹70",
-  //       rating: "4.5",
-  //       reviews: "13 Reviews",
-  //     },
-  //   ];
-  //   for (let i = 0; i < mydata.length; i++) {
-  //     axios.post(
-  //       `https://63c705d44ebaa80285526612.mockapi.io/makeup/`,
-  //       mydata[i]
-  //     );
-  //   }
-  // }
 
   console.log(data);
   return (
@@ -355,6 +189,7 @@ export default function WomenEthnic() {
                         "https://63c7f361075b3f3a91d6b179.mockapi.io/women-ethnic"
                       }
                       key={i}
+                      endpoint={"women-ethnic"}
                     />
                   );
                 })}
