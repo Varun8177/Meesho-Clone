@@ -61,6 +61,11 @@ export default function Electronics() {
   const handleClick = (val, limit) => {
     setpage(page + val);
     setLimit(limitShownm + limit);
+    window.scroll({
+      top: 0,
+      left: 0,
+      // behavior: "smooth",
+    });
   };
 
   return (
@@ -68,7 +73,7 @@ export default function Electronics() {
       <Stack>
         <Stack spacing={8} direction="row">
           <Box p={5}>
-            <Heading fontSize="xl">Women Ethnic Wear</Heading>
+            <Heading fontSize="xl">Electronics</Heading>
             <Text mt={4}>
               Showing {limitShownm}-{limitShownm + 9} out of 10000 products
             </Text>
@@ -181,6 +186,7 @@ export default function Electronics() {
                       {...item}
                       api={"https://63c705d44ebaa80285526612.mockapi.io/makeup"}
                       key={i}
+                      endpoint={"makeup"}
                     />
                   );
                 })}

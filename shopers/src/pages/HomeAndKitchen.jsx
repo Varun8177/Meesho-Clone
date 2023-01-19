@@ -61,6 +61,11 @@ export default function HomeAndKitchen() {
   const handleClick = (val, limit) => {
     setpage(page + val);
     setLimit(limitShownm + limit);
+    window.scroll({
+      top: 0,
+      left: 0,
+      // behavior: "smooth",
+    });
   };
 
   return (
@@ -68,7 +73,7 @@ export default function HomeAndKitchen() {
       <Stack>
         <Stack spacing={8} direction="row">
           <Box p={5}>
-            <Heading fontSize="xl">Women Ethnic Wear</Heading>
+            <Heading fontSize="xl">Home & Kitchen</Heading>
             <Text mt={4}>
               Showing {limitShownm}-{limitShownm + 9} out of 10000 products
             </Text>
@@ -183,6 +188,7 @@ export default function HomeAndKitchen() {
                         "https://63c705d44ebaa80285526612.mockapi.io/home-kitchen"
                       }
                       key={i}
+                      endpoint={"home-kitchen"}
                     />
                   );
                 })}

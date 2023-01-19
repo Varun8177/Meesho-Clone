@@ -12,12 +12,13 @@ import {
   Grid,
   Button,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import axios from "axios";
 import { useEffect } from "react";
 import ProductCards from "../components/home/ProductCards";
 import LoadingScreen from "../components/home/LoadingScreen";
 import { useSearchParams } from "react-router-dom";
+import { ApiContext } from "../context/ApiContext";
 
 const CurrentPage = (val = 1) => {
   let pageNumber = Number(val);
@@ -38,6 +39,7 @@ export default function Mens() {
   const [limitShownm, setLimit] = useState(1);
   const [page, setpage] = useState(CurrentPage(params.get("page")));
   const arr = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
+  const { handleApi } = useContext(ApiContext);
   const MensData = async (page) => {
     setLoad(true);
     try {
@@ -61,6 +63,11 @@ export default function Mens() {
   const handleClick = (val, limit) => {
     setpage(page + val);
     setLimit(limitShownm + limit);
+    window.scroll({
+      top: 0,
+      left: 0,
+      // behavior: "smooth",
+    });
   };
 
   return (
@@ -68,7 +75,7 @@ export default function Mens() {
       <Stack>
         <Stack spacing={8} direction="row">
           <Box p={5}>
-            <Heading fontSize="xl">Women Ethnic Wear</Heading>
+            <Heading fontSize="xl">Mens Wear</Heading>
             <Text mt={4}>
               Showing {limitShownm}-{limitShownm + 9} out of 10000 products
             </Text>
@@ -180,7 +187,8 @@ export default function Mens() {
                     <ProductCards
                       {...item}
                       api={"https://63c701b54ebaa80285521e6e.mockapi.io/men"}
-                      key={i}
+                      key={i + 1}
+                      endpoint={"men"}
                     />
                   );
                 })}
