@@ -8,10 +8,13 @@ import {
   PinInput,
   HStack,
   Button,
+  useToast,
 } from "@chakra-ui/react";
 
-import React, { useEffect } from "react";
+import React, { useContext } from "react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { OTPcontext } from "../context/OTPcontext";
 
 export function Timer({ handleTimer }) {
   const [count, setCount] = React.useState(59);
@@ -44,16 +47,20 @@ export function Timer({ handleTimer }) {
 
 export default function OTP() {
   const [timer, setTimer] = useState(false);
+  const [otpNumber, setOtpNumber] = useState([]);
+  const { otp, manageOTP } = useContext(OTPcontext);
+  const toast = useToast();
+  const navigate = useNavigate();
   const handleTimer = () => {
     setTimer(false);
   };
-  let otp = "";
-  // console.log(otp);
-  useEffect(() => {
-    console.log(otp);
-  }, [otp]);
+  const handleOTP = (val) => {
+    setOtpNumber([...otpNumber, val]);
+  };
+  console.log(otpNumber);
+  // const otp = Math.random().toString().substr(2, 6);
   return (
-    <Box bgColor={"pink"} height={"635px"} mt={["-50px"]} p={"50px"}>
+    <Box bgColor={"pink"} height={"635px"} mt={"-50px"} p={"50px"}>
       <Box
         w={"431px"}
         border={"1px solid rgb(223, 223, 223)"}
@@ -71,15 +78,25 @@ export default function OTP() {
         {/* MObile Number */}
         <Stack mt={"20px"} h={"308px"} p={"20px"}>
           <Heading fontSize={"2xl"}>Enter OTP</Heading>
-          <Text>Change Number</Text>
+
+          <Text
+            color={"rgb(166, 153, 153)"}
+            fontWeight={"light"}
+            fontSize={"sm"}
+            cursor={"pointer"}
+            onClick={() => navigate("/login")}
+          >
+            Change Number
+          </Text>
+
           <HStack m={"auto"}>
             <PinInput type="number">
-              <PinInputField onChange={(e) => (otp += e.target.value)} />
-              <PinInputField onChange={(e) => (otp += e.target.value)} />
-              <PinInputField onChange={(e) => (otp += e.target.value)} />
-              <PinInputField onChange={(e) => (otp += e.target.value)} />
-              <PinInputField onChange={(e) => (otp += e.target.value)} />
-              <PinInputField onChange={(e) => (otp += e.target.value)} />
+              <PinInputField onChange={(e) => handleOTP(e.target.value)} />
+              <PinInputField onChange={(e) => handleOTP(e.target.value)} />
+              <PinInputField onChange={(e) => handleOTP(e.target.value)} />
+              <PinInputField onChange={(e) => handleOTP(e.target.value)} />
+              <PinInputField onChange={(e) => handleOTP(e.target.value)} />
+              <PinInputField onChange={(e) => handleOTP(e.target.value)} />
             </PinInput>
           </HStack>
           <Button
@@ -89,13 +106,46 @@ export default function OTP() {
             color={"white"}
             width={"100%"}
             _hover={{ bg: "rgb(199, 60, 157)" }}
+            onClick={() => {
+              if (otpNumber.join("") === otp) {
+                toast({
+                  title: "Account Created Successfully",
+                  description: `Welcome to shoperz`,
+                  status: "success",
+                  duration: 3000,
+                  isClosable: true,
+                  position: "top",
+                });
+                setOtpNumber([]);
+                navigate("/");
+              } else {
+                toast({
+                  title: "Wrong OTP ",
+                  description: `Please enter correct otp to proceed`,
+                  status: "error",
+                  duration: 5000,
+                  isClosable: true,
+                });
+                setOtpNumber([]);
+              }
+            }}
           >
             Verify
           </Button>
           {timer || (
             <Text
               color={"rgb(246, 93, 151)"}
-              onClick={() => setTimer(!timer)}
+              onClick={() => {
+                toast({
+                  title: "OTP sent on your mobile number",
+                  description: `Please enter your otp to proceed ${otp}`,
+                  status: "success",
+                  duration: 9000,
+                  isClosable: true,
+                  position: "top",
+                });
+                setTimer(!timer);
+              }}
               cursor={"pointer"}
               fontWeight={"bold"}
             >

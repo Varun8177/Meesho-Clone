@@ -6,13 +6,16 @@ import reportWebVitals from './reportWebVitals';
 import { ChakraProvider } from '@chakra-ui/react'
 import { BrowserRouter } from "react-router-dom"
 import ApiContextProvider from './context/ApiContext';
+import OTPcontextProvider from './context/OTPcontext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>
     <ChakraProvider>
       <ApiContextProvider>
-        <App />
+        <OTPcontextProvider>
+          <App />
+        </OTPcontextProvider>
       </ApiContextProvider>
     </ChakraProvider>
   </BrowserRouter>

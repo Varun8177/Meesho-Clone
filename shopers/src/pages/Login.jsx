@@ -12,22 +12,30 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useState } from "react";
+import { useEffect } from "react";
 import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { OTPcontext } from "../context/OTPcontext";
 
-export default function Signup() {
+export default function Login() {
   const navigate = useNavigate();
   const { manageOTP } = useContext(OTPcontext);
   const toast = useToast();
   const otp = Math.random().toString().substr(2, 6);
-  const [name, setname] = useState("");
+  const [user, setUser] = useState([]);
   const [mobile, setMobile] = useState("");
-  function postReq(name, mobile) {
-    axios.post("https://63ca9c80f36cbbdfc75c5b52.mockapi.io/meesho_users", {
-      name,
-      mobile,
-    });
+  const [verified, setVerified] = useState(false);
+
+  function verifyUsers(mobile) {
+    axios
+      .get(
+        `https://63ca9c80f36cbbdfc75c5b52.mockapi.io/meesho_users?search=${mobile}`
+      )
+      .then((res) => {
+        setUser(res.data);
+        localStorage.setItem("id", res.data[0].id);
+      });
+    console.log(user);
   }
   return (
     <Box bgColor={"pink"} height={"635px"} mt={"-50px"} p={"50px"}>
@@ -47,10 +55,10 @@ export default function Signup() {
         </Stack>
         {/* MObile Number */}
         <Stack mt={"20px"} h={"308px"} p={"20px"}>
-          <Heading fontSize={"2xl"}>Sign Up to view your profile</Heading>
+          <Heading fontSize={"2xl"}>Log in</Heading>
           <InputGroup>
             <InputLeftAddon
-              children="Name"
+              children="IN +91"
               borderTop={"none"}
               borderLeft={"none"}
               borderRight={"none"}
@@ -59,28 +67,7 @@ export default function Signup() {
               mr={"10px"}
             />
             <Input
-              placeholder="enter your name"
-              borderTop={"none"}
-              borderLeft={"none"}
-              borderRight={"none"}
-              borderRadius={"0"}
-              borderBottom={"3px solid rgb(223, 223, 223)"}
-              focusBorderColor={"white"}
-              mb={"20px"}
-              onChange={(e) => setname(e.target.value)}
-            />
-          </InputGroup>
-          <InputGroup>
-            <InputLeftAddon
-              children="In +91"
-              borderTop={"none"}
-              borderLeft={"none"}
-              borderRight={"none"}
-              bgColor={"white"}
-              borderRadius={"0"}
-              mr={"10px"}
-            />
-            <Input
+              isRequired
               type="tel"
               placeholder="phone number"
               borderTop={"none"}
@@ -89,8 +76,12 @@ export default function Signup() {
               borderRadius={"0"}
               borderBottom={"3px solid rgb(223, 223, 223)"}
               focusBorderColor={"white"}
-              mb={"20px"}
-              onChange={(e) => setMobile(e.target.value)}
+              value={mobile}
+              onChange={(e) => {
+                setMobile(e.target.value);
+                console.log(mobile);
+                verifyUsers(mobile);
+              }}
             />
           </InputGroup>
           <Button
@@ -101,25 +92,39 @@ export default function Signup() {
             width={"100%"}
             _hover={{ bg: "rgb(199, 60, 157)" }}
             onClick={() => {
-              toast(
-                {
-                  title: "OTP sent on your mobile number",
-                  description: `Please enter your otp to proceed ${otp}`,
-                  status: "success",
-                  duration: 9000,
-                  isClosable: true,
-                },
-                postReq(name, mobile),
-                manageOTP(otp),
-                navigate("/otp-page")
-              );
+              setTimeout(() => {
+                user.length === 1
+                  ? toast(
+                      {
+                        title: "OTP sent on your mobile number",
+                        description: `Please enter your otp to proceed ${otp}`,
+                        status: "success",
+                        duration: 6000,
+                        isClosable: true,
+                        position: "top",
+                      },
+                      manageOTP(otp),
+                      navigate("/otp-page")
+                    )
+                  : toast(
+                      {
+                        title: "Invalid Mobile Number",
+                        description: `no user found please signup`,
+                        status: "error",
+                        duration: 3000,
+                        isClosable: true,
+                        position: "bottom",
+                      },
+                      manageOTP(otp)
+                    );
+              }, 2000);
             }}
           >
             Send OTP
           </Button>
           <Text m={"auto"}>
-            Already have an account? Login{" "}
-            <Link style={{ color: "blue" }} to={"/login"}>
+            Don't have a account yet? signup
+            <Link style={{ color: "blue", marginLeft: "5px" }} to={"/sign-up"}>
               here
             </Link>
           </Text>

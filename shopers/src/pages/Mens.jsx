@@ -156,7 +156,7 @@ export default function Mens() {
                 <h2>
                   <AccordionButton>
                     <Box as="span" flex="1" textAlign="left">
-                      Section 1 title
+                      Price
                     </Box>
                     <AccordionIcon />
                   </AccordionButton>
