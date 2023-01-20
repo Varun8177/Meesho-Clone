@@ -104,13 +104,18 @@ export default function Navbar() {
             <Box
               textAlign={"center"}
               onClick={() => {
-                navigate("/sign-up");
+                navigate("/login");
               }}
             >
               <CgProfile style={{ marginLeft: "12px" }} size="20px" />
               <Box>Profile</Box>
             </Box>
-            <Box ml={"5px"}>
+            <Box
+              ml={"5px"}
+              onClick={() => {
+                navigate("/cart");
+              }}
+            >
               <AiOutlineShoppingCart size="25px" />
               <Box>Cart</Box>
             </Box>

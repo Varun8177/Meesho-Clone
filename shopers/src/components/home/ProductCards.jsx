@@ -3,7 +3,6 @@ import { StarIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { ApiContext } from "../../context/ApiContext";
-import { useEffect } from "react";
 
 export default function ProductCards({
   images,

@@ -26,33 +26,30 @@ import axios from "axios";
 import { useEffect } from "react";
 import ProductCards from "../components/home/ProductCards";
 import LoadingScreen from "../components/home/LoadingScreen";
-import { useSearchParams } from "react-router-dom";
 
-const CurrentPage = (val = 1) => {
-  let pageNumber = Number(val);
-  if (typeof pageNumber !== "number") {
-    pageNumber = 1;
-  }
-  if (pageNumber <= 0) {
-    pageNumber = 1;
-  }
-  return pageNumber;
-};
+// const CurrentPage = (val = 1) => {
+//   let pageNumber = Number(val);
+//   if (typeof pageNumber !== "number") {
+//     pageNumber = 1;
+//   }
+//   if (pageNumber <= 0) {
+//     pageNumber = 1;
+//   }
+//   return pageNumber;
+// };
 
 export default function Home() {
   const navigate = useNavigate();
   const [sort, setSort] = useState("Price");
   const [data, setData] = useState([]);
   const [load, setLoad] = useState(false);
-  const [params, setParams] = useSearchParams();
   const [limitShownm, setLimit] = useState(1);
-  const [page, setpage] = useState(CurrentPage(params.get("page")));
   const arr = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
   const MensData = async (page) => {
     setLoad(true);
     try {
       const dress = await axios.get(
-        `https://63c701b54ebaa80285521e6e.mockapi.io/men?page=${page}&limit=12`
+        `https://63c701b54ebaa80285521e6e.mockapi.io/men?page=1&limit=12`
       );
       setData(dress.data);
       setLoad(false);
@@ -61,27 +58,23 @@ export default function Home() {
     }
   };
   useEffect(() => {
-    MensData(page);
-  }, [page]);
+    MensData();
+  }, []);
 
-  useEffect(() => {
-    setParams({ page });
-  }, [page, setParams]);
-
-  const handleClick = (val, limit) => {
-    setpage(page + val);
-    setLimit(limitShownm + limit);
-    window.scroll({
-      top: 0,
-      left: 0,
-    });
-  };
+  // const handleClick = (val, limit) => {
+  //   setpage(page + val);
+  //   setLimit(limitShownm + limit);
+  //   window.scroll({
+  //     top: 0,
+  //     left: 0,
+  //   });
+  // };
 
   const HandleSort = async (val) => {
     setLoad(true);
     try {
       const dress = await axios.get(
-        `https://63c701b54ebaa80285521e6e.mockapi.io/men?page=${page}&limit=12&sortBy=price&order=${val}`
+        `https://63c701b54ebaa80285521e6e.mockapi.io/men?page=1&limit=12`
       );
       setData(dress.data);
       setLoad(false);
@@ -262,19 +255,6 @@ export default function Home() {
                     );
                   })}
             </Grid>
-            <Button
-              isDisabled={page === 1}
-              onClick={() => handleClick(-1, -10)}
-            >
-              Previous
-            </Button>
-            <Button isDisabled>{page}</Button>
-            <Button
-              isDisabled={data.length !== 12}
-              onClick={() => handleClick(1, 10)}
-            >
-              Next
-            </Button>
           </Box>
         </Flex>
       </Box>
