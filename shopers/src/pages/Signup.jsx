@@ -8,11 +8,16 @@ import {
   InputLeftAddon,
   Input,
   Button,
+  useToast,
 } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 
 export default function Signup() {
+  const navigate = useNavigate();
+  const toast = useToast();
+  const otp = Math.random().toString().substr(2, 6);
   return (
-    <Box bgColor={"pink"} height={"708px"} mt={"-50px"} p={"50px"}>
+    <Box bgColor={"pink"} height={"635px"} mt={"-50px"} p={"50px"}>
       <Box
         w={"431px"}
         border={"1px solid rgb(223, 223, 223)"}
@@ -60,6 +65,18 @@ export default function Signup() {
             color={"white"}
             width={"100%"}
             _hover={{ bg: "rgb(199, 60, 157)" }}
+            onClick={() => {
+              toast(
+                {
+                  title: "OTP sent on your mobile number",
+                  description: `Please enter your otp to proceed ${otp}`,
+                  status: "success",
+                  duration: 9000,
+                  isClosable: true,
+                },
+                navigate("/otp-page")
+              );
+            }}
           >
             Send OTP
           </Button>
