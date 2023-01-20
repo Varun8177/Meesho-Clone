@@ -13,6 +13,7 @@ export default function ApiContextProvider({ children }) {
   const handleApi = (val, endpoint) => {
     setApi(val);
     setEndpoint(endpoint);
+    sessionStorage.setItem("api", val);
   };
 
   return (
