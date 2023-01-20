@@ -52,6 +52,19 @@ export default function Mens() {
       console.log(error);
     }
   };
+
+  const HandleSort = async (val) => {
+    setLoad(true);
+    try {
+      const dress = await axios.get(
+        `https://63c701b54ebaa80285521e6e.mockapi.io/men?page=1&limit=12&sortBy=price&order=${val}`
+      );
+      setData(dress.data);
+      setLoad(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
     MensData(page);
   }, [page]);
@@ -107,10 +120,20 @@ export default function Mens() {
                   </AccordionButton>
                 </h2>
                 <AccordionPanel pb={4}>
-                  <Text onClick={() => setSort("Low to High")}>
+                  <Text
+                    onClick={() => {
+                      HandleSort("asc");
+                      setSort("Low to High");
+                    }}
+                  >
                     Low to High
                   </Text>
-                  <Text onClick={() => setSort("High to Low")}>
+                  <Text
+                    onClick={() => {
+                      HandleSort("desc");
+                      setSort("High to Low");
+                    }}
+                  >
                     High to Low
                   </Text>
                 </AccordionPanel>

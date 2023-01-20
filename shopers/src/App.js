@@ -10,6 +10,7 @@ import HomeAndKitchen from './pages/HomeAndKitchen';
 import Jewellery from './pages/Jewellery';
 import Kids from './pages/Kids';
 import Mens from './pages/Mens';
+import OTP from './pages/OTP';
 import Signup from './pages/Signup';
 import WomenEthnic from './pages/WomenEthnic';
 import WomenWestern from './pages/WomenWestern';
@@ -31,6 +32,7 @@ function App() {
         <Route path='/electronics' element={<Electronics />} />
         <Route path='/single-prod/:user_id' element={<SingleProduct />} />
         <Route path='/sign-up' element={<Signup />} />
+        <Route path='//otp-page' element={<OTP />} />
       </Routes>
     </div>
   );

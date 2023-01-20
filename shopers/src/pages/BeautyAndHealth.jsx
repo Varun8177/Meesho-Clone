@@ -68,6 +68,19 @@ export default function BeautyAndHealthData() {
     });
   };
 
+  const HandleSort = async (val) => {
+    setLoad(true);
+    try {
+      const dress = await axios.get(
+        `https://63c705d44ebaa80285526612.mockapi.io/makeup?page=${page}&limit=12&sortBy=price&order=${val}`
+      );
+      setData(dress.data);
+      setLoad(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Box w={"87%"} m={"auto"} mt={{ base: "30px", sm: "30px", md: "-25px" }}>
       <Stack>
@@ -105,10 +118,20 @@ export default function BeautyAndHealthData() {
                   </AccordionButton>
                 </h2>
                 <AccordionPanel pb={4}>
-                  <Text onClick={() => setSort("Low to High")}>
+                  <Text
+                    onClick={() => {
+                      HandleSort("asc");
+                      setSort("Low to High");
+                    }}
+                  >
                     Low to High
                   </Text>
-                  <Text onClick={() => setSort("High to Low")}>
+                  <Text
+                    onClick={() => {
+                      HandleSort("desc");
+                      setSort("High to Low");
+                    }}
+                  >
                     High to Low
                   </Text>
                 </AccordionPanel>

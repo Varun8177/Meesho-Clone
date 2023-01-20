@@ -64,8 +64,20 @@ export default function Kids() {
     window.scroll({
       top: 0,
       left: 0,
-      // behavior: "smooth",
     });
+  };
+
+  const HandleSort = async (val) => {
+    setLoad(true);
+    try {
+      const dress = await axios.get(
+        `https://63c701b54ebaa80285521e6e.mockapi.io/kids?page=${page}&limit=12&sortBy=price&order=${val}`
+      );
+      setData(dress.data);
+      setLoad(false);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -105,10 +117,20 @@ export default function Kids() {
                   </AccordionButton>
                 </h2>
                 <AccordionPanel pb={4}>
-                  <Text onClick={() => setSort("Low to High")}>
+                  <Text
+                    onClick={() => {
+                      HandleSort("asc");
+                      setSort("Low to High");
+                    }}
+                  >
                     Low to High
                   </Text>
-                  <Text onClick={() => setSort("High to Low")}>
+                  <Text
+                    onClick={() => {
+                      HandleSort("desc");
+                      setSort("High to Low");
+                    }}
+                  >
                     High to Low
                   </Text>
                 </AccordionPanel>
