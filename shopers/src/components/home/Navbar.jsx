@@ -18,7 +18,8 @@ export default function Navbar() {
   const navigate = useNavigate();
   return (
     <Box
-      // border={"1px solid red"}
+      // border={"1px solid blue"}
+      w={"100%"}
       zIndex={"2"}
       color="white"
       h={"126px"}
@@ -67,7 +68,7 @@ export default function Navbar() {
               />
               <Input
                 htmlSize={10}
-                width={{ sm: "300px", md: "360px", lg: "400px" }}
+                width={{ sm: "300px", md: "200px", lg: "300px", xl: "400px" }}
                 borderRadius={"5px"}
                 h={"45px"}
                 border={"1px solid #000000"}
@@ -100,7 +101,12 @@ export default function Navbar() {
               fontWeight={100}
               borderRight={"1px solid grey"}
             ></Box>
-            <Box textAlign={"center"}>
+            <Box
+              textAlign={"center"}
+              onClick={() => {
+                navigate("/sign-up");
+              }}
+            >
               <CgProfile style={{ marginLeft: "12px" }} size="20px" />
               <Box>Profile</Box>
             </Box>
