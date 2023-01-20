@@ -22,9 +22,11 @@ import ProductCards from "./ProductCards";
 import LoadingScreen from "./LoadingScreen";
 
 export default function SingleProduct() {
+  const myapi = sessionStorage.getItem("api");
+  console.log(myapi);
   const [data, setData] = useState([]);
   const [load, setLoad] = useState(false);
-  const { api } = useContext(ApiContext);
+  // const { api } = useContext(ApiContext);
   const params = useParams();
   const [moreProd, setMoreprod] = useState([]);
   const arr = [1, 1, 1, 1, 1];
@@ -32,9 +34,14 @@ export default function SingleProduct() {
   const productData = async () => {
     setLoad(true);
     try {
-      const product = await axios.get(`${api}/${params.user_id}`);
+      const product = await axios.get(`${myapi}/${params.user_id}`);
       setData(product.data);
       setLoad(false);
+      window.scroll({
+        top: 0,
+        left: 0,
+        // behavior: "smooth",
+      });
     } catch (error) {
       console.log(error);
     }
@@ -42,7 +49,7 @@ export default function SingleProduct() {
   const moreProdData = async () => {
     setLoad(true);
     try {
-      const product = await axios.get(`${api}?page=3&limit=5`);
+      const product = await axios.get(`${myapi}?page=3&limit=5`);
       setMoreprod(product.data);
       setLoad(false);
     } catch (error) {
@@ -52,12 +59,12 @@ export default function SingleProduct() {
   useEffect(() => {
     productData();
     moreProdData();
-  }, []);
+  }, [params.user_id]);
 
   console.log(data);
 
   return (
-    <Box>
+    <Box border={"1px solid red"}>
       <Flex
         direction={["column", "column", "row", "row", "row"]}
         w={"80%"}
@@ -172,6 +179,10 @@ export default function SingleProduct() {
             </Box>
             <Flex justifyContent={"space-evenly"} width={"150px"} ml={"17px"}>
               <Button
+                _focus={{
+                  ring: "4px",
+                  ringColor: "red",
+                }}
                 borderRadius={"50%"}
                 border="1px solid rgb(223, 223, 223)"
               >
@@ -272,7 +283,12 @@ export default function SingleProduct() {
               })
             : moreProd.map((item, i) => {
                 return (
-                  <ProductCards {...item} api={api} key={i} endpoint={"mens"} />
+                  <ProductCards
+                    {...item}
+                    api={myapi}
+                    key={i}
+                    endpoint={"mens"}
+                  />
                 );
               })}
         </Grid>
