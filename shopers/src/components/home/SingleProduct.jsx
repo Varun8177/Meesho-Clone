@@ -7,30 +7,25 @@ import {
   Badge,
   Stack,
   Text,
-  IconButton,
-  Grid,
+  useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
-import { useContext } from "react";
 import { useParams } from "react-router-dom";
-import { ApiContext } from "../../context/ApiContext";
 import { StarIcon } from "@chakra-ui/icons";
-import { ArrowRightIcon, EmailIcon, ArrowForwardIcon } from "@chakra-ui/icons";
-import ProductCards from "./ProductCards";
-import LoadingScreen from "./LoadingScreen";
+import { ArrowRightIcon } from "@chakra-ui/icons";
+import MoreProducts from "../singleproduct/MoreProd";
+import Soldby from "../singleproduct/Soldby";
 
 export default function SingleProduct() {
   const myapi = sessionStorage.getItem("api");
-  console.log(myapi);
   const [data, setData] = useState([]);
   const [load, setLoad] = useState(false);
-  // const { api } = useContext(ApiContext);
   const params = useParams();
   const [moreProd, setMoreprod] = useState([]);
-  const arr = [1, 1, 1, 1, 1];
-
+  const toast = useToast();
+  const id = localStorage.getItem("id");
   const productData = async () => {
     setLoad(true);
     try {
@@ -40,7 +35,6 @@ export default function SingleProduct() {
       window.scroll({
         top: 0,
         left: 0,
-        // behavior: "smooth",
       });
     } catch (error) {
       console.log(error);
@@ -61,10 +55,15 @@ export default function SingleProduct() {
     moreProdData();
   }, [params.user_id]);
 
-  console.log(data);
+  function postReq(prod, id) {
+    axios.post(
+      `https://63ca9c80f36cbbdfc75c5b52.mockapi.io/meesho_users/${id}/cart`,
+      prod
+    );
+  }
 
   return (
-    <Box border={"1px solid red"}>
+    <Box>
       <Flex
         direction={["column", "column", "row", "row", "row"]}
         w={"80%"}
@@ -92,7 +91,20 @@ export default function SingleProduct() {
             mt={"40px"}
             direction={["column", "column", "row", "row", "row"]}
           >
-            <Button borderRadius={"5px"} w={"202px"}>
+            <Button
+              borderRadius={"5px"}
+              w={"202px"}
+              onClick={() => {
+                postReq(data, id);
+                toast({
+                  title: "Product added to cart",
+                  description: `Check your cart`,
+                  status: "success",
+                  duration: 5000,
+                  isClosable: true,
+                });
+              }}
+            >
               Add to Cart
             </Button>
             <Button
@@ -226,73 +238,11 @@ export default function SingleProduct() {
           </Box>
 
           {/* sold by */}
-
-          <Box
-            w={["100%", "100%", "500px", "500px"]}
-            borderWidth="1px"
-            borderRadius="lg"
-            overflow="hidden"
-            mt={"20px"}
-            pb={"5"}
-          >
-            <Box p="6">
-              <Heading fontSize={"xl"}>Sold by</Heading>
-            </Box>
-            <Stack ml={"17px"} color="rgb(102, 116, 142)">
-              <Flex alignItems={"center"}>
-                <IconButton
-                  mr={"20px"}
-                  variant="outline"
-                  colorScheme="rgb(244, 51, 151)"
-                  aria-label="Send email"
-                  icon={<EmailIcon />}
-                />
-                <Text>Harekrishnafashion@gmail.com</Text>
-              </Flex>
-              <Button
-                textAlign={"center"}
-                rightIcon={<ArrowForwardIcon />}
-                bgColor="rgb(244, 51, 151)"
-                variant="outline"
-                color={"white"}
-                width={"80%"}
-                margin={"auto"}
-              >
-                View Shop
-              </Button>
-            </Stack>
-          </Box>
+          <Soldby />
         </Box>
       </Flex>
       {/* More Products */}
-
-      <Box ml={"20px"} display={"block"} margin={"auto"} w={"fit-content"}>
-        <Heading mb={"20px"}>People also viewed</Heading>
-        <Grid
-          templateColumns={{
-            base: "repeat(1,220px)",
-            sm: "repeat(2,220px)",
-            md: "repeat(4,220px)",
-            lg: "repeat(5,220px)",
-          }}
-          gap={"20px"}
-        >
-          {load
-            ? arr.map(() => {
-                return <LoadingScreen />;
-              })
-            : moreProd.map((item, i) => {
-                return (
-                  <ProductCards
-                    {...item}
-                    api={myapi}
-                    key={i}
-                    endpoint={"mens"}
-                  />
-                );
-              })}
-        </Grid>
-      </Box>
+      <MoreProducts load={load} moreProd={moreProd} myapi={myapi} />
     </Box>
   );
 }
