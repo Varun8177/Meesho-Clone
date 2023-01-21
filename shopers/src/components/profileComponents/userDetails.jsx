@@ -80,3 +80,5 @@ export default function UserInitialDetails({ handleUserDetails }) {
     </Box>
   );
 }
+
+// userdetails
