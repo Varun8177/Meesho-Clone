@@ -9,7 +9,6 @@ import background_banner from "../components/images/background_banner.png";
 import kids_banner from "../components/images/kids_banner.png";
 import mens_banner from "../components/images/mens_banner.png";
 import register_banner from "../components/images/register_banner.png";
-import Mens from "./Mens";
 import {
   Stack,
   Text,
@@ -19,7 +18,6 @@ import {
   AccordionIcon,
   AccordionPanel,
   Grid,
-  Button,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import axios from "axios";
@@ -64,10 +62,10 @@ export default function Home() {
   // const handleClick = (val, limit) => {
   //   setpage(page + val);
   //   setLimit(limitShownm + limit);
-  //   window.scroll({
-  //     top: 0,
-  //     left: 0,
-  //   });
+  // window.scroll({
+  //   top: 0,
+  //   left: 0,
+  // });
   // };
 
   const HandleSort = async (val) => {
@@ -139,93 +137,45 @@ export default function Home() {
           mt={{ base: "50px", sm: "50px", md: "20px" }}
           direction={{ base: "column", sm: "column", md: "row" }}
         >
-          <Box>
-            {/* sort here */}
-            <Box
-              border={"1px solid rgb(240, 240, 240)"}
-              p={"5px 10px 5px 10px"}
-              mb={"20px"}
-              pos={{ base: "none", sm: "none", md: "sticky", lg: "sticky" }}
-              top={{ base: "none", sm: "none", md: "150", lg: "130" }}
-            >
-              <Accordion allowMultiple w={"316px"}>
-                <AccordionItem border={"0"}>
-                  <h2>
-                    <AccordionButton>
-                      <Box as="span" flex="1" textAlign="left" fontSize={"xl"}>
-                        Sort by :{sort}
-                      </Box>
-                      <AccordionIcon />
-                    </AccordionButton>
-                  </h2>
-                  <AccordionPanel pb={4}>
-                    <Text
-                      onClick={() => {
-                        HandleSort("asc");
-                        setSort("Low to High");
-                      }}
-                    >
-                      Low to High
-                    </Text>
-                    <Text
-                      onClick={() => {
-                        HandleSort("desc");
-                        setSort("High to Low");
-                      }}
-                    >
-                      High to Low
-                    </Text>
-                  </AccordionPanel>
-                </AccordionItem>
-              </Accordion>
-            </Box>
-
-            {/* Filter here */}
-            <Box
-              border={"1px solid rgb(240, 240, 240)"}
-              p={"5px 10px 5px 10px"}
-              pos={"sticky"}
-              top={{ base: "none", sm: "none", md: "270", lg: "200" }}
-            >
-              <Box as="span" flex="1" textAlign="left" fontSize={"xl"}>
-                Filters
-              </Box>
-              <Accordion defaultIndex={[0]} allowMultiple w={"316px"}>
-                <AccordionItem>
-                  <h2>
-                    <AccordionButton>
-                      <Box as="span" flex="1" textAlign="left">
-                        Section 1 title
-                      </Box>
-                      <AccordionIcon />
-                    </AccordionButton>
-                  </h2>
-                  <AccordionPanel pb={4}>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                    ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                  </AccordionPanel>
-                </AccordionItem>
-
-                <AccordionItem>
-                  <h2>
-                    <AccordionButton>
-                      <Box as="span" flex="1" textAlign="left">
-                        Section 2 title
-                      </Box>
-                      <AccordionIcon />
-                    </AccordionButton>
-                  </h2>
-                  <AccordionPanel pb={4}>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                    ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                  </AccordionPanel>
-                </AccordionItem>
-              </Accordion>
-            </Box>
+          {/* sort here */}
+          <Box
+            h={"fit-content"}
+            border={"1px solid rgb(240, 240, 240)"}
+            p={"5px 10px 5px 10px"}
+            mb={"20px"}
+            pos={{ base: "none", sm: "none", md: "sticky", lg: "sticky" }}
+            top={{ base: "none", sm: "none", md: "150", lg: "130" }}
+          >
+            <Accordion allowMultiple w={"316px"}>
+              <AccordionItem border={"0"}>
+                <h2>
+                  <AccordionButton>
+                    <Box as="span" flex="1" textAlign="left" fontSize={"xl"}>
+                      Sort by :{sort}
+                    </Box>
+                    <AccordionIcon />
+                  </AccordionButton>
+                </h2>
+                <AccordionPanel pb={4}>
+                  <Text
+                    onClick={() => {
+                      HandleSort("asc");
+                      setSort("Low to High");
+                    }}
+                  >
+                    Low to High
+                  </Text>
+                  <Text
+                    onClick={() => {
+                      HandleSort("desc");
+                      setSort("High to Low");
+                    }}
+                  >
+                    High to Low
+                  </Text>
+                </AccordionPanel>
+              </AccordionItem>
+            </Accordion>
           </Box>
 
           {/* Products rendering */}

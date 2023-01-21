@@ -23,11 +23,17 @@ export default function Signup() {
   const otp = Math.random().toString().substr(2, 6);
   const [name, setname] = useState("");
   const [mobile, setMobile] = useState("");
+
   function postReq(name, mobile) {
-    axios.post("https://63ca9c80f36cbbdfc75c5b52.mockapi.io/meesho_users", {
-      name,
-      mobile,
-    });
+    axios
+      .post("https://63ca9c80f36cbbdfc75c5b52.mockapi.io/meesho_users", {
+        name,
+        mobile,
+      })
+      .then((res) => {
+        localStorage.setItem("id", res.data.id);
+      });
+    // verifyUsers(name);
   }
   return (
     <Box bgColor={"pink"} height={"635px"} mt={"-50px"} p={"50px"}>
@@ -111,6 +117,7 @@ export default function Signup() {
                 },
                 postReq(name, mobile),
                 manageOTP(otp),
+                localStorage.setItem("login", true),
                 navigate("/otp-page")
               );
             }}

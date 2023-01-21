@@ -124,6 +124,7 @@ export default function SingleProduct() {
         {/* description section */}
         <Box>
           <Box
+            border={"1px solid rgb(223, 223, 223)"}
             w={["100%", "100%", "500px", "500px"]}
             borderWidth="1px"
             borderRadius="lg"
@@ -179,6 +180,7 @@ export default function SingleProduct() {
           {/* Select size */}
 
           <Box
+            border={"1px solid rgb(223, 223, 223)"}
             w={["100%", "100%", "500px", "500px"]}
             borderWidth="1px"
             borderRadius="lg"
@@ -218,6 +220,7 @@ export default function SingleProduct() {
           {/* Product details */}
 
           <Box
+            border={"1px solid rgb(223, 223, 223)"}
             w={["100%", "100%", "500px", "500px"]}
             borderWidth="1px"
             borderRadius="lg"

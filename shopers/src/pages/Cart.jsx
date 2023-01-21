@@ -1,87 +1,59 @@
-import {
-  Box,
-  Heading,
-  Stack,
-  Text,
-  Flex,
-  Button,
-  Drawer,
-  DrawerBody,
-  DrawerContent,
-  DrawerOverlay,
-  DrawerCloseButton,
-  DrawerFooter,
-  DrawerHeader,
-  Input,
-  useDisclosure,
-} from "@chakra-ui/react";
+import { Box, Heading, Stack, Flex } from "@chakra-ui/react";
+
 import axios from "axios";
 import { useState } from "react";
 import { useEffect } from "react";
-import { useRef } from "react";
 import CartItem from "../components/cartComponent/CartItem";
+import CartSkeleton from "../components/cartComponent/CartSkeleton";
 import Total from "../components/cartComponent/Total";
-
-export function EditButton() {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const btnRef = useRef();
-
-  return (
-    <>
-      <Button ref={btnRef} colorScheme="pink" onClick={onOpen}>
-        Edit
-      </Button>
-      <Drawer
-        size={"sm"}
-        isOpen={isOpen}
-        placement="right"
-        onClose={onClose}
-        finalFocusRef={btnRef}
-      >
-        <DrawerOverlay />
-        <DrawerContent>
-          <DrawerCloseButton />
-          <DrawerHeader>EDIT ITEM</DrawerHeader>
-
-          <DrawerBody>
-            <Input placeholder="Type here..." />
-          </DrawerBody>
-
-          <DrawerFooter>
-            <Button variant="outline" mr={3} onClick={onClose}>
-              Cancel
-            </Button>
-            <Button colorScheme="pink">Save</Button>
-          </DrawerFooter>
-        </DrawerContent>
-      </Drawer>
-    </>
-  );
-}
 
 export default function Cart() {
   const [data, setData] = useState([]);
   const [totalprice, setTotal] = useState(0);
   const id = localStorage.getItem("id");
+  const [load, setLoad] = useState(false);
+  const arr = [1, 2, 3, 4];
+  function deleteCartItem(id, itemId) {
+    axios
+      .delete(
+        `https://63ca9c80f36cbbdfc75c5b52.mockapi.io/meesho_users/${id}/cart/${itemId}`
+      )
+      .then((res) => {
+        getReq(id);
+      });
+  }
+
   function getReq(id) {
+    setLoad(true);
     axios
       .get(
         `https://63ca9c80f36cbbdfc75c5b52.mockapi.io/meesho_users/${id}/cart`
       )
       .then((res) => {
         setData(res.data);
-        data.map((item) => {
-          const price = item.price.split(" ");
-          return setTotal(totalprice + price[1]);
-        });
+        setLoad(false);
       });
   }
+  const HandleTotal = (val, qty) => {
+    if (qty === 1) {
+      setTotal((prev) => prev + val);
+    } else {
+      setTotal((prev) => prev - val);
+    }
+  };
   useEffect(() => {
     getReq(id);
   }, [id]);
+  // for (let i = 0; i < data.length; i++) {
+  //   let bag = "";
+  //   for (let j = 1; j < data[i].price.length; j++) {
+  //     bag += arr[i].price[j];
+  //   }
+  //   setTotal(totalprice + Number(bag));
+  // }
   // console.log(data);
   return (
-    <Box w={"70%"} mt={["50px", "150px", 0, 0, 0]} m={"auto"}>
+    <Box w={"70%"} mt={["50%", "40%", 0, 0, 0]} m={"auto"}>
       <Heading>Cart</Heading>
       <Flex
         mt={["50px", "50px", 0, 0, 0]}
@@ -90,9 +62,19 @@ export default function Cart() {
         direction={{ base: "column", sm: "column", md: "column", lg: "row" }}
       >
         <Stack>
-          {data.map((item) => {
-            return <CartItem {...item} />;
-          })}
+          {load
+            ? arr.map((item) => {
+                return <CartSkeleton />;
+              })
+            : data.map((item) => {
+                return (
+                  <CartItem
+                    {...item}
+                    HandleTotal={HandleTotal}
+                    deleteCartItem={deleteCartItem}
+                  />
+                );
+              })}
         </Stack>
         {/* <CartItem /> */}
 

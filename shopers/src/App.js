@@ -1,7 +1,10 @@
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
+import Footer from './components/home/Footer';
 import Navbar from './components/home/Navbar';
 import SingleProduct from './components/home/SingleProduct';
+import Review from './components/profileComponents/review';
+import UserProfileEdit from './components/profileComponents/userProfileEdit';
 import Bags from './pages/Bags';
 import BeautyAndHealthData from './pages/BeautyAndHealth';
 import Cart from './pages/Cart';
@@ -13,6 +16,7 @@ import Kids from './pages/Kids';
 import Login from './pages/Login';
 import Mens from './pages/Mens';
 import OTP from './pages/OTP';
+import Profile from './pages/profile';
 import Signup from './pages/Signup';
 import WomenEthnic from './pages/WomenEthnic';
 import WomenWestern from './pages/WomenWestern';
@@ -37,7 +41,11 @@ function App() {
         <Route path='/otp-page' element={<OTP />} />
         <Route path='/cart' element={<Cart />} />
         <Route path='/login' element={<Login />} />
+        <Route path='/profile' element={<Profile />} />
+        <Route path='/profile/review' element={<Review />} />
+        <Route path='/profile/user-details-edit' element={<UserProfileEdit />} />
       </Routes>
+      <Footer />
     </div>
   );
 }
