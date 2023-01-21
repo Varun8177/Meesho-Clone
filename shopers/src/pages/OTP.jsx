@@ -48,7 +48,7 @@ export function Timer({ handleTimer }) {
 export default function OTP() {
   const [timer, setTimer] = useState(false);
   const [otpNumber, setOtpNumber] = useState([]);
-  const { otp, manageOTP } = useContext(OTPcontext);
+  const { otp } = useContext(OTPcontext);
   const toast = useToast();
   const navigate = useNavigate();
   const handleTimer = () => {

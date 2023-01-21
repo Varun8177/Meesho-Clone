@@ -24,6 +24,7 @@ export default function ProductCards({
       borderWidth="1px"
       borderRadius="lg"
       overflow="hidden"
+      border={"1px solid rgb(223, 223, 223)"}
       onClick={() => {
         handleApi(api, endpoint);
         navigate(`/single-prod/${id}`);

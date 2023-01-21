@@ -34,9 +34,14 @@ export default function Login() {
       .then((res) => {
         setUser(res.data);
         localStorage.setItem("id", res.data[0].id);
+        // console.log(res.data);
       });
-    console.log(user);
   }
+
+  useState(() => {
+    verifyUsers(mobile);
+  }, [mobile]);
+  console.log(user);
   return (
     <Box bgColor={"pink"} height={"635px"} mt={"-50px"} p={"50px"}>
       <Box
@@ -92,6 +97,7 @@ export default function Login() {
             width={"100%"}
             _hover={{ bg: "rgb(199, 60, 157)" }}
             onClick={() => {
+              localStorage.setItem("login", true);
               setTimeout(() => {
                 user.length === 1
                   ? toast(
@@ -117,7 +123,7 @@ export default function Login() {
                       },
                       manageOTP(otp)
                     );
-              }, 2000);
+              }, 1000);
             }}
           >
             Send OTP

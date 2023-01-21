@@ -7,6 +7,7 @@ export const ApiContext = createContext();
 export default function ApiContextProvider({ children }) {
   const [api, setApi] = useState("");
   const [category, setEndpoint] = useState("");
+  const [email, setEmail] = useState("NA");
   const params = useParams();
   console.log("params", params);
 
@@ -15,9 +16,11 @@ export default function ApiContextProvider({ children }) {
     setEndpoint(endpoint);
     sessionStorage.setItem("api", val);
   };
-
+  const handleEmail = (val) => {
+    setEmail(val);
+  };
   return (
-    <ApiContext.Provider value={{ handleApi, api }}>
+    <ApiContext.Provider value={{ handleApi, api, handleEmail, email }}>
       {children}
     </ApiContext.Provider>
   );

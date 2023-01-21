@@ -12,6 +12,7 @@ import {
 export default function Soldby() {
   return (
     <Box
+      border={"1px solid rgb(223, 223, 223)"}
       w={["100%", "100%", "500px", "500px"]}
       borderWidth="1px"
       borderRadius="lg"

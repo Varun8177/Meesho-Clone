@@ -1,10 +1,12 @@
 import {
   Box,
+  Button,
   Flex,
   Image,
   Input,
   InputGroup,
   InputLeftElement,
+  useColorMode,
 } from "@chakra-ui/react";
 import { ImMobile } from "react-icons/im";
 import { CgProfile } from "react-icons/cg";
@@ -13,9 +15,25 @@ import shoperzLogo from "../images/shoperzLogo.png";
 import { SearchIcon } from "@chakra-ui/icons";
 import NavLinks from "./Navlinks";
 import { useNavigate } from "react-router-dom";
+import { BsSun, BsMoonStarsFill } from "react-icons/bs";
+
+export function ColorModeToggle() {
+  const { colorMode, toggleColorMode } = useColorMode();
+  return (
+    <Button
+      aria-label="Toggle Color Mode"
+      onClick={toggleColorMode}
+      _focus={{ boxShadow: "none" }}
+      w="fit-content"
+    >
+      {colorMode === "light" ? <BsMoonStarsFill /> : <BsSun />}
+    </Button>
+  );
+}
 
 export default function Navbar() {
   const navigate = useNavigate();
+  const login = localStorage.getItem("login");
   return (
     <Box
       // border={"1px solid blue"}
@@ -104,7 +122,15 @@ export default function Navbar() {
             <Box
               textAlign={"center"}
               onClick={() => {
-                navigate("/login");
+                if (login === "true") {
+                  navigate("/profile");
+                  window.scroll({
+                    top: 0,
+                    left: 0,
+                  });
+                } else {
+                  navigate("/login");
+                }
               }}
             >
               <CgProfile style={{ marginLeft: "12px" }} size="20px" />
@@ -119,6 +145,7 @@ export default function Navbar() {
               <AiOutlineShoppingCart size="25px" />
               <Box>Cart</Box>
             </Box>
+            <ColorModeToggle />
           </Flex>
         </Flex>
       </Box>
