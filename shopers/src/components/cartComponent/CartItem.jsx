@@ -9,6 +9,7 @@ export default function CartItem({
   id,
   HandleTotal,
   deleteCartItem,
+  size,
 }) {
   const [qty, setQuantity] = useState(1);
   const [value, setvalue] = useState(1);
@@ -48,7 +49,7 @@ export default function CartItem({
         >
           <Stack ml={"17px"} color="rgb(102, 116, 142)">
             <Text>Title:{title}</Text>
-            <Text>Size</Text>
+            <Text>Size:{size}</Text>
             <Text>price :{price}</Text>
             <Flex>
               <Button isDisabled={qty === 1} onClick={() => handleQuantity(-1)}>
