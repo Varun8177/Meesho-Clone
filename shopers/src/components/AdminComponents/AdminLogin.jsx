@@ -12,26 +12,18 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useState } from "react";
-import { useEffect } from "react";
-import { useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import Navbar from "../components/home/Navbar";
-import { OTPcontext } from "../context/OTPcontext";
+import { useNavigate } from "react-router-dom";
+import Navbar from "../home/Navbar";
 
-export default function Login() {
+export default function AdminLogin() {
   const navigate = useNavigate();
-  const { manageOTP } = useContext(OTPcontext);
   const toast = useToast();
-  const otp = Math.random().toString().substr(2, 6);
   const [user, setUser] = useState([]);
   const [mobile, setMobile] = useState("");
-  const [verified, setVerified] = useState(false);
 
   function verifyUsers(mobile) {
     axios
-      .get(
-        `https://63ca9c80f36cbbdfc75c5b52.mockapi.io/meesho_users?search=${mobile}`
-      )
+      .get(`https://63cd0ca00f1d5967f028fa8e.mockapi.io/admin?search=${mobile}`)
       .then((res) => {
         setUser(res.data);
         localStorage.setItem("id", res.data[0].id);
@@ -62,7 +54,7 @@ export default function Login() {
           </Stack>
           {/* MObile Number */}
           <Stack mt={"20px"} h={"308px"} p={"20px"}>
-            <Heading fontSize={"2xl"}>Log in</Heading>
+            <Heading fontSize={"2xl"}>Admin Login</Heading>
             <InputGroup>
               <InputLeftAddon
                 children="IN +91"
@@ -104,49 +96,27 @@ export default function Login() {
                   user.length === 1
                     ? toast(
                         {
-                          title: "OTP sent on your mobile number",
-                          description: `Please enter your otp to proceed ${otp}`,
+                          title: "Welcome to Admin's Dashboard",
                           status: "success",
                           duration: 6000,
                           isClosable: true,
                           position: "top",
                         },
-                        manageOTP(otp),
-                        navigate("/otp-page")
+                        navigate("/profile/Admin")
                       )
-                    : toast(
-                        {
-                          title: "Invalid Mobile Number",
-                          description: `no user found please signup`,
-                          status: "error",
-                          duration: 3000,
-                          isClosable: true,
-                          position: "bottom",
-                        },
-                        manageOTP(otp)
-                      );
+                    : toast({
+                        title: "Invalid Mobile Number",
+                        description: `no user found please signup`,
+                        status: "error",
+                        duration: 3000,
+                        isClosable: true,
+                        position: "bottom",
+                      });
                 }, 1000);
               }}
             >
-              Send OTP
+              Go to Dashboard
             </Button>
-            <Text m={"auto"}>
-              Don't have a account yet? signup
-              <Link
-                style={{ color: "blue", marginLeft: "5px" }}
-                to={"/sign-up"}
-              >
-                here
-              </Link>
-            </Text>
-            <Text m={"auto"}>
-              <Link
-                style={{ color: "blue", marginLeft: "5px" }}
-                to={"/admin-login"}
-              >
-                Admins Here
-              </Link>
-            </Text>
           </Stack>
         </Box>
       </Box>

@@ -1,17 +1,23 @@
-import { Box, Heading, Stack, Flex } from "@chakra-ui/react";
+import { Box, Heading, Stack, Flex, Text } from "@chakra-ui/react";
 
 import axios from "axios";
 import { useState } from "react";
+import { useContext } from "react";
 import { useEffect } from "react";
 import CartItem from "../components/cartComponent/CartItem";
 import CartSkeleton from "../components/cartComponent/CartSkeleton";
 import Total from "../components/cartComponent/Total";
+import Navbar from "../components/home/Navbar";
+import { TotalContext } from "../context/TotalContext";
 
 export default function Cart() {
+  const { handleTotalCost } = useContext(TotalContext);
   const [data, setData] = useState([]);
   const [totalprice, setTotal] = useState(0);
   const id = localStorage.getItem("id");
   const [load, setLoad] = useState(false);
+  const [size, setSize] = useState("");
+
   const arr = [1, 2, 3, 4];
   function deleteCartItem(id, itemId) {
     axios
@@ -37,51 +43,53 @@ export default function Cart() {
   const HandleTotal = (val, qty) => {
     if (qty === 1) {
       setTotal((prev) => prev + val);
+      handleTotalCost(totalprice);
     } else {
       setTotal((prev) => prev - val);
+      handleTotalCost(totalprice);
     }
   };
   useEffect(() => {
     getReq(id);
+    let x = localStorage.getItem("size");
+    setSize(x);
   }, [id]);
-  // for (let i = 0; i < data.length; i++) {
-  //   let bag = "";
-  //   for (let j = 1; j < data[i].price.length; j++) {
-  //     bag += arr[i].price[j];
-  //   }
-  //   setTotal(totalprice + Number(bag));
-  // }
-  // console.log(data);
+
   return (
-    <Box w={"70%"} mt={["50%", "40%", 0, 0, 0]} m={"auto"}>
-      <Heading>Cart</Heading>
-      <Flex
-        mt={["50px", "50px", 0, 0, 0]}
-        justifyContent={"space-between"}
-        m={"auto"}
-        direction={{ base: "column", sm: "column", md: "column", lg: "row" }}
-      >
-        <Stack>
-          {load
-            ? arr.map((item) => {
-                return <CartSkeleton />;
-              })
-            : data.map((item) => {
-                return (
-                  <CartItem
-                    {...item}
-                    HandleTotal={HandleTotal}
-                    deleteCartItem={deleteCartItem}
-                  />
-                );
-              })}
-        </Stack>
-        {/* <CartItem /> */}
+    <Box>
+      <Navbar />
+      <Box w={"70%"} mt={["50%", "40%", 0, 0, 0]} m={"auto"}>
+        <Heading>Cart</Heading>
+        <Text>{data.length} items in your cart</Text>
+        <Flex
+          mt={["50px", "50px", 0, 0, 0]}
+          justifyContent={"space-between"}
+          m={"auto"}
+          direction={{ base: "column", sm: "column", md: "column", lg: "row" }}
+        >
+          <Stack>
+            {load
+              ? arr.map((item) => {
+                  return <CartSkeleton />;
+                })
+              : data.map((item) => {
+                  return (
+                    <CartItem
+                      {...item}
+                      HandleTotal={HandleTotal}
+                      deleteCartItem={deleteCartItem}
+                      size={size}
+                    />
+                  );
+                })}
+          </Stack>
+          {/* <CartItem /> */}
 
-        {/* Total */}
+          {/* Total */}
 
-        <Total total={totalprice} />
-      </Flex>
+          <Total total={totalprice} data={data} />
+        </Flex>
+      </Box>
     </Box>
   );
 }

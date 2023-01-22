@@ -1,7 +1,17 @@
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 import { Box, Button, Heading, Image, Stack, Text } from "@chakra-ui/react";
+import { useEffect } from "react";
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { TotalContext } from "../../context/TotalContext";
 
-export default function Total({ total }) {
+export default function Total({ total, data }) {
+  const { handleTotalCost, handleOrders } = useContext(TotalContext);
+  const login = localStorage.getItem("login");
+  const navigate = useNavigate();
+  useEffect(() => {
+    handleTotalCost(total);
+  }, [total]);
   return (
     <Box
       w={["100%", "100%", "300px", "300px"]}
@@ -27,11 +37,19 @@ export default function Total({ total }) {
             width={"100%"}
             bgColor={"rgb(244, 51, 151)"}
             color={"white"}
+            onClick={() => {
+              if (login == "true") {
+                handleOrders(data);
+                navigate("/address");
+              } else {
+                navigate("/login");
+              }
+            }}
           >
             <Box as="span" marginRight={"10px"}>
               <ArrowForwardIcon />
             </Box>
-            Checkout
+            {login == "true" ? "Checkout" : "Login"}
           </Button>
           <Image src="https://images.meesho.com/images/marketing/1588578650850.webp" />
         </Stack>

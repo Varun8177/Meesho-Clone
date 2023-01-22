@@ -24,6 +24,7 @@ import axios from "axios";
 import { useEffect } from "react";
 import ProductCards from "../components/home/ProductCards";
 import LoadingScreen from "../components/home/LoadingScreen";
+import Navbar from "../components/home/Navbar";
 
 // const CurrentPage = (val = 1) => {
 //   let pageNumber = Number(val);
@@ -47,9 +48,15 @@ export default function Home() {
     setLoad(true);
     try {
       const dress = await axios.get(
-        `https://63c701b54ebaa80285521e6e.mockapi.io/men?page=1&limit=12`
+        `https://63c701b54ebaa80285521e6e.mockapi.io/men?page=2&limit=12`
       );
-      setData(dress.data);
+      const dress2 = await axios.get(
+        `https://63c7f361075b3f3a91d6b179.mockapi.io/women-ethnic?page=2&limit=12`
+      );
+      const kids = await axios.get(
+        `https://63c701b54ebaa80285521e6e.mockapi.io/kids?page=2&limit=12`
+      );
+      setData([...dress.data, ...dress2.data, ...kids.data]);
       setLoad(false);
     } catch (error) {
       console.log(error);
@@ -72,9 +79,15 @@ export default function Home() {
     setLoad(true);
     try {
       const dress = await axios.get(
-        `https://63c701b54ebaa80285521e6e.mockapi.io/men?page=1&limit=12`
+        `https://63c701b54ebaa80285521e6e.mockapi.io/men?page=2&limit=12&sortBy=price&order=${val}`
       );
-      setData(dress.data);
+      const dress2 = await axios.get(
+        `https://63c7f361075b3f3a91d6b179.mockapi.io/women-ethnic?page=2&limit=12&sortBy=price&order=${val}`
+      );
+      const kids = await axios.get(
+        `https://63c701b54ebaa80285521e6e.mockapi.io/kids?page=2&limit=12&sortBy=price&order=${val}`
+      );
+      setData([...dress.data, ...dress2.data, ...kids.data]);
       setLoad(false);
     } catch (error) {
       console.log(error);
@@ -83,6 +96,7 @@ export default function Home() {
 
   return (
     <Box>
+      <Navbar />
       <Image m={"auto"} src={Homepage_banner} mb={"20px"} w={"1106px"} />
       <Heading fontSize="3xl" margin={"auto"} w={"fit-content"} mb={"20px"}>
         -Top Categories to choose from-

@@ -35,7 +35,7 @@ export default function UserInitialDetails({ handleUserDetails }) {
   useEffect(() => {
     getReq(id);
   }, [id]);
-  console.log(data);
+
   return (
     <Box alignItems={"center"}>
       <Stack direction={["column", "row"]} spacing={6}>

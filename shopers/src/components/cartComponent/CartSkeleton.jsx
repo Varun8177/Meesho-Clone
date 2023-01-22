@@ -9,6 +9,7 @@ export default function CartSkeleton() {
       overflow="hidden"
       mt={"20px"}
       p={"15px"}
+      margin={"auto"}
     >
       {/* Product */}
       <Flex>

@@ -11,7 +11,6 @@ export default function ProductCards({
   id,
   rating,
   reviews,
-  onwards,
   api,
   endpoint,
 }) {
@@ -25,6 +24,7 @@ export default function ProductCards({
       borderRadius="lg"
       overflow="hidden"
       border={"1px solid rgb(223, 223, 223)"}
+      cursor={"pointer"}
       onClick={() => {
         handleApi(api, endpoint);
         navigate(`/single-prod/${id}`);
@@ -46,7 +46,7 @@ export default function ProductCards({
         <Box fontSize="xl">
           {price}
           <Box as="span" color="gray.600" fontSize="sm">
-            /{onwards}
+            /onwards
           </Box>
         </Box>
         <Badge
