@@ -6,6 +6,7 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
+  InputRightElement,
   useColorMode,
 } from "@chakra-ui/react";
 import { ImMobile } from "react-icons/im";
@@ -16,6 +17,8 @@ import { SearchIcon } from "@chakra-ui/icons";
 import NavLinks from "./Navlinks";
 import { useNavigate } from "react-router-dom";
 import { BsSun, BsMoonStarsFill } from "react-icons/bs";
+import { useContext } from "react";
+import { SearchContext } from "../../context/searchContext";
 
 export function ColorModeToggle() {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -33,37 +36,37 @@ export function ColorModeToggle() {
 
 export default function Navbar() {
   const navigate = useNavigate();
+  const { handleSearchValue, Searchvalue } = useContext(SearchContext);
+  const { colorMode } = useColorMode();
   const login = localStorage.getItem("login");
   return (
     <Box
-      // border={"1px solid blue"}
       w={"100%"}
       zIndex={"2"}
-      color="white"
       h={"126px"}
       position={{ base: "none", sm: "none", md: "sticky", lg: "sticky" }}
       top={"0"}
-      bgColor={"white"}
+      bgColor={colorMode === "light" ? "white" : "black"}
       mb={{ base: "200px", sm: "170px", md: "20px", lg: "20px" }}
     >
       <Box
         color="white"
         h={{ base: "130px", sm: "130px", md: "72px", lg: "72px" }}
-        bgColor={"white"}
+        bgColor={colorMode === "light" ? "white" : "black"}
       >
         <Flex
           direction={{ base: "column", sm: "column", md: "row", lg: "row" }}
           w="87%"
-          color="#333333"
+          // color="#333333"
           h={"72px"}
           m={"auto"}
           alignItems={"auto"}
-          bgColor={"white"}
+          bgColor={colorMode === "light" ? "white" : "black"}
         >
           {/* Logo section & search bar */}
           <Flex
             width={{ base: "100%", sm: "100%", md: "50%", lg: "50%" }}
-            bgColor={"white"}
+            bgColor={colorMode === "light" ? "white" : "black"}
           >
             <Image
               src={shoperzLogo}
@@ -76,6 +79,7 @@ export default function Navbar() {
                   top: 0,
                   left: 0,
                 });
+                handleSearchValue("");
                 navigate("/");
               }}
             />
@@ -91,6 +95,13 @@ export default function Navbar() {
                 h={"45px"}
                 border={"1px solid #000000"}
                 placeholder={"Try Saree,Kurti or search by product code"}
+                _placeholder={{ color: "pink.200" }}
+                value={Searchvalue}
+                onInput={(e) => {
+                  handleSearchValue(e.target.value);
+                  navigate("/search-products");
+                }}
+                color={"black"}
               />
             </InputGroup>
           </Flex>
@@ -98,12 +109,13 @@ export default function Navbar() {
           {/* Download app...Etc */}
 
           <Flex
+            color={colorMode === "light" ? "black" : "white"}
             justifyContent={"space-evenly"}
             alignItems={"center"}
             width={{ base: "100%", sm: "100%", md: "50%", lg: "50%" }}
-            bgColor={"white"}
+            bgColor={colorMode === "light" ? "white" : "black"}
           >
-            <Box display={"flex"} bgColor={"white"} alignItems={"center"}>
+            <Box display={"flex"} alignItems={"center"} cursor={"pointer"}>
               <ImMobile mt={"5px"} mr={"5px"} size="25px" />
               Download App
             </Box>
@@ -112,7 +124,7 @@ export default function Navbar() {
               fontSize={"4xl"}
               borderRight={"1px solid grey"}
             ></Box>
-            <Box>Become a Supplier</Box>
+            <Box cursor={"pointer"}>Become a Supplier</Box>
             <Box
               h={"100%"}
               fontSize={"4xl"}
@@ -121,6 +133,7 @@ export default function Navbar() {
             ></Box>
             <Box
               textAlign={"center"}
+              cursor={"pointer"}
               onClick={() => {
                 if (login === "true") {
                   navigate("/profile");
@@ -138,8 +151,17 @@ export default function Navbar() {
             </Box>
             <Box
               ml={"5px"}
+              cursor={"pointer"}
               onClick={() => {
-                navigate("/cart");
+                if (login === "true") {
+                  navigate("/cart");
+                  window.scroll({
+                    top: 0,
+                    left: 0,
+                  });
+                } else {
+                  navigate("/login");
+                }
               }}
             >
               <AiOutlineShoppingCart size="25px" />
@@ -151,9 +173,9 @@ export default function Navbar() {
       </Box>
       <Box
         w="100%"
-        color="black"
         h={{ base: "230px", sm: "230px", md: "52px", lg: "52px" }}
-        bgColor={"white"}
+        bgColor={colorMode === "light" ? "white" : "black"}
+        color={colorMode === "light" ? "black" : "white"}
         borderTop={"1px solid rgb(223, 223, 223)"}
         borderBottom={"1px solid rgb(223, 223, 223)"}
       >
