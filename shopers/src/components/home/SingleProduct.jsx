@@ -12,11 +12,14 @@ import {
 import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { StarIcon } from "@chakra-ui/icons";
 import { ArrowRightIcon } from "@chakra-ui/icons";
 import MoreProducts from "../singleproduct/MoreProd";
 import Soldby from "../singleproduct/Soldby";
+import Navbar from "./Navbar";
+import { useContext } from "react";
+import { TotalContext } from "../../context/TotalContext";
 
 export default function SingleProduct() {
   const myapi = sessionStorage.getItem("api");
@@ -26,6 +29,9 @@ export default function SingleProduct() {
   const [moreProd, setMoreprod] = useState([]);
   const toast = useToast();
   const id = localStorage.getItem("id");
+  const login = localStorage.getItem("login");
+  const { handleTotalCost } = useContext(TotalContext);
+  const navigate = useNavigate();
   const productData = async () => {
     setLoad(true);
     try {
@@ -64,6 +70,7 @@ export default function SingleProduct() {
 
   return (
     <Box>
+      <Navbar />
       <Flex
         direction={["column", "column", "row", "row", "row"]}
         w={"80%"}
@@ -95,14 +102,23 @@ export default function SingleProduct() {
               borderRadius={"5px"}
               w={"202px"}
               onClick={() => {
-                postReq(data, id);
-                toast({
-                  title: "Product added to cart",
-                  description: `Check your cart`,
-                  status: "success",
-                  duration: 5000,
-                  isClosable: true,
-                });
+                if (login == "true") {
+                  postReq(data, id);
+                  toast({
+                    title: "Product added to cart",
+                    description: `Check your cart`,
+                    status: "success",
+                    duration: 3000,
+                    isClosable: true,
+                  });
+                } else {
+                  toast({
+                    title: "Login to proceed",
+                    status: "error",
+                    duration: 3000,
+                    isClosable: true,
+                  });
+                }
               }}
             >
               Add to Cart
@@ -112,6 +128,19 @@ export default function SingleProduct() {
               width={"202px"}
               bgColor={"rgb(244, 51, 151)"}
               color={"white"}
+              onClick={() => {
+                if (login == "true") {
+                  handleTotalCost(data.price);
+                  navigate("/address");
+                } else {
+                  toast({
+                    title: "Login to proceed",
+                    status: "error",
+                    duration: 3000,
+                    isClosable: true,
+                  });
+                }
+              }}
             >
               <Box as="span" marginRight={"10px"}>
                 <ArrowRightIcon />
@@ -194,8 +223,11 @@ export default function SingleProduct() {
             <Flex justifyContent={"space-evenly"} width={"150px"} ml={"17px"}>
               <Button
                 _focus={{
-                  ring: "4px",
-                  ringColor: "red",
+                  ring: "1px",
+                  ringColor: "black",
+                }}
+                onClick={() => {
+                  localStorage.setItem("size", "Xl");
                 }}
                 borderRadius={"50%"}
                 border="1px solid rgb(223, 223, 223)"
@@ -203,14 +235,28 @@ export default function SingleProduct() {
                 Xl
               </Button>
               <Button
+                _focus={{
+                  ring: "1px",
+                  ringColor: "black",
+                }}
                 borderRadius={"50%"}
                 border="1px solid rgb(223, 223, 223)"
+                onClick={() => {
+                  localStorage.setItem("size", "Xl");
+                }}
               >
                 S
               </Button>
               <Button
+                _focus={{
+                  ring: "1px",
+                  ringColor: "black",
+                }}
                 borderRadius={"50%"}
                 border="1px solid rgb(223, 223, 223)"
+                onClick={() => {
+                  localStorage.setItem("size", "Xl");
+                }}
               >
                 L
               </Button>

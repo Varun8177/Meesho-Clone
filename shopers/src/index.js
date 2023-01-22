@@ -7,6 +7,8 @@ import { ChakraProvider } from '@chakra-ui/react'
 import { BrowserRouter } from "react-router-dom"
 import ApiContextProvider from './context/ApiContext';
 import OTPcontextProvider from './context/OTPcontext';
+import TotalContextProvider from './context/TotalContext';
+import SearchContextProvider from './context/searchContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -14,7 +16,11 @@ root.render(
     <ChakraProvider>
       <ApiContextProvider>
         <OTPcontextProvider>
-          <App />
+          <SearchContextProvider>
+            <TotalContextProvider>
+              <App />
+            </TotalContextProvider>
+          </SearchContextProvider>
         </OTPcontextProvider>
       </ApiContextProvider>
     </ChakraProvider>

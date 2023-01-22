@@ -15,6 +15,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Navbar from "../components/home/Navbar";
 import { OTPcontext } from "../context/OTPcontext";
 
 export default function Login() {
@@ -34,7 +35,6 @@ export default function Login() {
       .then((res) => {
         setUser(res.data);
         localStorage.setItem("id", res.data[0].id);
-        // console.log(res.data);
       });
   }
 
@@ -43,98 +43,112 @@ export default function Login() {
   }, [mobile]);
   console.log(user);
   return (
-    <Box bgColor={"pink"} height={"635px"} mt={"-50px"} p={"50px"}>
-      <Box
-        w={"431px"}
-        border={"1px solid rgb(223, 223, 223)"}
-        m={"auto"}
-        borderRadius={"5px"}
-        bgColor={"white"}
-      >
-        <Stack>
-          <Image
-            borderTopRadius={"5px"}
-            w={"431px"}
-            src="https://images.meesho.com/images/marketing/1661417516766.webp"
-          />
-        </Stack>
-        {/* MObile Number */}
-        <Stack mt={"20px"} h={"308px"} p={"20px"}>
-          <Heading fontSize={"2xl"}>Log in</Heading>
-          <InputGroup>
-            <InputLeftAddon
-              children="IN +91"
-              borderTop={"none"}
-              borderLeft={"none"}
-              borderRight={"none"}
-              bgColor={"white"}
-              borderRadius={"0"}
-              mr={"10px"}
+    <Box>
+      <Navbar />
+      <Box bgColor={"pink"} height={"635px"} mt={"-50px"} p={"50px"}>
+        <Box
+          w={"431px"}
+          border={"1px solid rgb(223, 223, 223)"}
+          m={"auto"}
+          borderRadius={"5px"}
+          bgColor={"white"}
+        >
+          <Stack>
+            <Image
+              borderTopRadius={"5px"}
+              w={"431px"}
+              src="https://images.meesho.com/images/marketing/1661417516766.webp"
             />
-            <Input
-              isRequired
-              type="tel"
-              placeholder="phone number"
-              borderTop={"none"}
-              borderLeft={"none"}
-              borderRight={"none"}
-              borderRadius={"0"}
-              borderBottom={"3px solid rgb(223, 223, 223)"}
-              focusBorderColor={"white"}
-              value={mobile}
-              onChange={(e) => {
-                setMobile(e.target.value);
-                console.log(mobile);
-                verifyUsers(mobile);
+          </Stack>
+          {/* MObile Number */}
+          <Stack mt={"20px"} h={"308px"} p={"20px"}>
+            <Heading fontSize={"2xl"}>Log in</Heading>
+            <InputGroup>
+              <InputLeftAddon
+                children="IN +91"
+                borderTop={"none"}
+                borderLeft={"none"}
+                borderRight={"none"}
+                bgColor={"white"}
+                borderRadius={"0"}
+                mr={"10px"}
+              />
+              <Input
+                isRequired
+                type="tel"
+                placeholder="phone number"
+                borderTop={"none"}
+                borderLeft={"none"}
+                borderRight={"none"}
+                borderRadius={"0"}
+                borderBottom={"3px solid rgb(223, 223, 223)"}
+                focusBorderColor={"white"}
+                value={mobile}
+                onChange={(e) => {
+                  setMobile(e.target.value);
+                  console.log(mobile);
+                  verifyUsers(mobile);
+                }}
+              />
+            </InputGroup>
+            <Button
+              textAlign={"center"}
+              bgColor="rgb(244, 51, 151)"
+              variant="outline"
+              color={"white"}
+              width={"100%"}
+              _hover={{ bg: "rgb(199, 60, 157)" }}
+              onClick={() => {
+                localStorage.setItem("login", true);
+                setTimeout(() => {
+                  user.length === 1
+                    ? toast(
+                        {
+                          title: "OTP sent on your mobile number",
+                          description: `Please enter your otp to proceed ${otp}`,
+                          status: "success",
+                          duration: 6000,
+                          isClosable: true,
+                          position: "top",
+                        },
+                        manageOTP(otp),
+                        navigate("/otp-page")
+                      )
+                    : toast(
+                        {
+                          title: "Invalid Mobile Number",
+                          description: `no user found please signup`,
+                          status: "error",
+                          duration: 3000,
+                          isClosable: true,
+                          position: "bottom",
+                        },
+                        manageOTP(otp)
+                      );
+                }, 1000);
               }}
-            />
-          </InputGroup>
-          <Button
-            textAlign={"center"}
-            bgColor="rgb(244, 51, 151)"
-            variant="outline"
-            color={"white"}
-            width={"100%"}
-            _hover={{ bg: "rgb(199, 60, 157)" }}
-            onClick={() => {
-              localStorage.setItem("login", true);
-              setTimeout(() => {
-                user.length === 1
-                  ? toast(
-                      {
-                        title: "OTP sent on your mobile number",
-                        description: `Please enter your otp to proceed ${otp}`,
-                        status: "success",
-                        duration: 6000,
-                        isClosable: true,
-                        position: "top",
-                      },
-                      manageOTP(otp),
-                      navigate("/otp-page")
-                    )
-                  : toast(
-                      {
-                        title: "Invalid Mobile Number",
-                        description: `no user found please signup`,
-                        status: "error",
-                        duration: 3000,
-                        isClosable: true,
-                        position: "bottom",
-                      },
-                      manageOTP(otp)
-                    );
-              }, 1000);
-            }}
-          >
-            Send OTP
-          </Button>
-          <Text m={"auto"}>
-            Don't have a account yet? signup
-            <Link style={{ color: "blue", marginLeft: "5px" }} to={"/sign-up"}>
-              here
-            </Link>
-          </Text>
-        </Stack>
+            >
+              Send OTP
+            </Button>
+            <Text m={"auto"}>
+              Don't have a account yet? signup
+              <Link
+                style={{ color: "blue", marginLeft: "5px" }}
+                to={"/sign-up"}
+              >
+                here
+              </Link>
+            </Text>
+            <Text m={"auto"}>
+              <Link
+                style={{ color: "blue", marginLeft: "5px" }}
+                to={"/admin-login"}
+              >
+                Admins Here
+              </Link>
+            </Text>
+          </Stack>
+        </Box>
       </Box>
     </Box>
   );

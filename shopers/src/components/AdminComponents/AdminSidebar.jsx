@@ -12,21 +12,20 @@ import {
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 
-export function Sidebar() {
+export function AdminSidebar() {
   const navigate = useNavigate();
   return (
-    <Box alignItems={"center"} h={"600px"}>
-      <Stack direction={["column", "row"]} spacing={6}></Stack>
-      <TableContainer w={"90%"} m={"auto"}>
+    <Box alignItems={"center"} h={"600px"} w={"35%"} borderWidth="1px">
+      <TableContainer w={"90%"} m={"auto"} position={"sticky"} top={"10"}>
         <Table variant="simple">
           <Thead>
-            <Heading mb={"50px"}>User Dashboard</Heading>
+            <Heading mb={"50px"}>Admin Dashboard</Heading>
           </Thead>
           <Tbody>
             <Tr>
               <Td
                 onClick={() => {
-                  navigate("/profile");
+                  navigate("/profile/Admin");
                 }}
                 cursor={"pointer"}
               >
@@ -37,36 +36,71 @@ export function Sidebar() {
               <Td
                 cursor={"pointer"}
                 onClick={() => {
-                  navigate("/profile/user-orders");
+                  navigate("/profile/Admin/add-product");
                 }}
               >
-                Orders
+                Add Product
               </Td>
             </Tr>
             <Tr>
               <Td
                 cursor={"pointer"}
                 onClick={() => {
-                  navigate("/profile/address");
+                  navigate("/profile/Admin/mens");
                 }}
               >
-                Address
+                Mens
               </Td>
             </Tr>
             <Tr>
-              <Td cursor={"pointer"}>Terms & Conditions</Td>
+              <Td
+                cursor={"pointer"}
+                onClick={() => {
+                  navigate("/profile/Admin/kids");
+                }}
+              >
+                Kids
+              </Td>
             </Tr>
             <Tr>
-              <Td cursor={"pointer"}>Help Center</Td>
+              <Td
+                cursor={"pointer"}
+                onClick={() => {
+                  navigate("/profile/Admin/women");
+                }}
+              >
+                Women
+              </Td>
+            </Tr>
+
+            <Tr>
+              <Td
+                cursor={"pointer"}
+                onClick={() => {
+                  navigate("/profile/Admin/users-joined");
+                }}
+              >
+                Users Joined
+              </Td>
             </Tr>
             <Tr>
               <Td
                 onClick={() => {
-                  navigate("/profile/review");
+                  navigate("/profile/Admin/reviews");
                 }}
                 cursor={"pointer"}
               >
                 Reviews & feedback
+              </Td>
+            </Tr>
+            <Tr>
+              <Td
+                cursor={"pointer"}
+                onClick={() => {
+                  navigate("/profile/Admin/create-admin");
+                }}
+              >
+                Create Admin
               </Td>
             </Tr>
           </Tbody>
@@ -81,12 +115,10 @@ export function Sidebar() {
           }}
           cursor={"pointer"}
           color={"white"}
-          alignSelf={"end"}
           onClick={() => {
             localStorage.setItem("login", false);
             navigate("/");
           }}
-          mt={[0, 0, "100px", "100px"]}
         >
           Logout
         </Button>
