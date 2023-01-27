@@ -45,7 +45,12 @@ export default function Login() {
   return (
     <Box>
       <Navbar />
-      <Box bgColor={"pink"} height={"635px"} mt={"-50px"} p={"50px"}>
+      <Box
+        bgColor={"rgb(253, 237, 236)"}
+        height={"635px"}
+        mt={"-50px"}
+        p={"50px"}
+      >
         <Box
           w={"431px"}
           border={"1px solid rgb(223, 223, 223)"}
@@ -63,6 +68,17 @@ export default function Login() {
           {/* MObile Number */}
           <Stack mt={"20px"} h={"308px"} p={"20px"}>
             <Heading fontSize={"2xl"}>Log in</Heading>
+            {mobile.length > 9 && (
+              <Text
+                color={"rgb(166, 153, 153)"}
+                fontWeight={"light"}
+                fontSize={"sm"}
+                cursor={"pointer"}
+                onClick={() => setMobile("")}
+              >
+                Change Number
+              </Text>
+            )}
             <InputGroup>
               <InputLeftAddon
                 children="IN +91"
@@ -84,6 +100,7 @@ export default function Login() {
                 borderBottom={"3px solid rgb(223, 223, 223)"}
                 focusBorderColor={"white"}
                 value={mobile}
+                isDisabled={mobile.length === 10}
                 onChange={(e) => {
                   setMobile(e.target.value);
                   console.log(mobile);
@@ -99,33 +116,43 @@ export default function Login() {
               width={"100%"}
               _hover={{ bg: "rgb(199, 60, 157)" }}
               onClick={() => {
-                localStorage.setItem("login", true);
-                setTimeout(() => {
-                  user.length === 1
-                    ? toast(
-                        {
-                          title: "OTP sent on your mobile number",
-                          description: `Please enter your otp to proceed ${otp}`,
-                          status: "success",
-                          duration: 6000,
-                          isClosable: true,
-                          position: "top",
-                        },
-                        manageOTP(otp),
-                        navigate("/otp-page")
-                      )
-                    : toast(
-                        {
-                          title: "Invalid Mobile Number",
-                          description: `no user found please signup`,
-                          status: "error",
-                          duration: 3000,
-                          isClosable: true,
-                          position: "bottom",
-                        },
-                        manageOTP(otp)
-                      );
-                }, 1000);
+                if (mobile.length === 0) {
+                  toast({
+                    title: "Enter Mobile Number to proceed",
+                    status: "error",
+                    duration: 3000,
+                    isClosable: true,
+                    position: "bottom",
+                  });
+                } else {
+                  localStorage.setItem("login", true);
+                  setTimeout(() => {
+                    user.length === 1
+                      ? toast(
+                          {
+                            title: "OTP sent on your mobile number",
+                            description: `Please enter your otp to proceed ${otp}`,
+                            status: "success",
+                            duration: 5000,
+                            isClosable: true,
+                            position: "top",
+                          },
+                          manageOTP(otp),
+                          navigate("/otp-page")
+                        )
+                      : toast(
+                          {
+                            title: "Invalid Mobile Number",
+                            description: `no user found please signup`,
+                            status: "error",
+                            duration: 3000,
+                            isClosable: true,
+                            position: "bottom",
+                          },
+                          manageOTP(otp)
+                        );
+                  }, 1000);
+                }
               }}
             >
               Send OTP
