@@ -195,7 +195,7 @@ export default function UserProfileEdit() {
                           <FormLabel>Mobile Number </FormLabel>
 
                           <Input
-                            type="number"
+                            type="tel"
                             name="number"
                             placeholder="Your Mobile Number"
                             onChange={(e) => {
