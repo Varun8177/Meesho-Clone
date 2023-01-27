@@ -3,12 +3,12 @@ import {
   Heading,
   Image,
   Stack,
-  Text,
   InputGroup,
   InputLeftAddon,
   Input,
   Button,
   useToast,
+  Text,
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useState } from "react";
@@ -55,6 +55,15 @@ export default function AdminLogin() {
           {/* MObile Number */}
           <Stack mt={"20px"} h={"308px"} p={"20px"}>
             <Heading fontSize={"2xl"}>Admin Login</Heading>
+            <Text
+              color={"rgb(166, 153, 153)"}
+              fontWeight={"light"}
+              fontSize={"sm"}
+              cursor={"pointer"}
+              onClick={() => setMobile("")}
+            >
+              Change Number
+            </Text>
             <InputGroup>
               <InputLeftAddon
                 children="IN +91"
@@ -76,6 +85,7 @@ export default function AdminLogin() {
                 borderBottom={"3px solid rgb(223, 223, 223)"}
                 focusBorderColor={"white"}
                 value={mobile}
+                isDisabled={mobile.length === 10}
                 onChange={(e) => {
                   setMobile(e.target.value);
                   console.log(mobile);
@@ -92,27 +102,25 @@ export default function AdminLogin() {
               _hover={{ bg: "rgb(199, 60, 157)" }}
               onClick={() => {
                 localStorage.setItem("login", true);
-                setTimeout(() => {
-                  user.length === 1
-                    ? toast(
-                        {
-                          title: "Welcome to Admin's Dashboard",
-                          status: "success",
-                          duration: 6000,
-                          isClosable: true,
-                          position: "top",
-                        },
-                        navigate("/profile/Admin")
-                      )
-                    : toast({
-                        title: "Invalid Mobile Number",
-                        description: `no user found please signup`,
-                        status: "error",
-                        duration: 3000,
+                user.length === 1
+                  ? toast(
+                      {
+                        title: "Welcome to Admin's Dashboard",
+                        status: "success",
+                        duration: 6000,
                         isClosable: true,
-                        position: "bottom",
-                      });
-                }, 1000);
+                        position: "top",
+                      },
+                      navigate("/profile/Admin")
+                    )
+                  : toast({
+                      title: "Invalid Mobile Number",
+                      description: `no user found please signup`,
+                      status: "error",
+                      duration: 3000,
+                      isClosable: true,
+                      position: "bottom",
+                    });
               }}
             >
               Go to Dashboard

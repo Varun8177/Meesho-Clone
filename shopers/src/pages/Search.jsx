@@ -4,11 +4,6 @@ import {
   Text,
   Box,
   Flex,
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionIcon,
-  AccordionPanel,
   Grid,
   Button,
 } from "@chakra-ui/react";
@@ -114,7 +109,7 @@ export default function Search() {
                     return (
                       <ProductCards
                         {...item}
-                        api={"https://63c701b54ebaa80285521e6e.mockapi.io/kids"}
+                        api={"https://63c701b54ebaa80285521e6e.mockapi.io/men"}
                         key={i}
                         endpoint={"kids"}
                       />

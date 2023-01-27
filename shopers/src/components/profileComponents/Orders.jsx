@@ -78,9 +78,20 @@ export default function Orders() {
             pt={"20px"}
             pb={"20px"}
           >
-            {orders.map((item) => {
-              return <OrderItems {...item} />;
-            })}
+            {orders.length === 0 ? (
+              <Box>
+                <Image
+                  src="https://img.freepik.com/free-vector/empty-concept-illustration_114360-1188.jpg?w=740&t=st=1674838461~exp=1674839061~hmac=e93ba9e31f1b7942c27b1f56a317715d72bd66a30a10f68043d8f1df7cd0ab25"
+                  w={"500px"}
+                  m={"auto"}
+                  alignSelf={"center"}
+                />
+              </Box>
+            ) : (
+              orders.map((item) => {
+                return <OrderItems {...item} />;
+              })
+            )}
           </Box>
         </Flex>
       </Box>

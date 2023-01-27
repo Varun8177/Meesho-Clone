@@ -89,6 +89,7 @@ export default function Navbar() {
                 children={<SearchIcon mt={"30px"} color="gray.300" />}
               />
               <Input
+                type={"search"}
                 htmlSize={10}
                 width={{ sm: "300px", md: "200px", lg: "300px", xl: "400px" }}
                 borderRadius={"5px"}
@@ -97,7 +98,7 @@ export default function Navbar() {
                 placeholder={"Try Saree,Kurti or search by product code"}
                 _placeholder={{ color: "pink.200" }}
                 value={Searchvalue}
-                onInput={(e) => {
+                onChange={(e) => {
                   handleSearchValue(e.target.value);
                   navigate("/search-products");
                 }}

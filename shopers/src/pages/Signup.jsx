@@ -99,6 +99,7 @@ export default function Signup() {
                 borderBottom={"3px solid rgb(223, 223, 223)"}
                 focusBorderColor={"white"}
                 mb={"20px"}
+                isDisabled={mobile.length === 10}
                 onChange={(e) => setMobile(e.target.value)}
               />
             </InputGroup>
