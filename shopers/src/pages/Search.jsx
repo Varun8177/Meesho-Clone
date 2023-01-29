@@ -29,7 +29,6 @@ const CurrentPage = (val = 1) => {
 
 export default function Search() {
   const { Searchvalue } = useContext(SearchContext);
-  const [sort, setSort] = useState("Price");
   const [data, setData] = useState([]);
   const [load, setLoad] = useState(false);
   const [params, setParams] = useSearchParams();
