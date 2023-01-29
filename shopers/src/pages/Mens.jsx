@@ -123,6 +123,7 @@ export default function Mens() {
               mb={"20px"}
               pos={{ base: "none", sm: "none", md: "sticky", lg: "sticky" }}
               top={{ base: "none", sm: "none", md: "150", lg: "130" }}
+              cursor={"pointer"}
             >
               <Accordion allowMultiple w={"316px"}>
                 <AccordionItem border={"0"}>
@@ -143,6 +144,7 @@ export default function Mens() {
                     >
                       Low to High
                     </Text>
+                    <hr />
                     <Text
                       onClick={() => {
                         HandleSort("desc");
@@ -158,6 +160,7 @@ export default function Mens() {
 
             {/* Filter here */}
             <Box
+              cursor={"pointer"}
               border={"1px solid rgb(240, 240, 240)"}
               p={"5px 10px 5px 10px"}
               mb={"20px"}
@@ -182,6 +185,7 @@ export default function Mens() {
                     >
                       Jeans
                     </Text>
+                    <hr />
                     <Text
                       onClick={() => {
                         HandleFilter("tshirt");
