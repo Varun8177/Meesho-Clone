@@ -118,6 +118,7 @@ export default function WomenEthnic() {
           <Box>
             {/* sort here */}
             <Box
+              cursor={"pointer"}
               border={"1px solid rgb(240, 240, 240)"}
               p={"5px 10px 5px 10px"}
               mb={"20px"}
@@ -143,6 +144,7 @@ export default function WomenEthnic() {
                     >
                       Low to High
                     </Text>
+                    <hr />
                     <Text
                       onClick={() => {
                         HandleSort("desc");
@@ -183,6 +185,7 @@ export default function WomenEthnic() {
                     >
                       Sarees
                     </Text>
+                    <hr />
                     <Text
                       onClick={() => {
                         HandleFilter("Kurtis");
@@ -190,6 +193,7 @@ export default function WomenEthnic() {
                     >
                       Kurtis
                     </Text>
+                    <hr />
                     <Text
                       onClick={() => {
                         HandleFilter("Lehenga");

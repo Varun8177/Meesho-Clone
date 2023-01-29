@@ -144,6 +144,10 @@ export default function Navbar() {
                   });
                 } else {
                   navigate("/login");
+                  window.scroll({
+                    top: 0,
+                    left: 0,
+                  });
                 }
               }}
             >
@@ -162,6 +166,10 @@ export default function Navbar() {
                   });
                 } else {
                   navigate("/login");
+                  window.scroll({
+                    top: 0,
+                    left: 0,
+                  });
                 }
               }}
             >

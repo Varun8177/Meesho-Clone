@@ -101,8 +101,6 @@ export default function Address() {
       .get(`https://63ca9c80f36cbbdfc75c5b52.mockapi.io/meesho_users/${id}`)
       .then((res) => {
         setData(res.data);
-        dispatch({ type: "name", payload: data.name });
-        dispatch({ type: "mobile", payload: data.mobile });
       });
   }
   useEffect(() => {
@@ -266,6 +264,10 @@ export default function Address() {
                 state.area === "" ||
                 state.house === ""
               }
+              onMouseEnter={() => {
+                dispatch({ type: "name", payload: data.name });
+                dispatch({ type: "mobile", payload: data.mobile });
+              }}
               onClick={() => {
                 toast({
                   title: "Succesfully saved address",

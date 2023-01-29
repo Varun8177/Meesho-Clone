@@ -143,6 +143,7 @@ export default function WomenWestern() {
                     >
                       Low to High
                     </Text>
+                    <hr />
                     <Text
                       onClick={() => {
                         HandleSort("desc");
@@ -183,6 +184,7 @@ export default function WomenWestern() {
                     >
                       Tunics
                     </Text>
+                    <hr />
                     <Text
                       onClick={() => {
                         HandleFilter("party");
@@ -190,6 +192,7 @@ export default function WomenWestern() {
                     >
                       Party Wear
                     </Text>
+                    <hr />
                     <Text
                       onClick={() => {
                         HandleFilter("fancy");

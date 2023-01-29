@@ -153,6 +153,7 @@ export default function Home() {
         >
           {/* sort here */}
           <Box
+            cursor={"pointer"}
             h={"fit-content"}
             border={"1px solid rgb(240, 240, 240)"}
             p={"5px 10px 5px 10px"}
@@ -179,6 +180,7 @@ export default function Home() {
                   >
                     Low to High
                   </Text>
+                  <hr />
                   <Text
                     onClick={() => {
                       HandleSort("desc");
