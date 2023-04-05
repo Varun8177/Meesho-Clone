@@ -1,0 +1,8 @@
+.active {
+  /* text-decoration: underline; */
+  color: rgb(244, 51, 151);
+}
+
+.default {
+  text-decoration: none;
+}

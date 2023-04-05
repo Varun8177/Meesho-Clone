@@ -97,44 +97,96 @@ export default function Home() {
   return (
     <Box>
       <Navbar />
-      <Image m={"auto"} src={Homepage_banner} mb={"20px"} w={"1106px"} />
-      <Heading fontSize="3xl" margin={"auto"} w={"fit-content"} mb={"20px"}>
-        -Top Categories to choose from-
+      <Image m={"auto"} src={Homepage_banner} mb={"20px"} w={"1220px"} />
+      <Heading
+        fontSize="3xl"
+        margin={"auto"}
+        w={"fit-content"}
+        mb={"20px"}
+        _before={{
+          content: `""`,
+          width: "20%",
+          height: "1px",
+          background: "#000",
+          position: "absolute",
+          left: 200,
+          top: 569,
+        }}
+        _after={{
+          content: `""`,
+          display: "block",
+          width: "20%",
+          height: "1px",
+          background: "#000",
+          right: 200,
+          top: 569,
+          position: "absolute",
+        }}
+      >
+        Top Categories to choose from
       </Heading>
       <Flex
         mb={"30px"}
-        w={"80%"}
-        p={"50px"}
+        w={{ base: "100%", md: "80%" }}
+        p={{ base: "20px", md: "50px" }}
         m={"auto"}
         bgImage={background_banner}
-        justifyContent={"space-evenly"}
+        bgSize="cover"
+        justifyContent={{ base: "center", md: "space-evenly" }}
+        alignItems={{ base: "center", md: "flex-start" }}
+        flexDirection={{ base: "column", md: "row" }}
       >
         <Image
           onClick={() => navigate("/women-ethnic")}
-          h={"500px"}
+          h={{ base: "300px", md: "500px" }}
+          w={{ base: "100%", md: "auto" }}
           src={women_category}
+          mb={{ base: "20px", md: "0" }}
+          objectFit={"contain"}
         />
-        <Flex direction={"column"}>
-          <Heading fontSize="6xl" margin={"auto"} w={"fit-content"} mb={"20px"}>
+        <Flex
+          direction={"column"}
+          alignItems={{ base: "center", md: "flex-start" }}
+          textAlign={{ base: "center", md: "left" }}
+          w={{ base: "100%", md: "auto" }}
+          ml={{ base: "0", md: "50px" }}
+          mt={{ base: "20px", md: "0" }}
+        >
+          <Heading
+            fontSize={{ base: "4xl", md: "6xl" }}
+            mb={{ base: "10px", md: "20px" }}
+          >
             Fashion Store
           </Heading>
-          <Flex justifyContent={"space-evenly"} w={"800px"}>
+          <Flex
+            justifyContent={{ base: "center", md: "space-evenly" }}
+            w={{ base: "100%", md: "800px" }}
+          >
             <Image
-              alignSelf={"end"}
               onClick={() => navigate("/men")}
-              h={"400px"}
+              h={{ base: "200px", md: "400px" }}
               src={mens_banner}
+              mb={{ base: "20px", md: "0" }}
+              objectFit={"contain"}
             />
             <Image
-              alignSelf={"end"}
               onClick={() => navigate("/kids")}
-              h={"400px"}
+              h={{ base: "200px", md: "400px" }}
               src={kids_banner}
+              objectFit={"contain"}
             />
           </Flex>
         </Flex>
       </Flex>
-      <Image m={"auto"} src={register_banner} mb={"40px"} mt={"40px"} />
+
+      <Image
+        m={"auto"}
+        src={register_banner}
+        mb={"40px"}
+        mt={"40px"}
+        w={"100%"}
+        maxW={"1220"}
+      />
       <Box w={"87%"} m={"auto"} mt={{ base: "30px", sm: "30px", md: "-25px" }}>
         <Stack>
           <Stack spacing={8} direction="row">
@@ -149,7 +201,7 @@ export default function Home() {
 
         <Flex
           mt={{ base: "50px", sm: "50px", md: "20px" }}
-          direction={{ base: "column", sm: "column", md: "row" }}
+          direction={["column", "column", "row"]}
         >
           {/* sort here */}
           <Box
