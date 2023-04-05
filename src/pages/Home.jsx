@@ -97,9 +97,33 @@ export default function Home() {
   return (
     <Box>
       <Navbar />
-      <Image m={"auto"} src={Homepage_banner} mb={"20px"} w={"1106px"} />
-      <Heading fontSize="3xl" margin={"auto"} w={"fit-content"} mb={"20px"}>
-        -Top Categories to choose from-
+      <Image m={"auto"} src={Homepage_banner} mb={"20px"} w={"1220px"} />
+      <Heading
+        fontSize="3xl"
+        margin={"auto"}
+        w={"fit-content"}
+        mb={"20px"}
+        _before={{
+          content: `""`,
+          width: "20%",
+          height: "1px",
+          background: "#000",
+          position: "absolute",
+          left: 200,
+          top: 569,
+        }}
+        _after={{
+          content: `""`,
+          display: "block",
+          width: "20%",
+          height: "1px",
+          background: "#000",
+          right: 200,
+          top: 569,
+          position: "absolute",
+        }}
+      >
+        Top Categories to choose from
       </Heading>
       <Flex
         mb={"30px"}
@@ -134,7 +158,13 @@ export default function Home() {
           </Flex>
         </Flex>
       </Flex>
-      <Image m={"auto"} src={register_banner} mb={"40px"} mt={"40px"} />
+      <Image
+        m={"auto"}
+        src={register_banner}
+        mb={"40px"}
+        mt={"40px"}
+        w={"1220px"}
+      />
       <Box w={"87%"} m={"auto"} mt={{ base: "30px", sm: "30px", md: "-25px" }}>
         <Stack>
           <Stack spacing={8} direction="row">
@@ -149,7 +179,7 @@ export default function Home() {
 
         <Flex
           mt={{ base: "50px", sm: "50px", md: "20px" }}
-          direction={{ base: "column", sm: "column", md: "row" }}
+          direction={["column", "column", "row"]}
         >
           {/* sort here */}
           <Box
