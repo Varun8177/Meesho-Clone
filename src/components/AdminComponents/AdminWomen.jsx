@@ -88,10 +88,9 @@ function SingleProdSkeleton({ images, title, price, handleDelete, id }) {
 export default function AdminWomen() {
   const [data, setData] = useState([]);
   const [load, setLoad] = useState(false);
-  const [page, setpage] = useState(1);
   const [search, setsearch] = useState("");
   const arr = [1, 2, 3];
-  const MensData = async (page) => {
+  const MensData = async () => {
     setLoad(true);
     try {
       const dress = await axios.get(
@@ -103,27 +102,24 @@ export default function AdminWomen() {
       console.log(error);
     }
   };
-  const handleDelete = async (id) => {
+  const handleDelete = (id) => {
     setLoad(true);
-    try {
-      axios
-        .delete(
-          `https://63c7f361075b3f3a91d6b179.mockapi.io/women-ethnic/${id}`
-        )
-        .then((res) => {
-          MensData(page);
-        });
-      setLoad(false);
-    } catch (error) {
-      console.log(error);
-    }
+    axios
+      .delete(`https://63c7f361075b3f3a91d6b179.mockapi.io/women-ethnic/${id}`)
+      .then((res) => {
+        MensData();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    setLoad(false);
   };
 
-  const MenssearchData = async (page, val) => {
+  const MenssearchData = async (val) => {
     setLoad(true);
     try {
       const dress = await axios.get(
-        `https://63c7f361075b3f3a91d6b179.mockapi.io/women-ethnic?page=${page}&limit=3&search=${val}`
+        `https://63c7f361075b3f3a91d6b179.mockapi.io/women-ethnic?search=${val}`
       );
       setData(dress.data);
       setLoad(false);
@@ -132,8 +128,8 @@ export default function AdminWomen() {
     }
   };
   useEffect(() => {
-    MensData(page);
-  }, [page]);
+    MensData();
+  }, []);
 
   return (
     <Box bgColor={"#fafafa"}>
@@ -153,7 +149,7 @@ export default function AdminWomen() {
             placeholder="Enter name or id"
             onChange={(e) => {
               setsearch(e.target.value);
-              MenssearchData(page, search);
+              MenssearchData(search);
             }}
           />
           {/* Product */}
