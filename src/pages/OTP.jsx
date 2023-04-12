@@ -48,15 +48,17 @@ export function Timer({ handleTimer }) {
 
 export default function OTP() {
   const [timer, setTimer] = useState(false);
-  const [otpNumber, setOtpNumber] = useState([]);
+  const [otpNumber, setOtpNumber] = useState("");
   const { otp } = useContext(OTPcontext);
   const toast = useToast();
   const navigate = useNavigate();
   const handleTimer = () => {
     setTimer(false);
   };
-  const handleOTP = (val) => {
-    setOtpNumber([...otpNumber, val]);
+  const handleOTP = (e) => {
+    const { value, name } = e.target;
+    const newPin = otpNumber.slice(0, name) + value + otpNumber.slice(name + 1);
+    setOtpNumber(newPin);
   };
   console.log(otpNumber);
   // const otp = Math.random().toString().substr(2, 6);
@@ -93,13 +95,13 @@ export default function OTP() {
             </Text>
 
             <HStack m={"auto"}>
-              <PinInput type="number">
-                <PinInputField onChange={(e) => handleOTP(e.target.value)} />
-                <PinInputField onChange={(e) => handleOTP(e.target.value)} />
-                <PinInputField onChange={(e) => handleOTP(e.target.value)} />
-                <PinInputField onChange={(e) => handleOTP(e.target.value)} />
-                <PinInputField onChange={(e) => handleOTP(e.target.value)} />
-                <PinInputField onChange={(e) => handleOTP(e.target.value)} />
+              <PinInput type="number" value={otpNumber} onChange={setOtpNumber}>
+                <PinInputField onChange={handleOTP} />
+                <PinInputField onChange={handleOTP} />
+                <PinInputField onChange={handleOTP} />
+                <PinInputField onChange={handleOTP} />
+                <PinInputField onChange={handleOTP} />
+                <PinInputField onChange={handleOTP} />
               </PinInput>
             </HStack>
             <Button
@@ -110,7 +112,7 @@ export default function OTP() {
               width={"100%"}
               _hover={{ bg: "rgb(199, 60, 157)" }}
               onClick={() => {
-                if (otpNumber.join("") === otp) {
+                if (otpNumber === otp) {
                   toast({
                     title: "Account Created Successfully",
                     description: `Welcome to shoperz`,

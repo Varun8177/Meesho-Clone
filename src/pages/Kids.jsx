@@ -11,6 +11,7 @@ import {
   AccordionPanel,
   Grid,
   Button,
+  Divider,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import axios from "axios";
@@ -45,7 +46,14 @@ export default function Kids() {
       const dress = await axios.get(
         `https://63c701b54ebaa80285521e6e.mockapi.io/kids?page=${page}&limit=12`
       );
-      setData(dress.data);
+      const newArray = [...dress.data];
+
+      for (let i = newArray.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+      }
+
+      setData(newArray);
       setLoad(false);
     } catch (error) {
       console.log(error);
@@ -69,16 +77,18 @@ export default function Kids() {
   };
 
   const HandleSort = async (val) => {
-    setLoad(true);
-    try {
-      const dress = await axios.get(
-        `https://63c701b54ebaa80285521e6e.mockapi.io/kids?page=${page}&limit=12&sortBy=price&order=${val}`
-      );
-      setData(dress.data);
-      setLoad(false);
-    } catch (error) {
-      console.log(error);
-    }
+    const sortedData = [...data].sort((a, b) => {
+      const priceA = parseInt(a.price.replace(/[^0-9]/g, ""));
+      const priceB = parseInt(b.price.replace(/[^0-9]/g, ""));
+
+      if (val === "asc") {
+        return priceA - priceB;
+      } else {
+        return priceB - priceA;
+      }
+    });
+
+    setData(sortedData);
   };
   const HandleFilter = async (val) => {
     setLoad(true);
@@ -115,84 +125,134 @@ export default function Kids() {
           <Box>
             {/* sort here */}
             <Box
-              cursor={"pointer"}
-              border={"1px solid rgb(240, 240, 240)"}
-              p={"5px 10px 5px 10px"}
-              mb={"20px"}
               pos={{ base: "none", sm: "none", md: "sticky", lg: "sticky" }}
               top={{ base: "none", sm: "none", md: "150", lg: "130" }}
             >
-              <Accordion allowMultiple w={"316px"}>
-                <AccordionItem border={"0"}>
-                  <h2>
-                    <AccordionButton>
-                      <Box as="span" flex="1" textAlign="left" fontSize={"xl"}>
-                        Sort by :{sort}
-                      </Box>
-                      <AccordionIcon />
-                    </AccordionButton>
-                  </h2>
-                  <AccordionPanel pb={4}>
-                    <Text
-                      onClick={() => {
-                        HandleSort("asc");
-                        setSort("Low to High");
-                      }}
-                    >
-                      Low to High
-                    </Text>
-                    <hr />
-                    <Text
-                      onClick={() => {
-                        HandleSort("desc");
-                        setSort("High to Low");
-                      }}
-                    >
-                      High to Low
-                    </Text>
-                  </AccordionPanel>
-                </AccordionItem>
-              </Accordion>
-            </Box>
+              <Box
+                border={"1px solid rgb(240, 240, 240)"}
+                p={"5px 10px 5px 10px"}
+                mb={"20px"}
+                borderRadius={"8px"}
+              >
+                <Accordion allowMultiple w={"316px"}>
+                  <AccordionItem border={"0"}>
+                    <h2>
+                      <AccordionButton
+                        _hover={{
+                          background: "transparent",
+                          color: "#718096",
+                        }}
+                        _focus={{
+                          outline: "none",
+                          boxShadow: "none",
+                        }}
+                        _expanded={{
+                          background: "transparent",
+                          color: "#718096",
+                        }}
+                      >
+                        <Box
+                          as="span"
+                          flex="1"
+                          textAlign="left"
+                          fontSize={"xl"}
+                        >
+                          Sort by : {sort}
+                        </Box>
+                        <AccordionIcon />
+                      </AccordionButton>
+                    </h2>
+                    <AccordionPanel pb={4}>
+                      <Text
+                        onClick={() => {
+                          HandleSort("asc");
+                          setSort("Low to High");
+                        }}
+                        p={"5"}
+                        _hover={{
+                          cursor: "pointer",
+                          background: "#F7FAFC",
+                          color: "#718096",
+                        }}
+                      >
+                        Low to High
+                      </Text>
+                      <hr />
+                      <Text
+                        onClick={() => {
+                          HandleSort("desc");
+                          setSort("High to Low");
+                        }}
+                        p={5}
+                        _hover={{
+                          cursor: "pointer",
+                          background: "#F7FAFC",
+                          color: "#718096",
+                        }}
+                      >
+                        High to Low
+                      </Text>
+                    </AccordionPanel>
+                  </AccordionItem>
+                </Accordion>
+              </Box>
 
-            {/* Filter here */}
-            <Box
-              cursor={"pointer"}
-              border={"1px solid rgb(240, 240, 240)"}
-              p={"5px 10px 5px 10px"}
-              mb={"20px"}
-              pos={{ base: "none", sm: "none", md: "sticky", lg: "sticky" }}
-              top={{ base: "none", sm: "none", md: "250", lg: "230" }}
-            >
-              <Accordion allowMultiple w={"316px"}>
-                <AccordionItem border={"0"}>
-                  <h2>
-                    <AccordionButton>
-                      <Box as="span" flex="1" textAlign="left" fontSize={"xl"}>
-                        Filter
-                      </Box>
-                      <AccordionIcon />
-                    </AccordionButton>
-                  </h2>
-                  <AccordionPanel pb={4}>
-                    <Text
-                      onClick={() => {
-                        HandleFilter("Frocks");
-                      }}
-                    >
-                      Frocks
-                    </Text>
-                    <hr />
-                    <Text
-                      onClick={() => {
-                        HandleFilter("cute");
-                      }}
-                    >
-                      Cute wear
-                    </Text>
-                  </AccordionPanel>
-                </AccordionItem>
-              </Accordion>
+              {/* Filter here */}
+              <Box
+                cursor={"pointer"}
+                border={"1px solid rgb(240, 240, 240)"}
+                p={"5px 10px 5px 10px"}
+                mb={"20px"}
+                borderRadius={"8px"}
+              >
+                <Accordion allowMultiple w={"316px"}>
+                  <AccordionItem border={"0"}>
+                    <h2>
+                      <AccordionButton
+                        _hover={{
+                          background: "transparent",
+                          color: "#718096",
+                        }}
+                        _focus={{
+                          outline: "none",
+                          boxShadow: "none",
+                        }}
+                        _expanded={{
+                          background: "transparent",
+                          color: "#718096",
+                        }}
+                      >
+                        <Box
+                          as="span"
+                          flex="1"
+                          textAlign="left"
+                          fontSize={"xl"}
+                        >
+                          Filter
+                        </Box>
+                        <AccordionIcon />
+                      </AccordionButton>
+                    </h2>
+                    <AccordionPanel pb={4}>
+                      <Text
+                        onClick={() => {
+                          HandleFilter("Frocks");
+                        }}
+                      >
+                        Frocks
+                      </Text>
+                      <Divider my={2} borderColor="#CBD5E0" />
+                      <Text
+                        onClick={() => {
+                          HandleFilter("cute");
+                        }}
+                      >
+                        Cute wear
+                      </Text>
+                    </AccordionPanel>
+                  </AccordionItem>
+                </Accordion>
+              </Box>
             </Box>
           </Box>
 

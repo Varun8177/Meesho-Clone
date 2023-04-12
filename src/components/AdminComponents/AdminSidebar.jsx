@@ -7,6 +7,7 @@ import {
   TableContainer,
   Tbody,
   Td,
+  Th,
   Thead,
   Tr,
 } from "@chakra-ui/react";
@@ -15,114 +16,95 @@ import { useNavigate } from "react-router-dom";
 export function AdminSidebar() {
   const navigate = useNavigate();
   return (
-    <Box alignItems={"center"} h={"600px"} w={"35%"} borderWidth="1px">
-      <TableContainer w={"90%"} m={"auto"} position={"sticky"} top={"10"}>
-        <Table variant="simple">
-          <Thead>
-            <Heading mb={"50px"}>Admin Dashboard</Heading>
-          </Thead>
-          <Tbody>
-            <Tr>
-              <Td
-                onClick={() => {
-                  navigate("/profile/Admin");
-                }}
-                cursor={"pointer"}
-              >
-                Profile
-              </Td>
-            </Tr>
-            <Tr>
-              <Td
-                cursor={"pointer"}
-                onClick={() => {
-                  navigate("/profile/Admin/add-product");
-                }}
-              >
-                Add Product
-              </Td>
-            </Tr>
-            <Tr>
-              <Td
-                cursor={"pointer"}
-                onClick={() => {
-                  navigate("/profile/Admin/mens");
-                }}
-              >
-                Mens
-              </Td>
-            </Tr>
-            <Tr>
-              <Td
-                cursor={"pointer"}
-                onClick={() => {
-                  navigate("/profile/Admin/kids");
-                }}
-              >
-                Kids
-              </Td>
-            </Tr>
-            <Tr>
-              <Td
-                cursor={"pointer"}
-                onClick={() => {
-                  navigate("/profile/Admin/women");
-                }}
-              >
-                Women
-              </Td>
-            </Tr>
-
-            <Tr>
-              <Td
-                cursor={"pointer"}
-                onClick={() => {
-                  navigate("/profile/Admin/users-joined");
-                }}
-              >
-                Users Joined
-              </Td>
-            </Tr>
-            <Tr>
-              <Td
-                onClick={() => {
-                  navigate("/profile/Admin/reviews");
-                }}
-                cursor={"pointer"}
-              >
-                Reviews & feedback
-              </Td>
-            </Tr>
-            <Tr>
-              <Td
-                cursor={"pointer"}
-                onClick={() => {
-                  navigate("/profile/Admin/create-admin");
-                }}
-              >
-                Create Admin
-              </Td>
-            </Tr>
-          </Tbody>
-        </Table>
-
-        <Button
-          w={"100%"}
-          m={"auto"}
-          bgColor={"pink.400"}
-          _hover={{
-            bg: "pink.500",
-          }}
-          cursor={"pointer"}
-          color={"white"}
-          onClick={() => {
-            localStorage.setItem("login", false);
-            navigate("/");
-          }}
-        >
-          Logout
-        </Button>
-      </TableContainer>
+    <Box
+      h="100%"
+      w="35%"
+      p="2"
+      position="sticky"
+      top="10"
+      bgColor="white"
+      border="1px solid #E5E7EB"
+    >
+      <Table variant="simple">
+        <Thead>
+          <Tr>
+            <Th textAlign="center" fontWeight="bold">
+              Dashboard
+            </Th>
+          </Tr>
+        </Thead>
+        <Tbody>
+          <Tr
+            cursor="pointer"
+            _hover={{ bgColor: "#F3F4F6" }}
+            onClick={() => navigate("/profile/Admin")}
+          >
+            <Td>Profile</Td>
+          </Tr>
+          <Tr
+            cursor="pointer"
+            _hover={{ bgColor: "#F3F4F6" }}
+            onClick={() => navigate("/profile/Admin/add-product")}
+          >
+            <Td>Add Product</Td>
+          </Tr>
+          <Tr
+            cursor="pointer"
+            _hover={{ bgColor: "#F3F4F6" }}
+            onClick={() => navigate("/profile/Admin/mens")}
+          >
+            <Td>Mens</Td>
+          </Tr>
+          <Tr
+            cursor="pointer"
+            _hover={{ bgColor: "#F3F4F6" }}
+            onClick={() => navigate("/profile/Admin/kids")}
+          >
+            <Td>Kids</Td>
+          </Tr>
+          <Tr
+            cursor="pointer"
+            _hover={{ bgColor: "#F3F4F6" }}
+            onClick={() => navigate("/profile/Admin/women")}
+          >
+            <Td>Women</Td>
+          </Tr>
+          <Tr
+            cursor="pointer"
+            _hover={{ bgColor: "#F3F4F6" }}
+            onClick={() => navigate("/profile/Admin/users-joined")}
+          >
+            <Td>Users Joined</Td>
+          </Tr>
+          <Tr
+            cursor="pointer"
+            _hover={{ bgColor: "#F3F4F6" }}
+            onClick={() => navigate("/profile/Admin/reviews")}
+          >
+            <Td>Reviews &amp; Feedback</Td>
+          </Tr>
+          <Tr
+            cursor="pointer"
+            _hover={{ bgColor: "#F3F4F6" }}
+            onClick={() => navigate("/profile/Admin/create-admin")}
+          >
+            <Td>Create Admin</Td>
+          </Tr>
+        </Tbody>
+      </Table>
+      <Button
+        w="100%"
+        mt="2"
+        bgColor="pink.400"
+        _hover={{ bg: "pink.500" }}
+        color="white"
+        onClick={() => {
+          localStorage.setItem("login", false);
+          navigate("/");
+        }}
+      >
+        Logout
+      </Button>
     </Box>
   );
 }

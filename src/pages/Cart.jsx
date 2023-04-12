@@ -19,7 +19,15 @@ export default function Cart() {
   const [size, setSize] = useState("");
 
   const arr = [1, 2, 3, 4];
-  function deleteCartItem(id, itemId) {
+
+  function removeTunics(str) {
+    let originalStr = str;
+    let updatedStr = originalStr.replace("&amp; Tunics", "");
+    updatedStr = originalStr.replace("&amp; Dresses", "");
+    return updatedStr;
+  }
+
+  function deleteCartItem(id, itemId, qty, price) {
     axios
       .delete(
         `https://63ca9c80f36cbbdfc75c5b52.mockapi.io/meesho_users/${id}/cart/${itemId}`
@@ -36,7 +44,17 @@ export default function Cart() {
         `https://63ca9c80f36cbbdfc75c5b52.mockapi.io/meesho_users/${id}/cart`
       )
       .then((res) => {
-        setData(res.data);
+        const updatedData = res.data.map((item) => {
+          let updatedTitle = removeTunics(item.title);
+          console.log(item.title, updatedTitle);
+          return {
+            ...item,
+            title: updatedTitle,
+          };
+        });
+
+        console.log(updatedData);
+        setData(updatedData);
         setLoad(false);
       });
   }
@@ -83,10 +101,6 @@ export default function Cart() {
                   );
                 })}
           </Stack>
-          {/* <CartItem /> */}
-
-          {/* Total */}
-
           <Total total={totalprice} data={data} />
         </Flex>
       </Box>

@@ -17,36 +17,31 @@ import { AdminSidebar } from "./AdminSidebar";
 function SingleProd({ images, title, price, handleDelete, id }) {
   return (
     <Box
-      w={["100%", "100%", "750px", "750px"]}
+      w={"100%"}
       borderWidth="1px"
       borderRadius="lg"
       overflow="hidden"
       mt={"20px"}
       p={"15px"}
     >
-      {/* Product */}
-      <Flex>
-        <Image src={images} w={"100px"} />
-        <Flex
-          //   border={"1px solid red"}
-          w={"100%"}
-          justifyContent={"space-between"}
+      <Flex alignItems="center">
+        <Image src={images} w={"100px"} borderRadius="md" mr="4" />
+        <Stack color="gray.500">
+          <Text fontWeight="bold" fontSize="lg">
+            {title}
+          </Text>
+          <Text fontSize="md">Price: {price}</Text>
+        </Stack>
+        <Button
+          onClick={() => {
+            handleDelete(id);
+          }}
+          size="sm"
+          variant="outline"
+          ml="auto"
         >
-          <Stack ml={"17px"} color="rgb(102, 116, 142)">
-            <Text>Title:{title}</Text>
-            <Text>Size</Text>
-            <Text>price :{price}</Text>
-          </Stack>
-          <Stack>
-            <Button
-              onClick={() => {
-                handleDelete(id);
-              }}
-            >
-              X
-            </Button>
-          </Stack>
-        </Flex>
+          X
+        </Button>
       </Flex>
     </Box>
   );
@@ -126,7 +121,7 @@ export default function AdminKids() {
     setLoad(true);
     try {
       const dress = await axios.get(
-        `https://63c701b54ebaa80285521e6e.mockapi.io/kids?page=${page}&limit=3&search=${val}`
+        `https://63c701b54ebaa80285521e6e.mockapi.io/kids`
       );
       setData(dress.data);
       setLoad(false);
@@ -146,16 +141,19 @@ export default function AdminKids() {
     });
   };
   return (
-    <Box>
+    <Box bgColor={"#fafafa"}>
       <AdminNavbar />
-      <Flex p={"10px"} w={"80%"} m={"auto"}>
+      <Flex p={"10px"} w={"80%"} m={"auto"} justifyContent={"space-between"}>
         <AdminSidebar />
         <Box
+          bgColor={"white"}
           w={["100%", "100%", "750px", "750px"]}
           borderWidth="1px"
           borderRadius="lg"
-          overflow="hidden"
+          h={"80vh"}
+          overflow="scroll"
           p={"15px"}
+          border="1px solid #E5E7EB"
         >
           <Input
             placeholder="Enter name or id"
@@ -172,21 +170,6 @@ export default function AdminKids() {
             : data.map((item) => {
                 return <SingleProd {...item} handleDelete={handleDelete} />;
               })}
-          <Box textAlign={"center"} mt={"20px"}>
-            <Button
-              isDisabled={page === 1}
-              onClick={() => handleClick(-1, -10)}
-            >
-              Previous
-            </Button>
-            <Button isDisabled>{page}</Button>
-            <Button
-              isDisabled={data.length !== 3}
-              onClick={() => handleClick(1, 10)}
-            >
-              Next
-            </Button>
-          </Box>
         </Box>
       </Flex>
     </Box>

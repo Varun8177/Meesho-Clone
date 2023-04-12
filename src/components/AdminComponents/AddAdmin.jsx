@@ -40,6 +40,8 @@ export default function AddAdmin() {
           overflow="hidden"
           p={"25px"}
           m={"auto"}
+          h={"80vh"}
+          alignItems={"center"}
         >
           {/* contact Input */}
           <Heading fontSize={"lg"} mb={"20px"}>

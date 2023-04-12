@@ -39,36 +39,45 @@ export default function CartItem({
       mt={"20px"}
       p={"15px"}
     >
-      {/* Product */}
-      <Flex>
-        <Image src={images} w={"100px"} />
-        <Flex
-          //   border={"1px solid red"}
-          w={"100%"}
-          justifyContent={"space-between"}
-        >
-          <Stack ml={"17px"} color="rgb(102, 116, 142)">
-            <Text>Title:{title}</Text>
-            <Text>Size:{size}</Text>
-            <Text>price :{price}</Text>
-            <Flex>
-              <Button isDisabled={qty === 1} onClick={() => handleQuantity(-1)}>
-                -
-              </Button>
-              <Button isDisabled>{qty}</Button>
-              <Button onClick={() => handleQuantity(1)}>+</Button>
-            </Flex>
-          </Stack>
-          <Stack>
+      <Flex alignItems="center">
+        <Image src={images} w={"100px"} borderRadius="md" mr="4" />
+        <Stack color="gray.500">
+          <Text fontWeight="bold" fontSize="lg">
+            {title}
+          </Text>
+          <Text fontSize="md">Size: {size}</Text>
+          <Text fontSize="md">Price: {price}</Text>
+          <Flex alignItems="center">
             <Button
-              onClick={() => {
-                deleteCartItem(userId, id);
-              }}
+              isDisabled={qty === 1}
+              size="sm"
+              onClick={() => handleQuantity(-1)}
+              variant="outline"
             >
-              X
+              -
             </Button>
-          </Stack>
-        </Flex>
+            <Text fontSize="lg" mx="2">
+              {qty}
+            </Text>
+            <Button
+              size="sm"
+              onClick={() => handleQuantity(1)}
+              variant="outline"
+            >
+              +
+            </Button>
+          </Flex>
+        </Stack>
+        <Button
+          onClick={() => {
+            deleteCartItem(userId, id, qty, price);
+          }}
+          size="sm"
+          variant="outline"
+          ml="auto"
+        >
+          X
+        </Button>
       </Flex>
     </Box>
   );

@@ -6,7 +6,6 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
-  InputRightElement,
   useColorMode,
 } from "@chakra-ui/react";
 import { ImMobile } from "react-icons/im";
@@ -24,12 +23,16 @@ export function ColorModeToggle() {
   const { colorMode, toggleColorMode } = useColorMode();
   return (
     <Button
-      aria-label="Toggle Color Mode"
       onClick={toggleColorMode}
-      _focus={{ boxShadow: "none" }}
+      cursor={"pointer"}
       w="fit-content"
+      style={{ marginLeft: "12px" }}
     >
-      {colorMode === "light" ? <BsMoonStarsFill /> : <BsSun />}
+      {colorMode === "light" ? (
+        <BsMoonStarsFill size="20px" />
+      ) : (
+        <BsSun size="20px" />
+      )}
     </Button>
   );
 }
@@ -82,8 +85,9 @@ export default function Navbar() {
                 handleSearchValue("");
                 navigate("/");
               }}
+              cursor={"pointer"}
             />
-            <InputGroup ml={"2%"} alignItems={"center"}>
+            <InputGroup ml={{ base: "0", md: "2%" }} alignItems={"center"}>
               <InputLeftElement
                 pointerEvents="none"
                 children={<SearchIcon mt={"30px"} color="gray.300" />}
@@ -91,12 +95,19 @@ export default function Navbar() {
               <Input
                 type={"search"}
                 htmlSize={10}
-                width={{ sm: "300px", md: "200px", lg: "300px", xl: "400px" }}
+                width={{
+                  base: "100%",
+                  sm: "300px",
+                  md: "200px",
+                  lg: "300px",
+                  xl: "400px",
+                }}
                 borderRadius={"5px"}
                 h={"45px"}
-                border={"1px solid #000000"}
-                placeholder={"Try Saree,Kurti or search by product code"}
-                _placeholder={{ color: "pink.200" }}
+                borderColor={"gray.300"}
+                focusBorderColor={"gray.300"} // set focus border color to transparent
+                placeholder={"Try Saree, Kurti, or search by product code"}
+                _placeholder={{ color: "grey.200" }}
                 value={Searchvalue}
                 onChange={(e) => {
                   handleSearchValue(e.target.value);
@@ -110,7 +121,7 @@ export default function Navbar() {
           {/* Download app...Etc */}
 
           <Flex
-            color={colorMode === "light" ? "black" : "white"}
+            color={colorMode === "light" ? "#333" : "#f5f5f5"}
             justifyContent={"space-evenly"}
             alignItems={"center"}
             width={{ base: "100%", sm: "100%", md: "50%", lg: "50%" }}
@@ -123,59 +134,75 @@ export default function Navbar() {
             <Box
               h={"100%"}
               fontSize={"4xl"}
-              borderRight={"1px solid grey"}
+              borderRight={"1px solid #ccc"}
             ></Box>
             <Box cursor={"pointer"}>Become a Supplier</Box>
             <Box
               h={"100%"}
               fontSize={"4xl"}
               fontWeight={100}
-              borderRight={"1px solid grey"}
+              borderRight={"1px solid #ccc"}
             ></Box>
-            <Box
-              textAlign={"center"}
-              cursor={"pointer"}
-              onClick={() => {
-                if (login === "true") {
+            {login === "true" ? (
+              <Box
+                textAlign={"center"}
+                cursor={"pointer"}
+                onClick={() => {
                   navigate("/profile");
                   window.scroll({
                     top: 0,
                     left: 0,
                   });
-                } else {
+                }}
+              >
+                <CgProfile style={{ marginLeft: "12px" }} size="20px" />
+                <Box>Profile</Box>
+              </Box>
+            ) : (
+              <Box
+                textAlign={"center"}
+                cursor={"pointer"}
+                onClick={() => {
                   navigate("/login");
                   window.scroll({
                     top: 0,
                     left: 0,
                   });
-                }
-              }}
-            >
-              <CgProfile style={{ marginLeft: "12px" }} size="20px" />
-              <Box>Profile</Box>
-            </Box>
-            <Box
-              ml={"5px"}
-              cursor={"pointer"}
-              onClick={() => {
-                if (login === "true") {
+                }}
+              >
+                Login
+              </Box>
+            )}
+            {login === "true" ? (
+              <Box
+                ml={"5px"}
+                cursor={"pointer"}
+                onClick={() => {
                   navigate("/cart");
                   window.scroll({
                     top: 0,
                     left: 0,
                   });
-                } else {
-                  navigate("/login");
+                }}
+              >
+                <AiOutlineShoppingCart size="25px" />
+                <Box>Cart</Box>
+              </Box>
+            ) : (
+              <Box
+                textAlign={"center"}
+                cursor={"pointer"}
+                onClick={() => {
+                  navigate("/sign-up");
                   window.scroll({
                     top: 0,
                     left: 0,
                   });
-                }
-              }}
-            >
-              <AiOutlineShoppingCart size="25px" />
-              <Box>Cart</Box>
-            </Box>
+                }}
+              >
+                Signup
+              </Box>
+            )}
             <ColorModeToggle />
           </Flex>
         </Flex>

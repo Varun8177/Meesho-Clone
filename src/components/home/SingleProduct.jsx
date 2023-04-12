@@ -24,6 +24,7 @@ import { TotalContext } from "../../context/TotalContext";
 export default function SingleProduct() {
   const myapi = sessionStorage.getItem("api");
   const [data, setData] = useState([]);
+  const [cartData, setCartData] = useState([]);
   const [load, setLoad] = useState(false);
   const params = useParams();
   const [moreProd, setMoreprod] = useState([]);
@@ -32,11 +33,26 @@ export default function SingleProduct() {
   const login = localStorage.getItem("login");
   const { handleTotalCost } = useContext(TotalContext);
   const navigate = useNavigate();
+
+  function removeTunics(str) {
+    let originalStr = str;
+    let updatedStr = originalStr.replace("&amp; Tunics", "");
+    return updatedStr;
+  }
   const productData = async () => {
     setLoad(true);
     try {
       const product = await axios.get(`${myapi}/${params.user_id}`);
+      let updatedTitle = removeTunics(product.data.title);
+      product.data.title = updatedTitle;
       setData(product.data);
+      axios
+        .get(
+          `https://63ca9c80f36cbbdfc75c5b52.mockapi.io/meesho_users/${id}/cart`
+        )
+        .then((res) => {
+          setCartData(res.data);
+        });
       setLoad(false);
       window.scroll({
         top: 0,
@@ -49,23 +65,75 @@ export default function SingleProduct() {
   const moreProdData = async () => {
     setLoad(true);
     try {
-      const product = await axios.get(`${myapi}?page=3&limit=5`);
-      setMoreprod(product.data);
+      const productRes = await axios.get(`${myapi}/${params.user_id}`);
+      const product = productRes.data;
+
+      const productsRes = await axios.get(`${myapi}?page=3&limit=10`);
+      const availableProducts = productsRes.data.filter(
+        (item) => item.title !== product.title
+      );
+
+      const moreProducts = availableProducts.slice(0, 5);
+      setMoreprod(moreProducts);
       setLoad(false);
     } catch (error) {
       console.log(error);
     }
   };
+
   useEffect(() => {
     productData();
     moreProdData();
   }, [params.user_id]);
 
   function postReq(prod, id) {
-    axios.post(
-      `https://63ca9c80f36cbbdfc75c5b52.mockapi.io/meesho_users/${id}/cart`,
-      prod
-    );
+    axios
+      .get(
+        `https://63ca9c80f36cbbdfc75c5b52.mockapi.io/meesho_users/${id}/cart?title=${prod.title}`
+      )
+      .then((res) => {
+        if (res.data.length === 0) {
+          axios
+            .post(
+              `https://63ca9c80f36cbbdfc75c5b52.mockapi.io/meesho_users/${id}/cart`,
+              prod
+            )
+            .then((res) => {
+              toast({
+                title: "Product added to cart",
+                description: `Check your cart`,
+                status: "success",
+                duration: 3000,
+                isClosable: true,
+              });
+            })
+            .catch((error) => {
+              console.log(error);
+              toast({
+                title: "An error occurred",
+                status: "error",
+                duration: 3000,
+                isClosable: true,
+              });
+            });
+        } else {
+          toast({
+            title: "Already in cart",
+            status: "error",
+            duration: 3000,
+            isClosable: true,
+          });
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        toast({
+          title: "An error occurred",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+      });
   }
 
   return (
@@ -88,9 +156,9 @@ export default function SingleProduct() {
         >
           <Image
             src={data.images}
-            h={["100%", "100%", "460px", "460px"]}
             m={"auto"}
             w={["100%", "100%", "449px", "449px"]}
+            // filter="brightness()"
           />
           <Flex
             justifyContent={"space-between"}
@@ -104,13 +172,6 @@ export default function SingleProduct() {
               onClick={() => {
                 if (login == "true") {
                   postReq(data, id);
-                  toast({
-                    title: "Product added to cart",
-                    description: `Check your cart`,
-                    status: "success",
-                    duration: 3000,
-                    isClosable: true,
-                  });
                 } else {
                   toast({
                     title: "Login to proceed",
@@ -278,10 +339,10 @@ export default function SingleProduct() {
               <Heading fontSize={"xl"}>Product Details</Heading>
             </Box>
             <Stack ml={"17px"} color="rgb(102, 116, 142)">
-              <Text>Name:{data.title}</Text>
-              <Text>price:{data.price}</Text>
-              <Text>fabric:cotton</Text>
-              <Text>Sizes:Xl,L,S</Text>
+              <Text>Name: {data.title}</Text>
+              <Text>price: {data.price}</Text>
+              <Text>fabric: cotton</Text>
+              <Text>Sizes: Xl,L,S</Text>
               <Text>Country of Origin : India</Text>
             </Stack>
           </Box>
