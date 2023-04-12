@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Divider,
   Flex,
   Image,
   Input,
@@ -13,7 +14,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import AdminNavbar from "./AdminNavbar";
 import { AdminSidebar } from "./AdminSidebar";
-
+import { HiPlus } from "react-icons/hi";
 function SingleProd({ images, title, price, handleDelete, id }) {
   return (
     <Box
@@ -31,6 +32,7 @@ function SingleProd({ images, title, price, handleDelete, id }) {
             {title}
           </Text>
           <Text fontSize="md">Price: {price}</Text>
+          <Button variant={"outline"}>Edit</Button>
         </Stack>
         <Button
           onClick={() => {
@@ -88,10 +90,10 @@ function SingleProdSkeleton({ images, title, price, handleDelete, id }) {
 export default function AdminMens() {
   const [data, setData] = useState([]);
   const [load, setLoad] = useState(false);
-  const [page, setpage] = useState(1);
+  // const [page, setpage] = useState(1);
   const [search, setsearch] = useState("");
   const arr = [1, 2, 3];
-  const MensData = async (page) => {
+  const MensData = async () => {
     setLoad(true);
     try {
       const dress = await axios.get(
@@ -106,10 +108,10 @@ export default function AdminMens() {
   const handleDelete = async (id) => {
     setLoad(true);
     try {
-      const dress = await axios
+      axios
         .delete(`https://63c701b54ebaa80285521e6e.mockapi.io/men/${id}`)
         .then((res) => {
-          MensData(page);
+          MensData();
         });
       setLoad(false);
     } catch (error) {
@@ -117,7 +119,7 @@ export default function AdminMens() {
     }
   };
 
-  const MenssearchData = async (page, val) => {
+  const MenssearchData = async (val) => {
     setLoad(true);
     try {
       const dress = await axios.get(
@@ -130,16 +132,9 @@ export default function AdminMens() {
     }
   };
   useEffect(() => {
-    MensData(page);
-  }, [page]);
+    MensData();
+  }, []);
 
-  const handleClick = (val) => {
-    setpage(page + val);
-    window.scroll({
-      top: 0,
-      left: 0,
-    });
-  };
   return (
     <Box bgColor={"#fafafa"}>
       <AdminNavbar />
@@ -155,13 +150,35 @@ export default function AdminMens() {
           p={"15px"}
           border="1px solid #E5E7EB"
         >
-          <Input
-            placeholder="Enter name or id"
-            onChange={(e) => {
-              setsearch(e.target.value);
-              MenssearchData(page, search);
-            }}
-          />
+          <Flex
+            w={"100%"}
+            justifyContent={"space-between"}
+            mb={"10px"}
+            alignItems={"center"}
+          >
+            <Input
+              placeholder="Enter name or id"
+              width={"50%"}
+              onChange={(e) => {
+                setsearch(e.target.value);
+                MenssearchData(search);
+              }}
+            />
+            <Flex
+              alignItems="center"
+              w="150px"
+              justifyContent="space-between"
+              bg="gray.100"
+              p="2"
+              borderRadius="md"
+              cursor="pointer"
+              _hover={{ bg: "gray.200" }}
+            >
+              <Text fontWeight="semibold">Add Product</Text>
+              <HiPlus size={20} />
+            </Flex>
+          </Flex>
+          <Divider />
           {/* Product */}
           {load
             ? arr.map((item) => {

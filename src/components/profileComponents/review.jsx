@@ -2,39 +2,22 @@ import {
   Flex,
   Box,
   Button,
-  VStack,
   FormControl,
   FormLabel,
   Input,
-  InputGroup,
-  InputLeftElement,
   Textarea,
   useToast,
 } from "@chakra-ui/react";
-import { MdOutlineEmail } from "react-icons/md";
-import { BsPerson } from "react-icons/bs";
 import { Sidebar } from "./Sidebar";
-import { Stack, useClipboard, useColorModeValue } from "@chakra-ui/react";
 import React from "react";
 import Navbar from "../home/Navbar";
 import axios from "axios";
 import { useState } from "react";
 
-const confetti = {
-  light: {
-    primary: "4299E1", // blue.400
-    secondary: "BEE3F8", // blue.100
-  },
-
-  dark: {
-    primary: "1A365D", // blue.900
-    secondary: "2A4365", // blue.800
-  },
-};
-
 export function ContactFormWithSocialButtons() {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
+  const [load, setLoad] = useState(false);
   const [message, setmessage] = useState("");
   const toast = useToast();
   const postReview = (e) => {
@@ -42,14 +25,24 @@ export function ContactFormWithSocialButtons() {
     if (email) {
       if (name) {
         if (message) {
-          return axios.post(
-            "https://63cd0ca00f1d5967f028fa8e.mockapi.io/Reviews",
-            {
+          setLoad(true);
+          axios
+            .post("https://63cd0ca00f1d5967f028fa8e.mockapi.io/Reviews", {
               email,
               name,
               message,
-            }
-          );
+            })
+            .then((res) => {
+              toast({
+                title: "Feedback Successfully Delivered",
+                description:
+                  "Your feedback has been sent to the team. Thank you for helping us improve!",
+                status: "success",
+                duration: 3000,
+                isClosable: true,
+              });
+              setLoad(false);
+            });
         }
       }
     }
@@ -107,6 +100,7 @@ export function ContactFormWithSocialButtons() {
             }}
             cursor={"pointer"}
             color={"white"}
+            isLoading={load}
           >
             Submit
           </Button>

@@ -19,17 +19,43 @@ export default function AddItem() {
   const [price, setprice] = useState("");
   const [images, setimage] = useState("");
 
-  const postItem = (title, price, image) => {
-    return axios.post("https://63c701b54ebaa80285521e6e.mockapi.io/men", {
-      title,
-      price,
-      images,
-      rating: "3.0",
-      reviews: "35 reviews",
-    });
+  const postItem = (title, price, images) => {
+    if (title && price && images) {
+      axios
+        .post("https://63c701b54ebaa80285521e6e.mockapi.io/men", {
+          title,
+          price,
+          images,
+          rating: "3.0",
+          reviews: "35 reviews",
+        })
+        .then((res) => {
+          toast({
+            title: "Product Created",
+            status: "success",
+            duration: 3000,
+            isClosable: true,
+          });
+        })
+        .catch((err) => {
+          toast({
+            title: err.message,
+            status: "error",
+            duration: 3000,
+            isClosable: true,
+          });
+        });
+    } else {
+      toast({
+        title: "Fill all details to create a product",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
   };
   return (
-    <Box>
+    <Box bgColor={"#fafafa"}>
       <AdminNavbar />
       <Flex p={"10px"} w={"80%"} m={"auto"}>
         <AdminSidebar />
@@ -41,6 +67,7 @@ export default function AddItem() {
           p={"25px"}
           m={"auto"}
           h={"80vh"}
+          bgColor={"white"}
         >
           {/* contact Input */}
           <Heading fontSize={"lg"} mb={"20px"}>
@@ -103,12 +130,6 @@ export default function AddItem() {
             _hover={{ bg: "rgb(199, 60, 157)" }}
             onClick={() => {
               postItem(title, price, images);
-              toast({
-                title: "Product Created",
-                status: "success",
-                duration: 9000,
-                isClosable: true,
-              });
             }}
           >
             Add Product

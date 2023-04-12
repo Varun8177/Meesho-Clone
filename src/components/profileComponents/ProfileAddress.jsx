@@ -1,11 +1,11 @@
 import {
   Box,
   Flex,
-  Heading,
   Table,
   TableContainer,
   Tbody,
   Td,
+  Th,
   Thead,
   Tr,
 } from "@chakra-ui/react";
@@ -17,7 +17,7 @@ import { Sidebar } from "./Sidebar";
 export default function ProfileAddress() {
   const { address } = useContext(TotalContext);
   return (
-    <Box>
+    <Box h={"100vh"}>
       <Navbar />
       <Box w={"70%"} margin={"auto"}>
         <Flex justifyContent={"space-between"} w={"100%"}>
@@ -29,6 +29,7 @@ export default function ProfileAddress() {
             border={"1px solid rgb(223, 223, 223)"}
             alignItems={"center"}
             pt={"10px"}
+            bgColor={"#FAFAFA"}
           >
             <Box
               w={["100%", "100%", "90%", "90%"]}
@@ -37,12 +38,16 @@ export default function ProfileAddress() {
               overflow="hidden"
               p={"15px"}
               m={"auto"}
-              mt={"30px"}
+              bgColor={"white"}
             >
-              <Heading>Address</Heading>
+              {/* <Heading>Address</Heading> */}
               <TableContainer w={"100%"} m={"auto"}>
                 <Table variant="simple">
-                  <Thead></Thead>
+                  <Thead>
+                    <Tr>
+                      <Th>Address</Th>
+                    </Tr>
+                  </Thead>
                   <Tbody>
                     <Tr>
                       <Td>Name</Td>
