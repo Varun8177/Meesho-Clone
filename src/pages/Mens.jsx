@@ -41,7 +41,6 @@ export default function Mens() {
   const [limitShownm, setLimit] = useState(1);
   const [page, setpage] = useState(CurrentPage(params.get("page")));
   const arr = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
-  const { handleApi } = useContext(ApiContext);
   const MensData = async (page) => {
     setLoad(true);
     try {

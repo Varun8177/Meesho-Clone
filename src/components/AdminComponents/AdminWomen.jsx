@@ -106,7 +106,7 @@ export default function AdminWomen() {
   const handleDelete = async (id) => {
     setLoad(true);
     try {
-      const dress = await axios
+      axios
         .delete(
           `https://63c7f361075b3f3a91d6b179.mockapi.io/women-ethnic/${id}`
         )
@@ -135,13 +135,6 @@ export default function AdminWomen() {
     MensData(page);
   }, [page]);
 
-  const handleClick = (val) => {
-    setpage(page + val);
-    window.scroll({
-      top: 0,
-      left: 0,
-    });
-  };
   return (
     <Box bgColor={"#fafafa"}>
       <AdminNavbar />

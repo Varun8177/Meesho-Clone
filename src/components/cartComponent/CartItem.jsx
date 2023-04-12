@@ -19,6 +19,7 @@ export default function CartItem({
     k = k.join("");
     k = Number(k);
     HandleTotal(k, value);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [qty]);
   const userId = localStorage.getItem("id");
   const handleQuantity = (val) => {

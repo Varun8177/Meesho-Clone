@@ -1,9 +1,7 @@
 import {
   Box,
-  Button,
   Divider,
   Flex,
-  Heading,
   IconButton,
   Skeleton,
   Stack,
