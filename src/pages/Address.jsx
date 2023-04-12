@@ -18,6 +18,7 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
 import Navbar from "../components/home/Navbar";
+import { FaMagic } from "react-icons/fa";
 
 const initialState = {
   name: "",
@@ -88,6 +89,8 @@ const reducer = (state, action) => {
 };
 
 export default function Address() {
+  const [error, setError] = useState("");
+  const [location, setLocation] = useState(null);
   const navigate = useNavigate();
   const [state, dispatch] = useReducer(reducer, initialState);
   const { handleAddress } = useContext(TotalContext);
@@ -103,6 +106,43 @@ export default function Address() {
         setData(res.data);
       });
   }
+
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          // Get the latitude and longitude from the geolocation API
+          const { latitude, longitude } = position.coords;
+
+          // Call an API to get the city name using the latitude and longitude
+          fetch(
+            `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latitude}&lon=${longitude}`
+          )
+            .then((response) => response.json())
+            .then((data) => {
+              if (data) {
+                // Set the state name
+                console.log("location", data);
+                setLocation(data);
+              } else {
+                setError("State not found");
+              }
+            })
+            .catch((error) => {
+              console.error(error);
+              setError("Error occurred while fetching data");
+            });
+        },
+        (error) => {
+          console.error(error);
+          setError("Error occurred while getting current position");
+        }
+      );
+    } else {
+      setError("Geolocation is not supported by this browser.");
+    }
+  }, []);
+
   useEffect(() => {
     getReq(id);
   }, [id]);
@@ -160,8 +200,41 @@ export default function Address() {
             {/* Address input */}
 
             <Heading fontSize={"lg"} mb={"20px"}>
-              <LinkIcon /> Address
+              <Flex>
+                <Box>
+                  <LinkIcon /> Address
+                </Box>
+                <Button
+                  ml={"auto"}
+                  size="sm"
+                  leftIcon={<FaMagic />}
+                  variant="outline"
+                  _hover={{
+                    borderColor: "grey.500",
+                    color: "black",
+                  }}
+                  onClick={() => {
+                    console.log("countru", location.address.country);
+                    dispatch({
+                      type: "country",
+                      payload: location.address.country,
+                    });
+                    dispatch({
+                      type: "pincode",
+                      payload: location.address.postcode,
+                    });
+                    dispatch({
+                      type: "city",
+                      payload: location.address.county,
+                    });
+                    dispatch({ type: "area", payload: location.display_name });
+                  }}
+                >
+                  Autofill
+                </Button>
+              </Flex>
             </Heading>
+
             <FormControl isRequired>
               <Input
                 type="text"
@@ -171,6 +244,7 @@ export default function Address() {
                 borderRight={"0"}
                 borderLeft={"0"}
                 borderRadius={"0"}
+                value={state.house}
                 onChange={(e) =>
                   dispatch({ type: "house", payload: e.target.value })
                 }
@@ -185,6 +259,7 @@ export default function Address() {
                 borderRight={"0"}
                 borderLeft={"0"}
                 borderRadius={"0"}
+                value={state.area}
                 onChange={(e) =>
                   dispatch({ type: "area", payload: e.target.value })
                 }
@@ -199,6 +274,7 @@ export default function Address() {
                 borderRight={"0"}
                 borderLeft={"0"}
                 borderRadius={"0"}
+                value={state.pincode}
                 onChange={(e) =>
                   dispatch({ type: "pincode", payload: e.target.value })
                 }
@@ -215,6 +291,7 @@ export default function Address() {
                   borderRight={"0"}
                   borderLeft={"0"}
                   borderRadius={"0"}
+                  value={state.city}
                   onChange={(e) =>
                     dispatch({ type: "city", payload: e.target.value })
                   }
@@ -230,6 +307,7 @@ export default function Address() {
                   borderRight={"0"}
                   borderLeft={"0"}
                   borderRadius={"0"}
+                  value={state.country}
                   onChange={(e) =>
                     dispatch({ type: "country", payload: e.target.value })
                   }

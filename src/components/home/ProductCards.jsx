@@ -4,6 +4,12 @@ import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { ApiContext } from "../../context/ApiContext";
 
+function removeTunics(str) {
+  let originalStr = str;
+  let updatedStr = originalStr.replace("&amp; Tunics", "");
+  return updatedStr;
+}
+
 export default function ProductCards({
   images,
   title,

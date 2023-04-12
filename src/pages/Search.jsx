@@ -47,7 +47,27 @@ export default function Search() {
       const kids = await axios.get(
         `https://63c701b54ebaa80285521e6e.mockapi.io/kids?page=${page}&limit=15&search=${Searchvalue}`
       );
-      setData([...dress.data, ...dress2.data, ...kids.data]);
+      const dressData = dress.data.map((item) => {
+        return {
+          ...item,
+          category: "men",
+        };
+      });
+
+      const dress2Data = dress2.data.map((item) => {
+        return {
+          ...item,
+          category: "women",
+        };
+      });
+
+      const kidsData = kids.data.map((item) => {
+        return {
+          ...item,
+          category: "kids",
+        };
+      });
+      setData([...dressData, ...dress2Data, ...kidsData]);
       setLoad(false);
     } catch (error) {
       console.log(error);
@@ -108,9 +128,17 @@ export default function Search() {
                     return (
                       <ProductCards
                         {...item}
-                        api={"https://63c701b54ebaa80285521e6e.mockapi.io/men"}
+                        api={
+                          item.category === "men"
+                            ? "https://63c701b54ebaa80285521e6e.mockapi.io/men"
+                            : item.category === "women"
+                            ? "https://63c7f361075b3f3a91d6b179.mockapi.io/women-ethnic"
+                            : item.category === "kids"
+                            ? "https://63c701b54ebaa80285521e6e.mockapi.io/kids"
+                            : null
+                        }
                         key={i}
-                        endpoint={"kids"}
+                        endpoint={"men"}
                       />
                     );
                   })}

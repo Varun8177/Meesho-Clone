@@ -38,23 +38,23 @@ export function OrderItems({ title, images, price }) {
       mt={"30px"}
       bgColor={"white"}
     >
-      {/* Product */}
-      <Flex>
+      <Flex align="center">
         <Image src={images} w={"100px"} />
-        <Flex w={"100%"} justifyContent={"space-between"}>
-          <Stack ml={"17px"} color="rgb(102, 116, 142)">
-            <Text>Title:{title}</Text>
-            <Text>Size</Text>
-            <Text>price :{price}</Text>
-            <Text>Estimated Time : {time} days</Text>
-            <Text>
-              Unique Code : {code}{" "}
-              <Box as="span" fontSize={"sm"}>
-                (Verify yourself with this code during delevery)
-              </Box>
-            </Text>
-          </Stack>
-        </Flex>
+        <Stack ml={"17px"} color="gray.600">
+          <Text fontSize={"lg"} fontWeight={"bold"}>
+            {title}
+          </Text>
+          <Text fontSize={"lg"} fontWeight={"bold"}>
+            {price}
+          </Text>
+          <Text fontSize={"md"}>{time} days estimated delivery time</Text>
+          <Text fontSize={"md"}>
+            Unique Code: {code}{" "}
+            <Box as="span" fontSize={"sm"}>
+              (Verify during delivery)
+            </Box>
+          </Text>
+        </Stack>
       </Flex>
     </Box>
   );
@@ -74,9 +74,11 @@ export default function Orders() {
             w={"67%"}
             border={"1px solid rgb(223, 223, 223)"}
             alignItems={"center"}
-            bgColor={"pink.200"}
+            bgColor={"#F1F1F1"}
             pt={"20px"}
             pb={"20px"}
+            overflow={"scroll"}
+            h={"80vh"}
           >
             {orders.length === 0 ? (
               <Box>

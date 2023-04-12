@@ -127,7 +127,7 @@ export default function Login() {
                 } else {
                   localStorage.setItem("login", true);
                   setTimeout(() => {
-                    user.length === 1
+                    user.length >= 1
                       ? toast(
                           {
                             title: "OTP sent on your mobile number",
@@ -158,7 +158,7 @@ export default function Login() {
               Send OTP
             </Button>
             <Text m={"auto"}>
-              Don't have a account yet? signup
+              Don't have an account yet? Signup
               <Link
                 style={{ color: "blue", marginLeft: "5px" }}
                 to={"/sign-up"}
@@ -167,12 +167,14 @@ export default function Login() {
               </Link>
             </Text>
             <Text m={"auto"}>
+              If you're an admin, click
               <Link
-                style={{ color: "blue", marginLeft: "5px" }}
+                style={{ color: "blue", marginLeft: "5px", marginRight: "5px" }}
                 to={"/admin-login"}
               >
-                Admins Here
+                here
               </Link>
+              to login.
             </Text>
           </Stack>
         </Box>

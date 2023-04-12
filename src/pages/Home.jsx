@@ -26,17 +26,6 @@ import ProductCards from "../components/home/ProductCards";
 import LoadingScreen from "../components/home/LoadingScreen";
 import Navbar from "../components/home/Navbar";
 
-// const CurrentPage = (val = 1) => {
-//   let pageNumber = Number(val);
-//   if (typeof pageNumber !== "number") {
-//     pageNumber = 1;
-//   }
-//   if (pageNumber <= 0) {
-//     pageNumber = 1;
-//   }
-//   return pageNumber;
-// };
-
 export default function Home() {
   const navigate = useNavigate();
   const [sort, setSort] = useState("Price");
@@ -44,6 +33,7 @@ export default function Home() {
   const [load, setLoad] = useState(false);
   const [limitShownm, setLimit] = useState(1);
   const arr = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
+
   const MensData = async (page) => {
     setLoad(true);
     try {
@@ -56,7 +46,36 @@ export default function Home() {
       const kids = await axios.get(
         `https://63c701b54ebaa80285521e6e.mockapi.io/kids?page=2&limit=12`
       );
-      setData([...dress.data, ...dress2.data, ...kids.data]);
+
+      const dressData = dress.data.map((item) => {
+        return {
+          ...item,
+          category: "men",
+        };
+      });
+
+      const dress2Data = dress2.data.map((item) => {
+        return {
+          ...item,
+          category: "women",
+        };
+      });
+
+      const kidsData = kids.data.map((item) => {
+        return {
+          ...item,
+          category: "kids",
+        };
+      });
+
+      const newArray = [...dressData, ...dress2Data, ...kidsData];
+
+      for (let i = newArray.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+      }
+
+      setData(newArray);
       setLoad(false);
     } catch (error) {
       console.log(error);
@@ -66,32 +85,19 @@ export default function Home() {
     MensData();
   }, []);
 
-  // const handleClick = (val, limit) => {
-  //   setpage(page + val);
-  //   setLimit(limitShownm + limit);
-  // window.scroll({
-  //   top: 0,
-  //   left: 0,
-  // });
-  // };
-
   const HandleSort = async (val) => {
-    setLoad(true);
-    try {
-      const dress = await axios.get(
-        `https://63c701b54ebaa80285521e6e.mockapi.io/men?page=2&limit=12&sortBy=price&order=${val}`
-      );
-      const dress2 = await axios.get(
-        `https://63c7f361075b3f3a91d6b179.mockapi.io/women-ethnic?page=2&limit=12&sortBy=price&order=${val}`
-      );
-      const kids = await axios.get(
-        `https://63c701b54ebaa80285521e6e.mockapi.io/kids?page=2&limit=12&sortBy=price&order=${val}`
-      );
-      setData([...dress.data, ...dress2.data, ...kids.data]);
-      setLoad(false);
-    } catch (error) {
-      console.log(error);
-    }
+    const sortedData = [...data].sort((a, b) => {
+      const priceA = parseInt(a.price.replace(/[^0-9]/g, ""));
+      const priceB = parseInt(b.price.replace(/[^0-9]/g, ""));
+
+      if (val === "asc") {
+        return priceA - priceB;
+      } else {
+        return priceB - priceA;
+      }
+    });
+
+    setData(sortedData);
   };
 
   return (
@@ -204,46 +210,81 @@ export default function Home() {
           direction={["column", "column", "row"]}
         >
           {/* sort here */}
-          <Box
-            cursor={"pointer"}
-            h={"fit-content"}
-            border={"1px solid rgb(240, 240, 240)"}
-            p={"5px 10px 5px 10px"}
-            mb={"20px"}
-            pos={{ base: "none", sm: "none", md: "sticky", lg: "sticky" }}
-            top={{ base: "none", sm: "none", md: "150", lg: "130" }}
-          >
-            <Accordion allowMultiple w={"316px"}>
-              <AccordionItem border={"0"}>
-                <h2>
-                  <AccordionButton>
-                    <Box as="span" flex="1" textAlign="left" fontSize={"xl"}>
-                      Sort by :{sort}
-                    </Box>
-                    <AccordionIcon />
-                  </AccordionButton>
-                </h2>
-                <AccordionPanel pb={4}>
-                  <Text
-                    onClick={() => {
-                      HandleSort("asc");
-                      setSort("Low to High");
-                    }}
-                  >
-                    Low to High
-                  </Text>
-                  <hr />
-                  <Text
-                    onClick={() => {
-                      HandleSort("desc");
-                      setSort("High to Low");
-                    }}
-                  >
-                    High to Low
-                  </Text>
-                </AccordionPanel>
-              </AccordionItem>
-            </Accordion>
+          <Box>
+            <Box
+              pos={{ base: "sticky", sm: "sticky", md: "sticky", lg: "sticky" }}
+              top={{ base: "0", sm: "0", md: "150", lg: "130" }}
+            >
+              <Box
+                border={"1px solid rgb(240, 240, 240)"}
+                p={"5px 10px 5px 10px"}
+                mb={"20px"}
+                borderRadius={"8px"}
+                h={"fit-content"}
+              >
+                <Accordion allowMultiple w={"316px"}>
+                  <AccordionItem border={"0"}>
+                    <h2>
+                      <AccordionButton
+                        _hover={{
+                          background: "transparent",
+                          color: "#718096",
+                        }}
+                        _focus={{
+                          outline: "none",
+                          boxShadow: "none",
+                        }}
+                        _expanded={{
+                          background: "transparent",
+                          color: "#718096",
+                        }}
+                      >
+                        <Box
+                          as="span"
+                          flex="1"
+                          textAlign="left"
+                          fontSize={"xl"}
+                        >
+                          Sort by : {sort}
+                        </Box>
+                        <AccordionIcon />
+                      </AccordionButton>
+                    </h2>
+                    <AccordionPanel pb={4}>
+                      <Text
+                        onClick={() => {
+                          HandleSort("asc");
+                          setSort("Low to High");
+                        }}
+                        p={"5"}
+                        _hover={{
+                          cursor: "pointer",
+                          background: "#F7FAFC",
+                          color: "#718096",
+                        }}
+                      >
+                        Low to High
+                      </Text>
+                      <hr />
+                      <Text
+                        onClick={() => {
+                          HandleSort("desc");
+                          setSort("High to Low");
+                        }}
+                        p={5}
+                        _hover={{
+                          cursor: "pointer",
+                          background: "#F7FAFC",
+                          color: "#718096",
+                        }}
+                      >
+                        High to Low
+                      </Text>
+                    </AccordionPanel>
+                  </AccordionItem>
+                </Accordion>
+              </Box>
+            </Box>
           </Box>
 
           {/* Products rendering */}
@@ -266,7 +307,15 @@ export default function Home() {
                     return (
                       <ProductCards
                         {...item}
-                        api={"https://63c701b54ebaa80285521e6e.mockapi.io/men"}
+                        api={
+                          item.category === "men"
+                            ? "https://63c701b54ebaa80285521e6e.mockapi.io/men"
+                            : item.category === "women"
+                            ? "https://63c7f361075b3f3a91d6b179.mockapi.io/women-ethnic"
+                            : item.category === "kids"
+                            ? "https://63c701b54ebaa80285521e6e.mockapi.io/kids"
+                            : null
+                        }
                         key={i}
                         endpoint={"men"}
                       />

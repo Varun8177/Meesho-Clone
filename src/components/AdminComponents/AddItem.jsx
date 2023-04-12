@@ -40,6 +40,7 @@ export default function AddItem() {
           overflow="hidden"
           p={"25px"}
           m={"auto"}
+          h={"80vh"}
         >
           {/* contact Input */}
           <Heading fontSize={"lg"} mb={"20px"}>
