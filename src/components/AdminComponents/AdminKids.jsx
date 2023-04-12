@@ -88,36 +88,9 @@ function SingleProdSkeleton({ images, title, price, handleDelete, id }) {
 export default function AdminKids() {
   const [data, setData] = useState([]);
   const [load, setLoad] = useState(false);
-  const [page, setpage] = useState(1);
   const [search, setsearch] = useState("");
   const arr = [1, 2, 3];
-  const MensData = async (page) => {
-    setLoad(true);
-    try {
-      const dress = await axios.get(
-        `https://63c701b54ebaa80285521e6e.mockapi.io/kids?page=${page}&limit=3`
-      );
-      setData(dress.data);
-      setLoad(false);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const handleDelete = async (id) => {
-    setLoad(true);
-    try {
-      const dress = await axios
-        .delete(`https://63c701b54ebaa80285521e6e.mockapi.io/kids/${id}`)
-        .then((res) => {
-          MensData(page);
-        });
-      setLoad(false);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const MenssearchData = async (page, val) => {
+  const MensData = async () => {
     setLoad(true);
     try {
       const dress = await axios.get(
@@ -129,17 +102,36 @@ export default function AdminKids() {
       console.log(error);
     }
   };
-  useEffect(() => {
-    MensData(page);
-  }, [page]);
-
-  const handleClick = (val) => {
-    setpage(page + val);
-    window.scroll({
-      top: 0,
-      left: 0,
-    });
+  const handleDelete = async (id) => {
+    setLoad(true);
+    try {
+      axios
+        .delete(`https://63c701b54ebaa80285521e6e.mockapi.io/kids/${id}`)
+        .then((res) => {
+          MensData();
+        });
+      setLoad(false);
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  const MenssearchData = async (val) => {
+    setLoad(true);
+    try {
+      const dress = await axios.get(
+        `https://63c701b54ebaa80285521e6e.mockapi.io/kids?search=${val}`
+      );
+      setData(dress.data);
+      setLoad(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    MensData();
+  }, []);
+
   return (
     <Box bgColor={"#fafafa"}>
       <AdminNavbar />
@@ -159,7 +151,7 @@ export default function AdminKids() {
             placeholder="Enter name or id"
             onChange={(e) => {
               setsearch(e.target.value);
-              MenssearchData(page, search);
+              MenssearchData(search);
             }}
           />
           {/* Product */}
