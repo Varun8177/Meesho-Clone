@@ -17,12 +17,12 @@ Visit the live website [here](https://shoperz-co.netlify.app/) and start shoppin
 
 ## Key Features
 
-- Responsive design
 - User authentication and authorization
 - Search and filter functionality
 - Add to cart and checkout process
 - Product reviews and ratings
 - Order history and status tracking
+- Admin Dashboard to perform CRUD Operations. Please use the code ```8177836651``` to access the dashboard.
 
 ## Installation and Usage
 
@@ -82,6 +82,7 @@ This project was completed as part of the Unit 4 Construct Week at Masai School.
 
 ## Author
 
-Insert your name and contact information here.
+Varun Ergurala
+
 
 
