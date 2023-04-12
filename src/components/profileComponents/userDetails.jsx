@@ -1,14 +1,10 @@
+/* eslint-disable no-unused-vars */
 import { useEffect } from "react";
 import axios from "axios";
 import {
-  Avatar,
   Box,
   Button,
-  IconButton,
   Image,
-  Input,
-  InputGroup,
-  InputLeftElement,
   Stack,
   Table,
   TableContainer,
@@ -21,8 +17,6 @@ import { useState } from "react";
 import { useContext } from "react";
 import { ApiContext } from "../../context/ApiContext";
 import { useNavigate } from "react-router-dom";
-import { FaCamera } from "react-icons/fa";
-import { FaFile } from "react-icons/fa";
 
 export default function UserInitialDetails({ handleUserDetails }) {
   const { email } = useContext(ApiContext);
@@ -59,7 +53,13 @@ export default function UserInitialDetails({ handleUserDetails }) {
           <Input type="file" onChange={handleImageChange} />
         </InputGroup> */}
       </Stack>
-      <TableContainer w={"70%"} m={"auto"}>
+      <TableContainer
+        w="90%"
+        m="auto"
+        boxShadow={"base"}
+        alignSelf={"baseline"}
+        p={"1rem"}
+      >
         <Table variant="simple">
           <Thead></Thead>
           <Tbody>

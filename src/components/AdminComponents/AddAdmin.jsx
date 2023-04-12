@@ -5,7 +5,6 @@ import {
   FormControl,
   Heading,
   Input,
-  Select,
   useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
@@ -16,7 +15,6 @@ import { AdminSidebar } from "./AdminSidebar";
 export default function AddAdmin() {
   //   const navigate = useNavigate();
   const toast = useToast();
-  //   const [state, dispatch] = useReducer(reducer, initialState);
   const [name, setname] = useState("");
   const [email, setemail] = useState("");
   const [mobile, setmobile] = useState("");
@@ -29,7 +27,7 @@ export default function AddAdmin() {
     });
   };
   return (
-    <Box>
+    <Box bgColor={"#fafafa"}>
       <AdminNavbar />
       <Flex p={"10px"} w={"80%"} m={"auto"}>
         <AdminSidebar />
@@ -42,6 +40,7 @@ export default function AddAdmin() {
           m={"auto"}
           h={"80vh"}
           alignItems={"center"}
+          bgColor={"white"}
         >
           {/* contact Input */}
           <Heading fontSize={"lg"} mb={"20px"}>

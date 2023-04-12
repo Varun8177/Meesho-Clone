@@ -1,12 +1,12 @@
 import {
   Box,
   Button,
-  Heading,
   Stack,
   Table,
   TableContainer,
   Tbody,
   Td,
+  Th,
   Thead,
   Tr,
 } from "@chakra-ui/react";
@@ -15,12 +15,16 @@ import { useNavigate } from "react-router-dom";
 export function Sidebar() {
   const navigate = useNavigate();
   return (
-    <Box alignItems={"center"} h={"600px"}>
+    <Box alignItems={"center"} pb={"5"}>
       <Stack direction={["column", "row"]} spacing={6}></Stack>
       <TableContainer w={"90%"} m={"auto"}>
         <Table variant="simple">
           <Thead>
-            <Heading mb={"50px"}>User Dashboard</Heading>
+            <Tr>
+              <Th textAlign="center" fontWeight="bold">
+                Dashboard
+              </Th>
+            </Tr>
           </Thead>
           <Tbody>
             <Tr>
@@ -28,14 +32,16 @@ export function Sidebar() {
                 onClick={() => {
                   navigate("/profile");
                 }}
-                cursor={"pointer"}
+                cursor="pointer"
+                _hover={{ bgColor: "#F3F4F6" }}
               >
                 Profile
               </Td>
             </Tr>
             <Tr>
               <Td
-                cursor={"pointer"}
+                cursor="pointer"
+                _hover={{ bgColor: "#F3F4F6" }}
                 onClick={() => {
                   navigate("/profile/user-orders");
                 }}
@@ -45,7 +51,8 @@ export function Sidebar() {
             </Tr>
             <Tr>
               <Td
-                cursor={"pointer"}
+                cursor="pointer"
+                _hover={{ bgColor: "#F3F4F6" }}
                 onClick={() => {
                   navigate("/profile/address");
                 }}
@@ -54,17 +61,22 @@ export function Sidebar() {
               </Td>
             </Tr>
             <Tr>
-              <Td cursor={"pointer"}>Terms & Conditions</Td>
+              <Td cursor="pointer" _hover={{ bgColor: "#F3F4F6" }}>
+                Terms & Conditions
+              </Td>
             </Tr>
             <Tr>
-              <Td cursor={"pointer"}>Help Center</Td>
+              <Td cursor="pointer" _hover={{ bgColor: "#F3F4F6" }}>
+                Help Center
+              </Td>
             </Tr>
             <Tr>
               <Td
                 onClick={() => {
                   navigate("/profile/review");
                 }}
-                cursor={"pointer"}
+                cursor="pointer"
+                _hover={{ bgColor: "#F3F4F6" }}
               >
                 Reviews & feedback
               </Td>

@@ -1,16 +1,4 @@
-import {
-  Box,
-  Button,
-  Heading,
-  Stack,
-  Table,
-  TableContainer,
-  Tbody,
-  Td,
-  Th,
-  Thead,
-  Tr,
-} from "@chakra-ui/react";
+import { Box, Button, Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 
 export function AdminSidebar() {
