@@ -74,6 +74,7 @@ export default function Cart() {
     getReq();
     let x = localStorage.getItem("size");
     setSize(x);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
