@@ -1,13 +1,13 @@
 // import { Box } from "@chakra-ui/react";
 // import Navbar from "../components/home/Navbar";
 
-import { Box, Flex, Image, Heading } from "@chakra-ui/react";
+import { Box, Flex, Image, Heading, Show } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import Homepage_banner from "../components/images/Homepage_banner.png";
-import women_category from "../components/images/women_category.png";
-import background_banner from "../components/images/background_banner.png";
-import kids_banner from "../components/images/kids_banner.png";
-import mens_banner from "../components/images/mens_banner.png";
+import women_category from "../components/images/women_category.jpg";
+import background_banner2 from "../components/images/background_banner2.jpg";
+import kids_banner from "../components/images/kids_banner.jpg";
+import mens_banner from "../components/images/mens_banner.jpg";
 import register_banner from "../components/images/register_banner.png";
 import {
   Stack,
@@ -105,86 +105,102 @@ export default function Home() {
     <Box>
       <Navbar />
       <Image m={"auto"} src={Homepage_banner} mb={"20px"} w={"1220px"} />
-      <Heading
-        fontSize="3xl"
-        margin={"auto"}
-        w={"fit-content"}
-        mb={"20px"}
-        _before={{
-          content: `""`,
-          width: "20%",
-          height: "1px",
-          background: "#000",
-          position: "absolute",
-          left: 200,
-          top: 569,
-        }}
-        _after={{
-          content: `""`,
-          display: "block",
-          width: "20%",
-          height: "1px",
-          background: "#000",
-          right: 200,
-          top: 569,
-          position: "absolute",
-        }}
-      >
-        Top Categories to choose from
-      </Heading>
+      <Show above="lg">
+        <Heading
+          fontSize="3xl"
+          margin={"auto"}
+          w={"fit-content"}
+          mb={"20px"}
+          _before={{
+            content: `""`,
+            width: "20%",
+            height: "1px",
+            background: "#000",
+            position: "absolute",
+            left: "50%",
+            transform: "translateX(-50%)",
+            top: "100%",
+          }}
+          _after={{
+            content: `""`,
+            display: "block",
+            width: "20%",
+            height: "1px",
+            background: "#000",
+            position: "absolute",
+            left: "50%",
+            transform: "translateX(-50%)",
+            top: "100%",
+          }}
+        >
+          Top Categories to choose from
+        </Heading>
+      </Show>
+      <Show below="lg">
+        <Heading fontSize="xl" margin={"auto"} w={"fit-content"} mb={"20px"}>
+          Top Categories to choose from
+        </Heading>
+      </Show>
+      {/* <Show above="lg"> */}
       <Flex
         mb={"30px"}
-        w={{ base: "100%", md: "80%" }}
-        p={{ base: "20px", md: "50px" }}
+        w={{ base: "100%", md: "100%", lg: "100%", xl: "80%" }}
         m={"auto"}
-        bgImage={background_banner}
-        bgSize="cover"
-        justifyContent={{ base: "center", md: "space-evenly" }}
-        alignItems={{ base: "center", md: "flex-start" }}
-        flexDirection={{ base: "column", md: "row" }}
+        bgImage={{
+          base: background_banner2,
+          xl: "https://images.meesho.com/images/marketing/1678691670429.jpg",
+        }}
+        overflow={"hidden"}
+        alignItems={"baseline"}
+        pt={"5"}
+        pb={"5"}
       >
         <Image
           onClick={() => navigate("/women-ethnic")}
-          h={{ base: "300px", md: "500px" }}
-          w={{ base: "100%", md: "auto" }}
+          h={{
+            base: "100px",
+            sm: "150px",
+            md: "200px",
+            lg: "300px",
+            xl: "400px",
+          }}
+          w={{ base: "50%", md: "50%", lg: "50%" }}
           src={women_category}
           mb={{ base: "20px", md: "0" }}
           objectFit={"contain"}
         />
-        <Flex
-          direction={"column"}
-          alignItems={{ base: "center", md: "flex-start" }}
-          textAlign={{ base: "center", md: "left" }}
-          w={{ base: "100%", md: "auto" }}
-          ml={{ base: "0", md: "50px" }}
-          mt={{ base: "20px", md: "0" }}
-        >
-          <Heading
-            fontSize={{ base: "4xl", md: "6xl" }}
-            mb={{ base: "10px", md: "20px" }}
-          >
-            Fashion Store
-          </Heading>
-          <Flex
-            justifyContent={{ base: "center", md: "space-evenly" }}
-            w={{ base: "100%", md: "800px" }}
-          >
-            <Image
-              onClick={() => navigate("/men")}
-              h={{ base: "200px", md: "400px" }}
-              src={mens_banner}
-              mb={{ base: "20px", md: "0" }}
-              objectFit={"contain"}
-            />
-            <Image
-              onClick={() => navigate("/kids")}
-              h={{ base: "200px", md: "400px" }}
-              src={kids_banner}
-              objectFit={"contain"}
-            />
-          </Flex>
-        </Flex>
+
+        <Image
+          onClick={() => navigate("/men")}
+          h={{
+            base: "100px",
+            sm: "150px",
+            md: "200px",
+            lg: "300px",
+            xl: "250px",
+          }}
+          w={{ base: "50%", md: "50%", lg: "50%" }}
+          src={mens_banner}
+          mb={{ base: "20px", md: "0" }}
+          objectFit={"contain"}
+        />
+        <Image
+          onClick={() => navigate("/kids")}
+          h={{
+            base: "100px",
+            sm: "150px",
+            md: "200px",
+            lg: "300px",
+            xl: "250px",
+          }}
+          w={{ base: "50%", md: "50%", lg: "50%" }}
+          src={kids_banner}
+          mb={{ base: "20px", md: "0" }}
+          objectFit={"contain"}
+        />
       </Flex>
+      {/* </Show> */}
+      <Show below="lg"></Show>
 
       <Image
         m={"auto"}
@@ -208,12 +224,18 @@ export default function Home() {
 
         <Flex
           mt={{ base: "50px", sm: "50px", md: "20px" }}
-          direction={["column", "column", "row"]}
+          p={0}
+          direction={["column", "column", "column", "row"]}
         >
           {/* sort here */}
           <Box>
             <Box
-              pos={{ base: "sticky", sm: "sticky", md: "sticky", lg: "sticky" }}
+              pos={{
+                base: "initial",
+                sm: "sticky",
+                md: "sticky",
+                lg: "sticky",
+              }}
               top={{ base: "0", sm: "0", md: "150", lg: "130" }}
             >
               <Box
@@ -223,7 +245,14 @@ export default function Home() {
                 borderRadius={"8px"}
                 h={"fit-content"}
               >
-                <Accordion allowMultiple w={"316px"}>
+                <Accordion
+                  allowMultiple
+                  w={{
+                    base: "auto",
+                    md: "316px",
+                  }}
+                  m={{ md: 0, base: "auto" }}
+                >
                   <AccordionItem border={"0"}>
                     <h2>
                       <AccordionButton
@@ -290,15 +319,16 @@ export default function Home() {
 
           {/* Products rendering */}
 
-          <Box ml={"20px"}>
+          <Box>
             <Grid
               templateColumns={{
-                base: "repeat(1,220px)",
-                sm: "repeat(2,220px)",
-                md: "repeat(3,220px)",
-                lg: "repeat(4,220px)",
+                base: "repeat(2, 1fr)",
+                sm: "repeat(2, 1fr)",
+                md: "repeat(3, 1fr)",
+                lg: "repeat(3, 1fr)",
+                xl: "repeat(4, 1fr)",
               }}
-              gap={"20px"}
+              gap={{ base: "15px", md: "20px" }}
             >
               {load
                 ? arr.map(() => {

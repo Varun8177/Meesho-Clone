@@ -1,4 +1,4 @@
-import { Box, Image, Badge } from "@chakra-ui/react";
+import { Box, Image, Badge, Show } from "@chakra-ui/react";
 import { StarIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
@@ -19,7 +19,6 @@ export default function ProductCards({
 
   return (
     <Box
-      maxW="sm"
       borderWidth="1px"
       borderRadius="lg"
       overflow="hidden"
@@ -30,20 +29,38 @@ export default function ProductCards({
         navigate(`/single-prod/${id}`);
       }}
     >
-      <Image src={images} alt={id} height={"232px"} margin={"auto"} />
+      <Image
+        src={images}
+        alt={id}
+        height={{ base: "150px", md: "232px" }}
+        margin={"auto"}
+        objectFit={"cover"}
+      />
 
-      <Box p="6">
-        <Box
-          mt="1"
-          fontWeight="semibold"
-          as="h4"
-          lineHeight="tight"
-          noOfLines={1}
-        >
-          {title}
-        </Box>
-
-        <Box fontSize="xl">
+      <Box p={{ base: "2", md: "6" }}>
+        <Show above="md">
+          <Box
+            mt="1"
+            fontWeight="semibold"
+            as={"h4"}
+            lineHeight="tight"
+            noOfLines={1}
+          >
+            {title}
+          </Box>
+        </Show>
+        <Show below="sm">
+          <Box
+            mt="1"
+            fontWeight="semibold"
+            as={"p"}
+            lineHeight="tight"
+            noOfLines={1}
+          >
+            {title}
+          </Box>
+        </Show>
+        <Box fontSize={{ base: "sm", md: "xl" }}>
           {price}
           <Box as="span" color="gray.600" fontSize="sm">
             /onwards
