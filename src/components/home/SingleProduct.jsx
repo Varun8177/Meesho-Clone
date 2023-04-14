@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   Box,
   Button,
@@ -24,7 +25,9 @@ import { TotalContext } from "../../context/TotalContext";
 export default function SingleProduct() {
   const myapi = sessionStorage.getItem("api");
   const [data, setData] = useState([]);
+  // eslint-disable-next-line no-unused-vars
   const [cartData, setCartData] = useState([]);
+  const [buttonLoad, setButtonLoad] = useState(false);
   const [load, setLoad] = useState(false);
   const params = useParams();
   const [moreProd, setMoreprod] = useState([]);
@@ -87,6 +90,7 @@ export default function SingleProduct() {
   }, [params.user_id]);
 
   function postReq(prod, id) {
+    setButtonLoad(true);
     axios
       .get(
         `https://63ca9c80f36cbbdfc75c5b52.mockapi.io/meesho_users/${id}/cart?title=${prod.title}`
@@ -106,6 +110,7 @@ export default function SingleProduct() {
                 duration: 3000,
                 isClosable: true,
               });
+              setButtonLoad(false);
             })
             .catch((error) => {
               console.log(error);
@@ -115,6 +120,7 @@ export default function SingleProduct() {
                 duration: 3000,
                 isClosable: true,
               });
+              setButtonLoad(false);
             });
         } else {
           toast({
@@ -123,6 +129,7 @@ export default function SingleProduct() {
             duration: 3000,
             isClosable: true,
           });
+          setButtonLoad(false);
         }
       })
       .catch((error) => {
@@ -133,6 +140,7 @@ export default function SingleProduct() {
           duration: 3000,
           isClosable: true,
         });
+        setButtonLoad(false);
       });
   }
 
@@ -168,9 +176,10 @@ export default function SingleProduct() {
           >
             <Button
               borderRadius={"5px"}
+              isLoading={buttonLoad}
               w={"202px"}
               onClick={() => {
-                if (login == "true") {
+                if (login === "true") {
                   postReq(data, id);
                 } else {
                   toast({
@@ -190,7 +199,7 @@ export default function SingleProduct() {
               bgColor={"rgb(244, 51, 151)"}
               color={"white"}
               onClick={() => {
-                if (login == "true") {
+                if (login === "true") {
                   handleTotalCost(data.price);
                   navigate("/address");
                 } else {

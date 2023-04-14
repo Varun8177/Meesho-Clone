@@ -27,17 +27,17 @@ export default function Cart() {
     return updatedStr;
   }
 
-  function deleteCartItem(id, itemId, qty, price) {
+  function deleteCartItem(id, itemId) {
     axios
       .delete(
         `https://63ca9c80f36cbbdfc75c5b52.mockapi.io/meesho_users/${id}/cart/${itemId}`
       )
       .then((res) => {
-        getReq(id);
+        getReq();
       });
   }
 
-  function getReq(id) {
+  function getReq() {
     setLoad(true);
     axios
       .get(
@@ -46,15 +46,18 @@ export default function Cart() {
       .then((res) => {
         const updatedData = res.data.map((item) => {
           let updatedTitle = removeTunics(item.title);
-          console.log(item.title, updatedTitle);
           return {
             ...item,
             title: updatedTitle,
           };
         });
-
-        console.log(updatedData);
         setData(updatedData);
+        let total = updatedData.reduce((acc, item) => {
+          const priceWithoutCurrencySymbol = item.price.trim().substring(1);
+          const priceValue = Number(priceWithoutCurrencySymbol);
+          return (acc += priceValue);
+        }, 0);
+        setTotal(total);
         setLoad(false);
       });
   }
@@ -68,10 +71,10 @@ export default function Cart() {
     }
   };
   useEffect(() => {
-    getReq(id);
+    getReq();
     let x = localStorage.getItem("size");
     setSize(x);
-  }, [id]);
+  }, []);
 
   return (
     <Box>

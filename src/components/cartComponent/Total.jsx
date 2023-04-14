@@ -11,7 +11,7 @@ export default function Total({ total, data }) {
   const navigate = useNavigate();
   useEffect(() => {
     handleTotalCost(total);
-  }, [total]);
+  }, [total, handleTotalCost]);
   return (
     <Box
       w={["100%", "100%", "300px", "300px"]}
@@ -33,12 +33,14 @@ export default function Total({ total, data }) {
 
           <Heading fontSize={"xl"}>Order Total :{total} INR </Heading>
           <Button
+            isDisabled={data.length === 0}
             borderRadius={"5px"}
             width={"100%"}
+            _hover={"rgb(255, 0, 0)"}
             bgColor={"rgb(244, 51, 151)"}
             color={"white"}
             onClick={() => {
-              if (login == "true") {
+              if (login === "true") {
                 handleOrders(data);
                 navigate("/address");
               } else {
@@ -49,7 +51,7 @@ export default function Total({ total, data }) {
             <Box as="span" marginRight={"10px"}>
               <ArrowForwardIcon />
             </Box>
-            {login == "true" ? "Checkout" : "Login"}
+            {login === "true" ? "Checkout" : "Login"}
           </Button>
           <Image src="https://images.meesho.com/images/marketing/1588578650850.webp" />
         </Stack>

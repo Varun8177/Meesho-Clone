@@ -31,6 +31,7 @@ export default function Home() {
   const [sort, setSort] = useState("Price");
   const [data, setData] = useState([]);
   const [load, setLoad] = useState(false);
+  // eslint-disable-next-line no-unused-vars
   const [limitShownm, setLimit] = useState(1);
   const arr = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
 

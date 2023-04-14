@@ -79,6 +79,7 @@ export default function WomenWestern() {
 
   useEffect(() => {
     WomenWesternData(page);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 
   useEffect(() => {
