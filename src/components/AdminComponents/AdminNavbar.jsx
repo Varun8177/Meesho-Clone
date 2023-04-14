@@ -1,18 +1,5 @@
-import {
-  Box,
-  Button,
-  Flex,
-  Image,
-  Input,
-  InputGroup,
-  InputLeftElement,
-  useColorMode,
-} from "@chakra-ui/react";
-import { ImMobile } from "react-icons/im";
-import { CgProfile } from "react-icons/cg";
-import { AiOutlineShoppingCart } from "react-icons/ai";
+import { Box, Button, Flex, Image, useColorMode } from "@chakra-ui/react";
 import shoperzLogo from "../images/shoperzLogo.png";
-import { SearchIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
 import { BsSun, BsMoonStarsFill } from "react-icons/bs";
 import { useContext } from "react";
@@ -36,7 +23,6 @@ export default function AdminNavbar() {
   const navigate = useNavigate();
   const { handleSearchValue } = useContext(SearchContext);
   const { colorMode } = useColorMode();
-  const login = localStorage.getItem("login");
   return (
     <Box
       borderWidth={"1px"}

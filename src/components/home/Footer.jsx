@@ -121,15 +121,16 @@ export default function Footer() {
                 }}
                 aria-label="Subscribe"
                 icon={<BiMailSend />}
-                onClick={() =>
+                onClick={() => {
+                  toast.closeAll();
                   toast({
                     title: "Succesfully Subscribed",
                     description: "You will start getting notifications from us",
                     status: "success",
-                    duration: 9000,
+                    duration: 2000,
                     isClosable: true,
-                  })
-                }
+                  });
+                }}
               />
             </Stack>
           </Stack>

@@ -9,7 +9,7 @@ export default function ApiContextProvider({ children }) {
   const [category, setEndpoint] = useState("");
   const [email, setEmail] = useState("NA");
   const params = useParams();
-  console.log("params", params);
+  console.log("params", params, "category", category);
 
   const handleApi = (val, endpoint) => {
     setApi(val);

@@ -7,6 +7,7 @@ import {
   Skeleton,
   Stack,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useEffect } from "react";
@@ -14,7 +15,7 @@ import { useState } from "react";
 import AdminNavbar from "./AdminNavbar";
 import { AdminSidebar } from "./AdminSidebar";
 
-function SingleProd({ images, title, price, handleDelete, id }) {
+function SingleProd({ images, title, price, HandleDelete, id }) {
   return (
     <Box
       w={"100%"}
@@ -34,7 +35,7 @@ function SingleProd({ images, title, price, handleDelete, id }) {
         </Stack>
         <Button
           onClick={() => {
-            handleDelete(id);
+            HandleDelete(id);
           }}
           size="sm"
           variant="outline"
@@ -47,7 +48,7 @@ function SingleProd({ images, title, price, handleDelete, id }) {
   );
 }
 
-function SingleProdSkeleton({ images, title, price, handleDelete, id }) {
+function SingleProdSkeleton({ images, title, price, HandleDelete, id }) {
   return (
     <Skeleton
       w={["100%", "100%", "750px", "750px"]}
@@ -73,7 +74,7 @@ function SingleProdSkeleton({ images, title, price, handleDelete, id }) {
           <Stack>
             <Button
               onClick={() => {
-                handleDelete(id);
+                HandleDelete(id);
               }}
             >
               X
@@ -88,10 +89,9 @@ function SingleProdSkeleton({ images, title, price, handleDelete, id }) {
 export default function AdminWomen() {
   const [data, setData] = useState([]);
   const [load, setLoad] = useState(false);
-  const [page, setpage] = useState(1);
   const [search, setsearch] = useState("");
   const arr = [1, 2, 3];
-  const MensData = async (page) => {
+  const MensData = async () => {
     setLoad(true);
     try {
       const dress = await axios.get(
@@ -103,27 +103,38 @@ export default function AdminWomen() {
       console.log(error);
     }
   };
-  const handleDelete = async (id) => {
+  const HandleDelete = (id) => {
+    const toast = useToast();
     setLoad(true);
-    try {
-      const dress = await axios
-        .delete(
-          `https://63c7f361075b3f3a91d6b179.mockapi.io/women-ethnic/${id}`
-        )
-        .then((res) => {
-          MensData(page);
+    axios
+      .delete(`https://63c7f361075b3f3a91d6b179.mockapi.io/women-ethnic/${id}`)
+      .then((res) => {
+        MensData();
+        toast.closeAll();
+        toast({
+          title: "Product Has been successfully deleted",
+          status: "success",
+          duration: 3000,
+          isClosable: true,
         });
-      setLoad(false);
-    } catch (error) {
-      console.log(error);
-    }
+      })
+      .catch((err) => {
+        toast.closeAll();
+        toast({
+          title: err.message,
+          status: "errpr",
+          duration: 2000,
+          isClosable: true,
+        });
+      });
+    setLoad(false);
   };
 
-  const MenssearchData = async (page, val) => {
+  const MenssearchData = async (val) => {
     setLoad(true);
     try {
       const dress = await axios.get(
-        `https://63c7f361075b3f3a91d6b179.mockapi.io/women-ethnic?page=${page}&limit=3&search=${val}`
+        `https://63c7f361075b3f3a91d6b179.mockapi.io/women-ethnic?search=${val}`
       );
       setData(dress.data);
       setLoad(false);
@@ -132,16 +143,9 @@ export default function AdminWomen() {
     }
   };
   useEffect(() => {
-    MensData(page);
-  }, [page]);
+    MensData();
+  }, []);
 
-  const handleClick = (val) => {
-    setpage(page + val);
-    window.scroll({
-      top: 0,
-      left: 0,
-    });
-  };
   return (
     <Box bgColor={"#fafafa"}>
       <AdminNavbar />
@@ -160,7 +164,7 @@ export default function AdminWomen() {
             placeholder="Enter name or id"
             onChange={(e) => {
               setsearch(e.target.value);
-              MenssearchData(page, search);
+              MenssearchData(search);
             }}
           />
           {/* Product */}
@@ -169,7 +173,7 @@ export default function AdminWomen() {
                 return <SingleProdSkeleton {...item} />;
               })
             : data.map((item) => {
-                return <SingleProd {...item} handleDelete={handleDelete} />;
+                return <SingleProd {...item} HandleDelete={HandleDelete} />;
               })}
         </Box>
       </Flex>

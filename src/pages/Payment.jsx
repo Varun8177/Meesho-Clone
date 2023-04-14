@@ -5,7 +5,6 @@ import {
   Flex,
   Heading,
   Input,
-  Stack,
   Text,
   useToast,
 } from "@chakra-ui/react";
@@ -153,6 +152,7 @@ export default function Payment() {
                 py="2"
                 borderRadius="md"
                 onClick={() => {
+                  // eslint-disable-next-line eqeqeq
                   if (value == check) {
                     toast({
                       title: "Successfully Purchased",

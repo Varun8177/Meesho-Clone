@@ -52,7 +52,7 @@ export default function AdminLogin() {
               src="https://images.meesho.com/images/marketing/1661417516766.webp"
             />
           </Stack>
-          {/* MObile Number */}
+          {/* Mobile Number */}
           <Stack mt={"20px"} h={"308px"} p={"20px"}>
             <Heading fontSize={"2xl"}>Admin Login</Heading>
             <Text
@@ -102,7 +102,7 @@ export default function AdminLogin() {
               _hover={{ bg: "rgb(199, 60, 157)" }}
               onClick={() => {
                 localStorage.setItem("login", true);
-                user.length === 1
+                user.length >= 1
                   ? toast(
                       {
                         title: "Welcome to Admin's Dashboard",

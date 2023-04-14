@@ -36,6 +36,7 @@ export function Timer({ handleTimer }) {
       handleTimer();
     };
     return clear;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <Box>
@@ -113,6 +114,7 @@ export default function OTP() {
               _hover={{ bg: "rgb(199, 60, 157)" }}
               onClick={() => {
                 if (otpNumber === otp) {
+                  toast.closeAll();
                   toast({
                     title: "Account Created Successfully",
                     description: `Welcome to shoperz`,
@@ -121,9 +123,10 @@ export default function OTP() {
                     isClosable: true,
                     position: "top",
                   });
-                  setOtpNumber([]);
+                  setOtpNumber("");
                   navigate("/");
                 } else {
+                  toast.closeAll();
                   toast({
                     title: "Wrong OTP ",
                     description: `Please enter correct otp to proceed`,
@@ -131,7 +134,7 @@ export default function OTP() {
                     duration: 5000,
                     isClosable: true,
                   });
-                  setOtpNumber([]);
+                  setOtpNumber("");
                 }
               }}
             >

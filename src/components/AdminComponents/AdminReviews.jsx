@@ -1,9 +1,7 @@
 import {
   Box,
-  Button,
   Divider,
   Flex,
-  Heading,
   IconButton,
   Skeleton,
   Stack,
@@ -21,9 +19,10 @@ import { AdminSidebar } from "./AdminSidebar";
 import { CloseIcon } from "@chakra-ui/icons";
 
 export function SingleReview({ name, email, message }) {
+  const [resolved, setResolved] = useState(false);
   return (
     <Flex
-      bgColor="pink.200"
+      bgColor={resolved ? "gray.100" : "pink.200"}
       justifyContent="space-between"
       w={["100%", "100%", "60%", "60%"]}
       borderWidth="1px"
@@ -57,8 +56,9 @@ export function SingleReview({ name, email, message }) {
           color="gray.600"
           cursor={"pointer"}
           textTransform="uppercase"
+          onClick={() => setResolved(!resolved)}
         >
-          Resolved
+          {resolved ? "Resolved" : "Pending"}
         </Text>
       </Stack>
     </Flex>

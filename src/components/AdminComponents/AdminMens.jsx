@@ -8,6 +8,7 @@ import {
   Skeleton,
   Stack,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useEffect } from "react";
@@ -15,7 +16,7 @@ import { useState } from "react";
 import AdminNavbar from "./AdminNavbar";
 import { AdminSidebar } from "./AdminSidebar";
 import { HiPlus } from "react-icons/hi";
-function SingleProd({ images, title, price, handleDelete, id }) {
+function SingleProd({ images, title, price, HandleDelete, id }) {
   return (
     <Box
       w={"100%"}
@@ -36,7 +37,7 @@ function SingleProd({ images, title, price, handleDelete, id }) {
         </Stack>
         <Button
           onClick={() => {
-            handleDelete(id);
+            HandleDelete(id);
           }}
           size="sm"
           variant="outline"
@@ -49,7 +50,7 @@ function SingleProd({ images, title, price, handleDelete, id }) {
   );
 }
 
-function SingleProdSkeleton({ images, title, price, handleDelete, id }) {
+function SingleProdSkeleton({ images, title, price, HandleDelete, id }) {
   return (
     <Skeleton
       w={"100%"}
@@ -75,7 +76,7 @@ function SingleProdSkeleton({ images, title, price, handleDelete, id }) {
           <Stack>
             <Button
               onClick={() => {
-                handleDelete(id);
+                HandleDelete(id);
               }}
             >
               X
@@ -105,18 +106,31 @@ export default function AdminMens() {
       console.log(error);
     }
   };
-  const handleDelete = async (id) => {
+  const HandleDelete = async (id) => {
+    const toast = useToast();
     setLoad(true);
-    try {
-      axios
-        .delete(`https://63c701b54ebaa80285521e6e.mockapi.io/men/${id}`)
-        .then((res) => {
-          MensData();
+    axios
+      .delete(`https://63c701b54ebaa80285521e6e.mockapi.io/men/${id}`)
+      .then((res) => {
+        MensData();
+        toast.closeAll();
+        toast({
+          title: "Product has been successfully deleted",
+          status: "success",
+          duration: 2000,
+          isClosable: true,
         });
-      setLoad(false);
-    } catch (error) {
-      console.log(error);
-    }
+      })
+      .catch((err) => {
+        toast.closeAll();
+        toast({
+          title: err.message,
+          status: "errpr",
+          duration: 2000,
+          isClosable: true,
+        });
+      });
+    setLoad(false);
   };
 
   const MenssearchData = async (val) => {
@@ -185,7 +199,7 @@ export default function AdminMens() {
                 return <SingleProdSkeleton {...item} />;
               })
             : data.map((item) => {
-                return <SingleProd {...item} handleDelete={handleDelete} />;
+                return <SingleProd {...item} HandleDelete={HandleDelete} />;
               })}
         </Box>
       </Flex>

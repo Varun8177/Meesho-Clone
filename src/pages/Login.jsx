@@ -12,7 +12,6 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useState } from "react";
-import { useEffect } from "react";
 import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../components/home/Navbar";
@@ -25,7 +24,6 @@ export default function Login() {
   const otp = Math.random().toString().substr(2, 6);
   const [user, setUser] = useState([]);
   const [mobile, setMobile] = useState("");
-  const [verified, setVerified] = useState(false);
 
   function verifyUsers(mobile) {
     axios

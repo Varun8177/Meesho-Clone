@@ -89,7 +89,6 @@ const reducer = (state, action) => {
 };
 
 export default function Address() {
-  const [error, setError] = useState("");
   const [location, setLocation] = useState(null);
   const navigate = useNavigate();
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -125,21 +124,18 @@ export default function Address() {
                 console.log("location", data);
                 setLocation(data);
               } else {
-                setError("State not found");
+                console.error("not found");
               }
             })
             .catch((error) => {
               console.error(error);
-              setError("Error occurred while fetching data");
             });
         },
         (error) => {
           console.error(error);
-          setError("Error occurred while getting current position");
         }
       );
     } else {
-      setError("Geolocation is not supported by this browser.");
     }
   }, []);
 

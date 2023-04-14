@@ -13,13 +13,12 @@ import {
   Button,
   Divider,
 } from "@chakra-ui/react";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { useEffect } from "react";
 import ProductCards from "../components/home/ProductCards";
 import LoadingScreen from "../components/home/LoadingScreen";
 import { useSearchParams } from "react-router-dom";
-import { ApiContext } from "../context/ApiContext";
 import Navbar from "../components/home/Navbar";
 
 const CurrentPage = (val = 1) => {
@@ -41,7 +40,6 @@ export default function Mens() {
   const [limitShownm, setLimit] = useState(1);
   const [page, setpage] = useState(CurrentPage(params.get("page")));
   const arr = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
-  const { handleApi } = useContext(ApiContext);
   const MensData = async (page) => {
     setLoad(true);
     try {

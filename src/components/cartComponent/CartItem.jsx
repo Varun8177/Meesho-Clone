@@ -1,6 +1,5 @@
 import { Box, Button, Flex, Image, Stack, Text } from "@chakra-ui/react";
 import { useState } from "react";
-import { useEffect } from "react";
 
 export default function CartItem({
   title,
@@ -12,22 +11,18 @@ export default function CartItem({
   size,
 }) {
   const [qty, setQuantity] = useState(1);
-  const [value, setvalue] = useState(1);
-  useEffect(() => {
-    let k = price.trim().split("");
-    k.shift();
-    k = k.join("");
-    k = Number(k);
-    HandleTotal(k, value);
-  }, [qty]);
   const userId = localStorage.getItem("id");
   const handleQuantity = (val) => {
     if (val === 1) {
       setQuantity(qty + val);
-      setvalue(1);
+      const priceWithoutCurrencySymbol = price.trim().substring(1);
+      const priceValue = Number(priceWithoutCurrencySymbol);
+      HandleTotal(priceValue, 1);
     } else {
       setQuantity(qty + val);
-      setvalue(-1);
+      const priceWithoutCurrencySymbol = price.trim().substring(1);
+      const priceValue = Number(priceWithoutCurrencySymbol);
+      HandleTotal(priceValue, -1);
     }
   };
   return (
@@ -63,6 +58,7 @@ export default function CartItem({
               size="sm"
               onClick={() => handleQuantity(1)}
               variant="outline"
+              isDisabled={qty === 7}
             >
               +
             </Button>
