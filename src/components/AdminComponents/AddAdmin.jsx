@@ -20,11 +20,73 @@ export default function AddAdmin() {
   const [mobile, setmobile] = useState("");
 
   const postItem = (name, email, mobile) => {
-    return axios.post("https://63cd0ca00f1d5967f028fa8e.mockapi.io/admin", {
-      name,
-      email,
-      mobile,
-    });
+    toast.closeAll();
+    const nameRegex = /^[a-zA-Z\s]*$/;
+    const emailRegex = /\S+@\S+\.\S+/;
+    if (name && email && mobile) {
+      if (name && nameRegex.test(name.trim())) {
+        if (email && emailRegex.test(email.trim())) {
+          if (mobile.length === 10) {
+            axios
+              .post("https://63cd0ca00f1d5967f028fa8e.mockapi.io/admin", {
+                name,
+                email,
+                mobile,
+              })
+              .then((res) => {
+                toast.closeAll();
+                toast({
+                  title: "Admin Has been successfully created",
+                  status: "success",
+                  duration: 3000,
+                  isClosable: true,
+                });
+              })
+              .catch((err) => {
+                toast.closeAll();
+                toast({
+                  title: err.message,
+                  status: "error",
+                  duration: 3000,
+                  isClosable: true,
+                });
+              });
+          } else {
+            toast.closeAll();
+            toast({
+              title: "Invalid mobile number",
+              status: "error",
+              duration: 3000,
+              isClosable: true,
+            });
+          }
+        } else {
+          toast.closeAll();
+          toast({
+            title: "Invalid email address",
+            status: "error",
+            duration: 3000,
+            isClosable: true,
+          });
+        }
+      } else {
+        toast.closeAll();
+        toast({
+          title: "Invalid name",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+      }
+    } else {
+      toast.closeAll();
+      toast({
+        title: "Please provide all the required information",
+        status: "error",
+        duration: 2000,
+        isClosable: true,
+      });
+    }
   };
   return (
     <Box bgColor={"#fafafa"}>
@@ -93,12 +155,6 @@ export default function AddAdmin() {
             _hover={{ bg: "rgb(199, 60, 157)" }}
             onClick={() => {
               postItem(name, email, mobile);
-              toast({
-                title: "Added as Admin",
-                status: "success",
-                duration: 3000,
-                isClosable: true,
-              });
             }}
           >
             Add as Admin

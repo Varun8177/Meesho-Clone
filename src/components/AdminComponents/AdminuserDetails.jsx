@@ -141,6 +141,7 @@ export default function AdminuserDetails() {
       );
       if (dress) {
         UsersData();
+        toast.closeAll();
         toast({
           title: "User Deleted Successfully",
           status: "success",
@@ -150,7 +151,13 @@ export default function AdminuserDetails() {
       }
       setLoad(false);
     } catch (error) {
-      console.log(error);
+      toast.closeAll();
+      toast({
+        title: error.message,
+        status: "errpr",
+        duration: 2000,
+        isClosable: true,
+      });
     }
   };
 

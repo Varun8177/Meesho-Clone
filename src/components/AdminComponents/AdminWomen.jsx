@@ -7,6 +7,7 @@ import {
   Skeleton,
   Stack,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useEffect } from "react";
@@ -14,7 +15,7 @@ import { useState } from "react";
 import AdminNavbar from "./AdminNavbar";
 import { AdminSidebar } from "./AdminSidebar";
 
-function SingleProd({ images, title, price, handleDelete, id }) {
+function SingleProd({ images, title, price, HandleDelete, id }) {
   return (
     <Box
       w={"100%"}
@@ -34,7 +35,7 @@ function SingleProd({ images, title, price, handleDelete, id }) {
         </Stack>
         <Button
           onClick={() => {
-            handleDelete(id);
+            HandleDelete(id);
           }}
           size="sm"
           variant="outline"
@@ -47,7 +48,7 @@ function SingleProd({ images, title, price, handleDelete, id }) {
   );
 }
 
-function SingleProdSkeleton({ images, title, price, handleDelete, id }) {
+function SingleProdSkeleton({ images, title, price, HandleDelete, id }) {
   return (
     <Skeleton
       w={["100%", "100%", "750px", "750px"]}
@@ -73,7 +74,7 @@ function SingleProdSkeleton({ images, title, price, handleDelete, id }) {
           <Stack>
             <Button
               onClick={() => {
-                handleDelete(id);
+                HandleDelete(id);
               }}
             >
               X
@@ -102,15 +103,29 @@ export default function AdminWomen() {
       console.log(error);
     }
   };
-  const handleDelete = (id) => {
+  const HandleDelete = (id) => {
+    const toast = useToast();
     setLoad(true);
     axios
       .delete(`https://63c7f361075b3f3a91d6b179.mockapi.io/women-ethnic/${id}`)
       .then((res) => {
         MensData();
+        toast.closeAll();
+        toast({
+          title: "Product Has been successfully deleted",
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+        });
       })
       .catch((err) => {
-        console.log(err);
+        toast.closeAll();
+        toast({
+          title: err.message,
+          status: "errpr",
+          duration: 2000,
+          isClosable: true,
+        });
       });
     setLoad(false);
   };
@@ -158,7 +173,7 @@ export default function AdminWomen() {
                 return <SingleProdSkeleton {...item} />;
               })
             : data.map((item) => {
-                return <SingleProd {...item} handleDelete={handleDelete} />;
+                return <SingleProd {...item} HandleDelete={HandleDelete} />;
               })}
         </Box>
       </Flex>
