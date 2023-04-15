@@ -15,6 +15,10 @@ import {
   InputLeftElement,
   Show,
   Stack,
+  Table,
+  Th,
+  Thead,
+  Tr,
   useColorMode,
   useDisclosure,
 } from "@chakra-ui/react";
@@ -82,7 +86,7 @@ export default function Navbar() {
       icon: <GiShoppingBag />,
     },
     { path: "/electronics", title: "Electronics", icon: <FaTv /> },
-    // { path: "/sign-up", title: "Sign-up", icon: <AddIcon /> },
+
     // { path: "/login", title: "Login", icon: <LockIcon /> },
   ];
   const profileLink = {
@@ -95,6 +99,9 @@ export default function Navbar() {
     title: "Cart",
     icon: <AiOutlineShoppingCart />,
   };
+
+  const signUpLink = { path: "/sign-up", title: "Sign-up" }; //icon: < />
+  const loginLink = { path: "/login", title: "Login" }; //icon: <LockIcon />
   const btnRef = useRef();
   return (
     <Box
@@ -126,7 +133,7 @@ export default function Navbar() {
             align={"center"}
           >
             <Show below="lg">
-              <Flex align="center">
+              <Flex align="center" justifyContent={"space-around"}>
                 <Button
                   ref={btnRef}
                   bgColor="white"
@@ -148,7 +155,12 @@ export default function Navbar() {
                   <DrawerOverlay />
                   <DrawerContent h={"100vh"} overflowY={"auto"}>
                     <DrawerCloseButton _hover={{ bg: "gray.200" }} />
-                    <DrawerHeader borderBottomWidth="1px">
+                    <DrawerHeader
+                      borderBottomWidth="1px"
+                      display="flex"
+                      alignItems="center"
+                      justifyContent="center"
+                    >
                       <Image
                         src={shoperzLogo}
                         alt="logo"
@@ -165,54 +177,188 @@ export default function Navbar() {
                         cursor={"pointer"}
                       />
                     </DrawerHeader>
-                    <DrawerBody p={"0"}>
+
+                    <DrawerBody p={"0"} pb={"5"} mt="auto" textAlign="center">
+                      <Table
+                        variant="simple"
+                        pos={"sticky"}
+                        top={"0"}
+                        bgcolor="white"
+                        zIndex={"3"}
+                        mb={"10px"}
+                      >
+                        <Thead>
+                          <Tr>
+                            <Th textAlign="center" fontWeight="bold">
+                              User Details
+                            </Th>
+                          </Tr>
+                        </Thead>
+                      </Table>
                       {login === "true" ? (
-                        <Stack>
-                          <Button
-                            key={profileLink.path}
-                            variant="ghost"
-                            href={profileLink.path}
-                            fontSize="md"
-                            fontWeight="normal"
-                            _hover={{ bg: "gray.200" }}
-                            _focus={{ bg: "gray.200" }}
-                            textAlign={"left"}
-                            w={"fit-content"}
-                            leftIcon={profileLink.icon}
-                            onClick={() => {
-                              navigate(profileLink.path);
-                            }}
+                        <>
+                          <Flex
+                            justifyContent={"space-between"}
+                            w={"80%"}
+                            m={"auto"}
+                            mb={"10px"}
+                            p={"1rem"}
                           >
-                            {profileLink.title}
-                          </Button>
-                          <Button
-                            key={cartLink.path}
-                            variant="ghost"
-                            href={cartLink.path}
-                            fontSize="md"
-                            fontWeight="normal"
-                            _hover={{ bg: "gray.200" }}
-                            _focus={{ bg: "gray.200" }}
-                            textAlign={"left"}
-                            w={"fit-content"}
-                            leftIcon={cartLink.icon}
-                            onClick={() => {
-                              navigate(cartLink.path);
-                            }}
+                            <Button
+                              key={profileLink.path}
+                              variant="outline"
+                              colorScheme="gray"
+                              href={profileLink.path}
+                              fontSize="md"
+                              w={"45%"}
+                              fontWeight="normal"
+                              _hover={{ bg: "gray.200" }}
+                              _focus={{ bg: "gray.200" }}
+                              textAlign={"left"}
+                              leftIcon={profileLink.icon}
+                              onClick={() => {
+                                navigate(profileLink.path);
+                              }}
+                            >
+                              {profileLink.title}
+                            </Button>
+                            <Button
+                              key={cartLink.path}
+                              variant="outline"
+                              colorScheme="gray"
+                              fontSize="md"
+                              fontWeight="normal"
+                              _hover={{ bg: "gray.200" }}
+                              _focus={{ bg: "gray.200" }}
+                              textAlign={"left"}
+                              w={"45%"}
+                              leftIcon={cartLink.icon}
+                              onClick={() => {
+                                navigate(cartLink.path);
+                              }}
+                            >
+                              {cartLink.title}
+                            </Button>
+                          </Flex>
+
+                          <Flex
+                            justifyContent={"space-between"}
+                            w={"80%"}
+                            m={"auto"}
+                            mb={"10px"}
+                            p={"1rem"}
                           >
-                            {cartLink.title}
-                          </Button>
-                        </Stack>
-                      ) : null}
+                            <Button
+                              key={"/feedback"}
+                              variant="outline"
+                              colorScheme="gray"
+                              fontSize="md"
+                              w={"45%"}
+                              fontWeight="normal"
+                              _hover={{ bg: "gray.200" }}
+                              _focus={{ bg: "gray.200" }}
+                              textAlign={"left"}
+                              leftIcon={profileLink.icon}
+                              onClick={() => {
+                                navigate(profileLink.path);
+                              }}
+                            >
+                              Feedback
+                            </Button>
+                            <Button
+                              key={"/orders"}
+                              variant="outline"
+                              colorScheme="gray"
+                              fontSize="md"
+                              fontWeight="normal"
+                              _hover={{ bg: "gray.200" }}
+                              _focus={{ bg: "gray.200" }}
+                              textAlign={"left"}
+                              w={"45%"}
+                              leftIcon={cartLink.icon}
+                              onClick={() => {
+                                navigate(cartLink.path);
+                              }}
+                            >
+                              Orders
+                            </Button>
+                          </Flex>
+                        </>
+                      ) : (
+                        <>
+                          <Flex
+                            justifyContent={"space-between"}
+                            w={"80%"}
+                            m={"auto"}
+                            mb={"10px"}
+                            p={"1rem"}
+                          >
+                            <Button
+                              key={signUpLink.path}
+                              variant="outline"
+                              colorScheme="gray"
+                              fontSize="md"
+                              w={"45%"}
+                              fontWeight="normal"
+                              _hover={{ bg: "gray.200" }}
+                              _focus={{ bg: "gray.200" }}
+                              textAlign={"left"}
+                              leftIcon={signUpLink.icon}
+                              onClick={() => {
+                                navigate(signUpLink.path);
+                              }}
+                            >
+                              {signUpLink.title}
+                            </Button>
+                            <Button
+                              key={loginLink.path}
+                              variant="outline"
+                              colorScheme="gray"
+                              fontSize="md"
+                              fontWeight="normal"
+                              _hover={{ bg: "gray.200" }}
+                              _focus={{ bg: "gray.200" }}
+                              textAlign={"left"}
+                              w={"45%"}
+                              leftIcon={loginLink.icon}
+                              onClick={() => {
+                                navigate(loginLink.path);
+                              }}
+                            >
+                              {loginLink.title}
+                            </Button>
+                          </Flex>
+                        </>
+                      )}
                       <Divider />
-                      <Stack spacing={2} textAlign="left">
+                      <Table
+                        variant="simple"
+                        pos={"sticky"}
+                        top={"0"}
+                        bgcolor="white"
+                        zIndex={"3"}
+                      >
+                        <Thead>
+                          <Tr>
+                            <Th textAlign="center" fontWeight="bold">
+                              Categories
+                            </Th>
+                          </Tr>
+                        </Thead>
+                      </Table>
+                      <Stack spacing={10} textAlign="left">
                         {links.map((link) => (
-                          <Box _hover={{ bg: "gray.200" }} w={"100%"}>
+                          <Box
+                            _hover={{ bg: "gray.200" }}
+                            w={"100%"}
+                            cursor={"pointer"}
+                          >
                             <Button
                               key={link.path}
                               variant="ghost"
                               fontSize="md"
                               fontWeight="normal"
+                              _hover={{ bgColor: "none" }}
                               textAlign="left"
                               w={"fit-content"}
                               leftIcon={link.icon}
@@ -225,28 +371,54 @@ export default function Navbar() {
                           </Box>
                         ))}
                       </Stack>
+                      {login === "true" ? (
+                        <Button
+                          w={"80%"}
+                          m={"auto"}
+                          bgColor={"pink.400"}
+                          _hover={{
+                            bg: "pink.500",
+                          }}
+                          cursor={"pointer"}
+                          color={"white"}
+                          onClick={() => {
+                            localStorage.setItem("login", false);
+                            navigate("/");
+                          }}
+                          alignSelf="end"
+                          mt={"20px"}
+                        >
+                          Logout
+                        </Button>
+                      ) : null}
                     </DrawerBody>
                   </DrawerContent>
                 </Drawer>
               </Flex>
             </Show>
-            <Image
-              src={shoperzLogo}
-              alt="logo"
-              height={"50px"}
-              w={"136px"}
-              mt={"10px"}
-              onClick={() => {
-                window.scroll({
-                  top: 0,
-                  left: 0,
-                });
-                handleSearchValue("");
-                navigate("/");
-              }}
-              cursor={"pointer"}
-            />
-            <InputGroup ml={{ base: "0", md: "2%" }} alignItems={"center"}>
+            <Show above="sm">
+              <Image
+                src={shoperzLogo}
+                alt="logo"
+                height={"50px"}
+                w={"136px"}
+                mt={"10px"}
+                onClick={() => {
+                  window.scroll({
+                    top: 0,
+                    left: 0,
+                  });
+                  handleSearchValue("");
+                  navigate("/");
+                }}
+                cursor={"pointer"}
+              />
+            </Show>
+            <InputGroup
+              ml={{ base: "0", md: "2%" }}
+              mt={{ base: "5px", md: "0" }}
+              alignItems={"center"}
+            >
               <InputLeftElement
                 pointerEvents="none"
                 children={

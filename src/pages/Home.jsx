@@ -331,8 +331,8 @@ export default function Home() {
               gap={{ base: "15px", md: "20px" }}
             >
               {load
-                ? arr.map(() => {
-                    return <LoadingScreen />;
+                ? arr.map((item, i) => {
+                    return <LoadingScreen key={i} />;
                   })
                 : data.map((item, i) => {
                     return (
