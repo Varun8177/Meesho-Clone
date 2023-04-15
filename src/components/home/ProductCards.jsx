@@ -1,4 +1,4 @@
-import { Box, Image, Badge, Show } from "@chakra-ui/react";
+import { Box, Image, Badge } from "@chakra-ui/react";
 import { StarIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
@@ -34,32 +34,20 @@ export default function ProductCards({
         alt={id}
         height={{ base: "150px", md: "232px" }}
         margin={"auto"}
-        objectFit={"cover"}
+        objectFit={"contain"}
       />
 
       <Box p={{ base: "2", md: "6" }}>
-        <Show above="md">
-          <Box
-            mt="1"
-            fontWeight="semibold"
-            as={"h4"}
-            lineHeight="tight"
-            noOfLines={1}
-          >
-            {title}
-          </Box>
-        </Show>
-        <Show below="sm">
-          <Box
-            mt="1"
-            fontWeight="semibold"
-            as={"p"}
-            lineHeight="tight"
-            noOfLines={1}
-          >
-            {title}
-          </Box>
-        </Show>
+        <Box
+          mt="1"
+          fontWeight="semibold"
+          as={"h4"}
+          lineHeight="tight"
+          noOfLines={1}
+        >
+          {title}
+        </Box>
+
         <Box fontSize={{ base: "sm", md: "xl" }}>
           {price}
           <Box as="span" color="gray.600" fontSize="sm">

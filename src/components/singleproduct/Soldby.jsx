@@ -13,12 +13,13 @@ export default function Soldby() {
   return (
     <Box
       border={"1px solid rgb(223, 223, 223)"}
-      w={["100%", "100%", "500px", "500px"]}
+      w={{ base: "100%", md: "400px", lg: "500px", xl: "500px" }}
       borderWidth="1px"
       borderRadius="lg"
       overflow="hidden"
       mt={"20px"}
       pb={"5"}
+      ml={{ md: "10px" }}
     >
       <Box p="6">
         <Heading fontSize={"xl"}>Sold by</Heading>

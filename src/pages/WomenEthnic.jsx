@@ -39,7 +39,7 @@ export default function WomenEthnic() {
   const [params, setParams] = useSearchParams();
   const [limitShownm, setLimit] = useState(1);
   const [page, setpage] = useState(CurrentPage(params.get("page")));
-  const arr = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
+  const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   const WomenEthnicData = async (page) => {
     setLoad(true);
     try {
@@ -106,14 +106,13 @@ export default function WomenEthnic() {
     });
   };
 
-  console.log(data);
   return (
     <Box>
       <Navbar />
-      <Box w={"87%"} m={"auto"} mt={{ base: "30px", sm: "30px", md: "-25px" }}>
+      <Box w={"87%"} m={"auto"} mt={{ base: "10px", md: "-25px" }}>
         <Stack>
           <Stack spacing={8} direction="row">
-            <Box p={5}>
+            <Box p={{ base: 0, md: 5 }}>
               <Heading fontSize="xl">Women Ethnic Wear</Heading>
               <Text mt={4}>
                 Showing {limitShownm}-{limitShownm + 9} out of 10000 products
@@ -123,13 +122,18 @@ export default function WomenEthnic() {
         </Stack>
 
         <Flex
-          mt={{ base: "50px", sm: "50px", md: "20px" }}
+          mt={{ base: "20px", sm: "30px", md: "20px" }}
           direction={{ base: "column", sm: "column", md: "row" }}
         >
           <Box>
             <Box
-              pos={{ base: "none", sm: "none", md: "sticky", lg: "sticky" }}
-              top={{ base: "none", sm: "none", md: "150", lg: "130" }}
+              pos={{
+                base: "none",
+                sm: "none",
+                md: "sticky",
+                lg: "sticky",
+              }}
+              top={{ base: "0", sm: "0", md: "100", lg: "130" }}
             >
               {/* sort here */}
               <Box
@@ -138,7 +142,14 @@ export default function WomenEthnic() {
                 mb={"20px"}
                 borderRadius={"8px"}
               >
-                <Accordion allowMultiple w={"316px"}>
+                <Accordion
+                  allowMultiple
+                  w={{
+                    base: "auto",
+                    md: "220px",
+                    lg: "316px",
+                  }}
+                >
                   <AccordionItem border={"0"}>
                     <h2>
                       <AccordionButton
@@ -209,7 +220,14 @@ export default function WomenEthnic() {
                 mb={"20px"}
                 borderRadius={"8px"}
               >
-                <Accordion allowMultiple w={"316px"}>
+                <Accordion
+                  allowMultiple
+                  w={{
+                    base: "auto",
+                    md: "220px",
+                    lg: "316px",
+                  }}
+                >
                   <AccordionItem border={"0"}>
                     <h2>
                       <AccordionButton
@@ -281,16 +299,17 @@ export default function WomenEthnic() {
           <Box ml={"20px"}>
             <Grid
               templateColumns={{
-                base: "repeat(1,220px)",
-                sm: "repeat(2,220px)",
-                md: "repeat(3,220px)",
-                lg: "repeat(4,220px)",
+                base: "repeat(2, 1fr)",
+                sm: "repeat(3, 1fr)",
+                md: "repeat(2, 1fr)",
+                lg: "repeat(3, 1fr)",
+                xl: "repeat(4, 1fr)",
               }}
-              gap={"20px"}
+              gap={{ base: "15px", md: "20px" }}
             >
               {load
-                ? arr.map(() => {
-                    return <LoadingScreen />;
+                ? arr.map((item) => {
+                    return <LoadingScreen key={item + 213100} />;
                   })
                 : data.map((item, i) => {
                     return (
@@ -299,7 +318,7 @@ export default function WomenEthnic() {
                         api={
                           "https://63c7f361075b3f3a91d6b179.mockapi.io/women-ethnic"
                         }
-                        key={i}
+                        key={item.title + item.id}
                         endpoint={"women-ethnic"}
                       />
                     );

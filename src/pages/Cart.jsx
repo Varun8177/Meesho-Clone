@@ -80,11 +80,10 @@ export default function Cart() {
   return (
     <Box>
       <Navbar />
-      <Box w={"70%"} mt={["50%", "40%", 0, 0, 0]} m={"auto"}>
+      <Box w={"70%"} m={"auto"}>
         <Heading>Cart</Heading>
         <Text>{data.length} items in your cart</Text>
         <Flex
-          mt={["50px", "50px", 0, 0, 0]}
           justifyContent={"space-between"}
           m={"auto"}
           direction={{ base: "column", sm: "column", md: "column", lg: "row" }}

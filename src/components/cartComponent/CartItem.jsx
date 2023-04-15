@@ -27,7 +27,8 @@ export default function CartItem({
   };
   return (
     <Box
-      w={["100%", "100%", "750px", "750px"]}
+      // w={["100%", "100%", "750px", "750px"]}
+      w={{ base: "100%", xl: "600px", "2xl": "750px" }}
       borderWidth="1px"
       borderRadius="lg"
       overflow="hidden"

@@ -14,11 +14,13 @@ export default function Total({ total, data }) {
   }, [total, handleTotalCost]);
   return (
     <Box
-      w={["100%", "100%", "300px", "300px"]}
+      // w={["100%", "100%", "300px", "300px"]}
+      w={{ base: "100%", lg: "300px" }}
       borderWidth="1px"
       overflow="hidden"
       mt={"20px"}
       pb={"5"}
+      ml={{ lg: "10px", xl: "0" }}
       borderLeft={"2px solid rgb(234, 239, 244)"}
     >
       <Box>

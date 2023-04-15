@@ -5,20 +5,29 @@ import ProductCards from "../home/ProductCards";
 export default function MoreProducts({ load, moreProd, myapi }) {
   const arr = [1, 2, 3, 4, 5];
   return (
-    <Box ml={"20px"} display={"block"} margin={"auto"} w={"fit-content"}>
-      <Heading mb={"20px"}>People also viewed</Heading>
+    <Box>
+      <Heading
+        mb={"20px"}
+        ml={{ base: "0", md: "40px", xl: "80px" }}
+        textAlign={{ base: "center", md: "left" }}
+      >
+        People also viewed
+      </Heading>
       <Grid
         templateColumns={{
-          base: "repeat(1,220px)",
-          sm: "repeat(2,220px)",
-          md: "repeat(4,220px)",
-          lg: "repeat(5,220px)",
+          base: "repeat(2, 1fr)",
+          sm: "repeat(3, 1fr)",
+          md: "repeat(3, 1fr)",
+          lg: "repeat(4, 1fr)",
+          xl: "repeat(5, 1fr)",
         }}
-        gap={"20px"}
+        gap={{ base: "15px", md: "20px" }}
+        w={{ base: "100%", xl: "90%" }}
+        m={"auto"}
       >
         {load
-          ? arr.map(() => {
-              return <LoadingScreen />;
+          ? arr.map((item) => {
+              return <LoadingScreen key={item + 2132454190} />;
             })
           : moreProd.map((item, i) => {
               return (
