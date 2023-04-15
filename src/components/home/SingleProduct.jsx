@@ -149,39 +149,44 @@ export default function SingleProduct() {
       <Navbar />
       <Flex
         direction={["column", "column", "row", "row", "row"]}
-        w={"80%"}
+        w={{ base: "95%", xl: "80%" }}
         m={"auto"}
-        justifyContent={"space-evenly"}
+        justifyContent={{ base: "space-between", xl: "space-evenly" }}
         mb={"30px"}
+        gap={{ base: "20px", md: "0" }}
       >
         {/* image section */}
         <Box
           border={"1px solid rgb(223, 223, 223)"}
-          p={"20px"}
+          p={{ base: 0, md: "20px" }}
           height={"fit-content"}
-          mt={["50px", "50px", "0px", "0px"]}
+          mt={["20px", "20px", "0px", "0px"]}
           borderRadius={"5px"}
         >
           <Image
             src={data.images}
             m={"auto"}
-            w={["100%", "100%", "449px", "449px"]}
-            // filter="brightness()"
+            w={{ base: "300px", md: "70%", xl: "449px" }}
+            objectFit={"contain"}
           />
           <Flex
-            justifyContent={"space-between"}
-            w={"449px"}
-            mt={"40px"}
-            direction={["column", "column", "row", "row", "row"]}
+            justifyContent={{ base: "space-evenly", md: "space-between" }}
+            w={{ base: "90%", md: "80%", xl: "449px" }}
+            mt={{ base: "10px", md: "20px" }}
+            mb={{ base: "10px", md: "20px" }}
+            m={{ base: "auto", md: "20px" }}
           >
             <Button
               borderRadius={"5px"}
               isLoading={buttonLoad}
-              w={"202px"}
+              mt={{ base: "20px" }}
+              mb={{ base: "20px" }}
+              w={{ base: "40%", md: "130px", xl: "202px" }}
               onClick={() => {
                 if (login === "true") {
                   postReq(data, id);
                 } else {
+                  toast.closeAll();
                   toast({
                     title: "Login to proceed",
                     status: "error",
@@ -195,14 +200,18 @@ export default function SingleProduct() {
             </Button>
             <Button
               borderRadius={"5px"}
-              width={"202px"}
+              mt={{ base: "20px" }}
+              mb={{ base: "20px" }}
+              w={{ base: "40%", md: "130px", xl: "202px" }}
               bgColor={"rgb(244, 51, 151)"}
               color={"white"}
+              ml={{ md: "10px" }}
               onClick={() => {
                 if (login === "true") {
                   handleTotalCost(data.price);
                   navigate("/address");
                 } else {
+                  toast.closeAll();
                   toast({
                     title: "Login to proceed",
                     status: "error",
@@ -224,7 +233,8 @@ export default function SingleProduct() {
         <Box>
           <Box
             border={"1px solid rgb(223, 223, 223)"}
-            w={["100%", "100%", "500px", "500px"]}
+            w={{ base: "100%", md: "400px", lg: "500px", xl: "500px" }}
+            ml={{ md: "10px" }}
             borderWidth="1px"
             borderRadius="lg"
             overflow="hidden"
@@ -280,9 +290,10 @@ export default function SingleProduct() {
 
           <Box
             border={"1px solid rgb(223, 223, 223)"}
-            w={["100%", "100%", "500px", "500px"]}
+            w={{ base: "100%", md: "400px", lg: "500px", xl: "500px" }}
             borderWidth="1px"
             borderRadius="lg"
+            ml={{ md: "10px" }}
             overflow="hidden"
             mt={"20px"}
             pb={"5"}
@@ -337,11 +348,12 @@ export default function SingleProduct() {
 
           <Box
             border={"1px solid rgb(223, 223, 223)"}
-            w={["100%", "100%", "500px", "500px"]}
+            w={{ base: "100%", md: "400px", lg: "500px", xl: "500px" }}
             borderWidth="1px"
             borderRadius="lg"
             overflow="hidden"
             mt={"20px"}
+            ml={{ md: "10px" }}
             pb={"5"}
           >
             <Box p="6">

@@ -95,9 +95,9 @@ export default function Address() {
   const { handleAddress } = useContext(TotalContext);
   const toast = useToast();
   const { totalcost } = useContext(TotalContext);
-  console.log(totalcost);
   const id = localStorage.getItem("id");
   const [data, setData] = useState([]);
+  const [load, setLoad] = useState(false);
   function getReq(id) {
     axios
       .get(`https://63ca9c80f36cbbdfc75c5b52.mockapi.io/meesho_users/${id}`)
@@ -108,6 +108,7 @@ export default function Address() {
 
   useEffect(() => {
     if (navigator.geolocation) {
+      setLoad(true);
       navigator.geolocation.getCurrentPosition(
         (position) => {
           // Get the latitude and longitude from the geolocation API
@@ -122,20 +123,25 @@ export default function Address() {
               if (data) {
                 // Set the state name
                 console.log("location", data);
+                setLoad(false);
                 setLocation(data);
               } else {
                 console.error("not found");
+                setLoad(false);
               }
             })
             .catch((error) => {
+              setLoad(false);
               console.error(error);
             });
         },
         (error) => {
+          setLoad(false);
           console.error(error);
         }
       );
     } else {
+      setLoad(false);
     }
   }, []);
 
@@ -146,13 +152,17 @@ export default function Address() {
   return (
     <Box>
       <Navbar />
-      <Box w={"70%"} mt={["50%", "40%", 0, 0, 0]} m={"auto"}>
-        <Heading>Address</Heading>
+      <Box w={{ md: "90%", xl: "70%" }} m={"auto"}>
+        <Heading textAlign={{ base: "center", lg: "left" }}>Address</Heading>
         <Flex
-          mt={["50px", "50px", 0, 0, 0]}
           justifyContent={"space-between"}
           m={"auto"}
-          direction={{ base: "column", sm: "column", md: "column", lg: "row" }}
+          direction={{
+            base: "column-reverse",
+            sm: "column-reverse",
+            md: "column-reverse",
+            lg: "row",
+          }}
         >
           <Box
             w={["100%", "100%", "750px", "750px"]}
@@ -225,6 +235,7 @@ export default function Address() {
                     });
                     dispatch({ type: "area", payload: location.display_name });
                   }}
+                  isDisabled={load}
                 >
                   Autofill
                 </Button>
@@ -358,12 +369,14 @@ export default function Address() {
           </Box>
 
           <Box
-            w={["100%", "100%", "300px", "300px"]}
+            w={{ base: "100%", lg: "300px" }}
             borderWidth="1px"
             overflow="hidden"
-            mt={"20px"}
             pb={"5"}
             borderLeft={"2px solid rgb(234, 239, 244)"}
+            mt={"20px"}
+            // m={"auto"}
+            ml={{ lg: "10px" }}
           >
             <Box>
               <Box p="26px">
