@@ -17,12 +17,21 @@ Visit the live website [here](https://shoperz-co.netlify.app/) and start shoppin
 
 ## Key Features
 
+Features:
 - User authentication and authorization
-- Search and filter functionality
-- Add to cart and checkout process
-- Product reviews and ratings
-- Order history and status tracking
-- Admin Dashboard to perform CRUD Operations. Please use the code ```8177836651``` to access the dashboard.
+- Products divided into categories (Men, Women, Kids, etc.)
+- Filter and sort functionality on all products pages
+- Detailed single product page with size selection, add to cart, and buy options
+- Product recommendations on single product page
+- Search functionality on every page
+- Cart page with options to update quantity and delete items, and total calculation
+- Address page with autofill option and total price calculation
+- Payment page with captcha for secure checkout
+- Profile section for user details and order history
+- Feedback section for users to provide feedback and queries to admins
+- Admin section for CRUD operations on products and user details
+- Admin login page with mobile number authentication. Please use the code ```8177836651``` to access the dashboard.
+- Admin can view and resolve user feedback and access details of all users
 
 ## Installation and Usage
 
