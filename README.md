@@ -13,7 +13,12 @@ Visit the live website [here](https://shoperz-co.netlify.app/) and start shoppin
 ## Tech Stack
 
 - React.js
+- JavaScript
+- CSS
+- React Router DOM
 - Chakra UI
+- Geolocation API
+- MockAPI.io
 
 ## Key Features
 
