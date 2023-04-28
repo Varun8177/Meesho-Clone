@@ -164,35 +164,14 @@ export default function AdminMens() {
           p={"15px"}
           border="1px solid #E5E7EB"
         >
-          <Flex
-            w={"100%"}
-            justifyContent={"space-between"}
-            mb={"10px"}
-            alignItems={"center"}
-          >
-            <Input
-              type="search"
-              placeholder="Enter name or id"
-              width={"50%"}
-              onChange={(e) => {
-                setsearch(e.target.value);
-                MenssearchData(search);
-              }}
-            />
-            <Flex
-              alignItems="center"
-              w="150px"
-              justifyContent="space-between"
-              bg="gray.100"
-              p="2"
-              borderRadius="md"
-              cursor="pointer"
-              _hover={{ bg: "gray.200" }}
-            >
-              <Text fontWeight="semibold">Add Product</Text>
-              <HiPlus size={20} />
-            </Flex>
-          </Flex>
+          <Input
+            type="search"
+            placeholder="Enter name or id"
+            onChange={(e) => {
+              setsearch(e.target.value);
+              MenssearchData(search);
+            }}
+          />
           <Divider />
           {/* Product */}
           {load

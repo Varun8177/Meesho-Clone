@@ -104,6 +104,7 @@ export default function SingleProduct() {
   useEffect(() => {
     productData();
     moreProdData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params.user_id]);
 
   function postReq(prod, id) {
