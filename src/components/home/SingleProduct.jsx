@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import {
   Box,
   Button,
@@ -13,7 +12,7 @@ import {
 import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { StarIcon } from "@chakra-ui/icons";
 import { ArrowRightIcon } from "@chakra-ui/icons";
 import MoreProducts from "../singleproduct/MoreProd";
@@ -23,7 +22,7 @@ import { useContext } from "react";
 import { TotalContext } from "../../context/TotalContext";
 
 export default function SingleProduct() {
-  const myapi = sessionStorage.getItem("api");
+  const myapi = localStorage.getItem("api");
   const [data, setData] = useState([]);
   // eslint-disable-next-line no-unused-vars
   const [cartData, setCartData] = useState([]);
@@ -36,6 +35,9 @@ export default function SingleProduct() {
   const login = localStorage.getItem("login");
   const { handleTotalCost } = useContext(TotalContext);
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+
+  const endpoint = searchParams.get("endpoint");
 
   function removeTunics(str) {
     let originalStr = str;
@@ -45,17 +47,31 @@ export default function SingleProduct() {
   const productData = async () => {
     setLoad(true);
     try {
-      const product = await axios.get(`${myapi}/${params.user_id}`);
-      let updatedTitle = removeTunics(product.data.title);
+      let url = "";
+      if (endpoint === "women-western") {
+        url = "https://63c6ba9bd307b769673fb1fa.mockapi.io/women-western";
+      } else if (endpoint === "women-ethnic") {
+        url = "https://63c7f361075b3f3a91d6b179.mockapi.io/women-ethnic";
+      } else if (endpoint === "men") {
+        url = "https://63c701b54ebaa80285521e6e.mockapi.io/men";
+      } else if (endpoint === "kids") {
+        url = "https://63c701b54ebaa80285521e6e.mockapi.io/kids";
+      } else if (endpoint === "home-kitchen") {
+        url = "https://63c705d44ebaa80285526612.mockapi.io/home-kitchen";
+      } else if (endpoint === "makeup") {
+        url = "https://63c705d44ebaa80285526612.mockapi.io/makeup";
+      }
+      const product = await axios.get(`${url}/${params.user_id}`);
+      const updatedTitle = removeTunics(product.data.title);
       product.data.title = updatedTitle;
       setData(product.data);
-      axios
-        .get(
+      console.log(login);
+      if (login) {
+        const res = await axios.get(
           `https://63ca9c80f36cbbdfc75c5b52.mockapi.io/meesho_users/${id}/cart`
-        )
-        .then((res) => {
-          setCartData(res.data);
-        });
+        );
+        setCartData(res.data);
+      }
       setLoad(false);
       window.scroll({
         top: 0,
@@ -65,6 +81,7 @@ export default function SingleProduct() {
       console.log(error);
     }
   };
+
   const moreProdData = async () => {
     setLoad(true);
     try {
@@ -87,6 +104,7 @@ export default function SingleProduct() {
   useEffect(() => {
     productData();
     moreProdData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params.user_id]);
 
   function postReq(prod, id) {
@@ -373,7 +391,12 @@ export default function SingleProduct() {
         </Box>
       </Flex>
       {/* More Products */}
-      <MoreProducts load={load} moreProd={moreProd} myapi={myapi} />
+      <MoreProducts
+        load={load}
+        moreProd={moreProd}
+        myapi={myapi}
+        endpoint={endpoint}
+      />
     </Box>
   );
 }

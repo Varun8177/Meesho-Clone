@@ -86,8 +86,6 @@ export default function Navbar() {
       icon: <GiShoppingBag />,
     },
     { path: "/electronics", title: "Electronics", icon: <FaTv /> },
-
-    // { path: "/login", title: "Login", icon: <LockIcon /> },
   ];
   const profileLink = {
     path: "/profile",
@@ -346,7 +344,7 @@ export default function Navbar() {
                           </Tr>
                         </Thead>
                       </Table>
-                      <Stack spacing={10} textAlign="left">
+                      <Stack spacing={5} textAlign="left">
                         {links.map((link) => (
                           <Box
                             _hover={{ bg: "gray.200" }}
@@ -439,7 +437,7 @@ export default function Navbar() {
                 borderRadius={"5px"}
                 h={{ base: "40px", sm: "45px" }}
                 borderColor={"gray.300"}
-                focusBorderColor={"gray.300"} // set focus border color to transparent
+                focusBorderColor={"gray.300"}
                 placeholder={"Try Saree, Kurti, or search by product code"}
                 _placeholder={{ color: "grey.200" }}
                 value={Searchvalue}

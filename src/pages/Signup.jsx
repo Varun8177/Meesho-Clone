@@ -9,6 +9,7 @@ import {
   Input,
   Button,
   useToast,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useState } from "react";
@@ -24,7 +25,7 @@ export default function Signup() {
   const otp = Math.random().toString().substr(2, 6);
   const [name, setname] = useState("");
   const [mobile, setMobile] = useState("");
-
+  const bgColor = useColorModeValue("rgb(253, 237, 236)", "gray.800");
   function postReq(name, mobile) {
     axios
       .post("https://63ca9c80f36cbbdfc75c5b52.mockapi.io/meesho_users", {
@@ -36,12 +37,13 @@ export default function Signup() {
       });
     // verifyUsers(name);
   }
+
   return (
-    <Box>
+    <Box bgColor={bgColor}>
       <Navbar />
-      <Box bgColor={"pink"} height={"635px"} mt={"-50px"} p={"50px"}>
+      <Box p={"2%"} minH={"100vh"}>
         <Box
-          w={"431px"}
+          w={{ base: "100%", md: "431px" }}
           border={"1px solid rgb(223, 223, 223)"}
           m={"auto"}
           borderRadius={"5px"}
@@ -50,13 +52,28 @@ export default function Signup() {
           <Stack>
             <Image
               borderTopRadius={"5px"}
-              w={"431px"}
+              w={"100%"}
               src="https://images.meesho.com/images/marketing/1661417516766.webp"
             />
           </Stack>
           {/* MObile Number */}
-          <Stack mt={"20px"} h={"308px"} p={"20px"}>
-            <Heading fontSize={"2xl"}>Sign Up to view your profile</Heading>
+          <Stack
+            mt={{ base: "10px", md: "20px" }}
+            h={"308px"}
+            p={"20px"}
+            color="gray.700"
+          >
+            <Heading
+              fontSize={{ base: "xl", md: "2xl" }}
+              fontWeight="bold"
+              color="gray.700"
+              textAlign={{ base: "center", md: "left" }}
+              ml={{ md: "10px" }}
+              mb={{ base: "10px", md: 0 }}
+            >
+              Sign Up to view your profile
+            </Heading>
+
             <InputGroup>
               <InputLeftAddon
                 children="Name"
@@ -73,7 +90,7 @@ export default function Signup() {
                 borderLeft={"none"}
                 borderRight={"none"}
                 borderRadius={"0"}
-                borderBottom={"3px solid rgb(223, 223, 223)"}
+                borderBottomWidth={1}
                 focusBorderColor={"white"}
                 mb={"20px"}
                 onChange={(e) => setname(e.target.value)}
@@ -96,8 +113,9 @@ export default function Signup() {
                 borderLeft={"none"}
                 borderRight={"none"}
                 borderRadius={"0"}
-                borderBottom={"3px solid rgb(223, 223, 223)"}
+                borderBottomWidth={1}
                 focusBorderColor={"white"}
+                placeholderTextColor={"gray.400"}
                 mb={"20px"}
                 isDisabled={mobile.length === 10}
                 onChange={(e) => setMobile(e.target.value)}
@@ -128,7 +146,7 @@ export default function Signup() {
             >
               Send OTP
             </Button>
-            <Text m={"auto"}>
+            <Text m={"auto"} color={"black"}>
               Already have an account? Login{" "}
               <Link style={{ color: "blue" }} to={"/login"}>
                 here

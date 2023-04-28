@@ -39,18 +39,12 @@ export default function Login() {
   useState(() => {
     verifyUsers(mobile);
   }, [mobile]);
-  console.log(user);
   return (
-    <Box>
+    <Box bgColor={"rgb(253, 237, 236)"}>
       <Navbar />
-      <Box
-        bgColor={"rgb(253, 237, 236)"}
-        height={"635px"}
-        mt={"-50px"}
-        p={"50px"}
-      >
+      <Box p={"2%"} minH={"100vh"}>
         <Box
-          w={"431px"}
+          w={{ base: "100%", md: "431px" }}
           border={"1px solid rgb(223, 223, 223)"}
           m={"auto"}
           borderRadius={"5px"}
@@ -59,13 +53,22 @@ export default function Login() {
           <Stack>
             <Image
               borderTopRadius={"5px"}
-              w={"431px"}
+              w={"100%"}
               src="https://images.meesho.com/images/marketing/1661417516766.webp"
             />
           </Stack>
-          {/* MObile Number */}
+          {/* Mobile Number */}
           <Stack mt={"20px"} h={"308px"} p={"20px"}>
-            <Heading fontSize={"2xl"}>Log in</Heading>
+            <Heading
+              fontSize={{ base: "xl", md: "2xl" }}
+              fontWeight="bold"
+              color="gray.700"
+              textAlign={{ base: "center", md: "left" }}
+              ml={{ md: "10px" }}
+              mb={{ base: "10px", md: 0 }}
+            >
+              Log in
+            </Heading>
             {mobile.length > 9 && (
               <Text
                 color={"rgb(166, 153, 153)"}
@@ -95,7 +98,7 @@ export default function Login() {
                 borderLeft={"none"}
                 borderRight={"none"}
                 borderRadius={"0"}
-                borderBottom={"3px solid rgb(223, 223, 223)"}
+                borderBottomWidth={1}
                 focusBorderColor={"white"}
                 value={mobile}
                 isDisabled={mobile.length === 10}
