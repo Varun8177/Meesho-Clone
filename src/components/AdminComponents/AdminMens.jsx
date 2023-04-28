@@ -15,7 +15,6 @@ import { useEffect } from "react";
 import { useState } from "react";
 import AdminNavbar from "./AdminNavbar";
 import { AdminSidebar } from "./AdminSidebar";
-import { HiPlus } from "react-icons/hi";
 function SingleProd({ images, title, price, HandleDelete, id }) {
   return (
     <Box
