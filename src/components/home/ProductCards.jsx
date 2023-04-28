@@ -25,8 +25,8 @@ export default function ProductCards({
       border={"1px solid rgb(223, 223, 223)"}
       cursor={"pointer"}
       onClick={() => {
-        handleApi(api, endpoint);
-        navigate(`/single-prod/${id}`);
+        handleApi(api);
+        navigate(`/single-prod/${id}?endpoint=${endpoint}`);
       }}
     >
       <Image

@@ -92,6 +92,7 @@ export default function AdminMens() {
   const [data, setData] = useState([]);
   const [load, setLoad] = useState(false);
   // const [page, setpage] = useState(1);
+  const toast = useToast();
   const [search, setsearch] = useState("");
   const arr = [1, 2, 3];
   const MensData = async () => {
@@ -107,7 +108,6 @@ export default function AdminMens() {
     }
   };
   const HandleDelete = async (id) => {
-    const toast = useToast();
     setLoad(true);
     axios
       .delete(`https://63c701b54ebaa80285521e6e.mockapi.io/men/${id}`)
@@ -171,6 +171,7 @@ export default function AdminMens() {
             alignItems={"center"}
           >
             <Input
+              type="search"
               placeholder="Enter name or id"
               width={"50%"}
               onChange={(e) => {

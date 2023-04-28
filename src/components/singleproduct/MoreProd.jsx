@@ -2,7 +2,7 @@ import { Box, Heading, Grid } from "@chakra-ui/react";
 import LoadingScreen from "../home/LoadingScreen";
 import ProductCards from "../home/ProductCards";
 
-export default function MoreProducts({ load, moreProd, myapi }) {
+export default function MoreProducts({ load, moreProd, myapi, endpoint }) {
   const arr = [1, 2, 3, 4, 5];
   return (
     <Box>
@@ -31,7 +31,12 @@ export default function MoreProducts({ load, moreProd, myapi }) {
             })
           : moreProd.map((item, i) => {
               return (
-                <ProductCards {...item} api={myapi} key={i} endpoint={"mens"} />
+                <ProductCards
+                  {...item}
+                  api={myapi}
+                  key={i}
+                  endpoint={endpoint}
+                />
               );
             })}
       </Grid>
