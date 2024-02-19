@@ -55,6 +55,20 @@ const ProductServices = {
       throw new HttpException(500, "Error fetching all products");
     }
   },
+  getSearchResultService: async (text) => {
+    try {
+      const products = await ProductModel.find({
+        title: { $regex: text, $options: "i" },
+      });
+      return products;
+    } catch (error) {
+      if (error instanceof HttpException) {
+        throw error;
+      } else {
+        throw new HttpException(500, "Error fetching product");
+      }
+    }
+  },
   getProductService: async (productId) => {
     try {
       const isValidObjectId = mongoose.Types.ObjectId.isValid(productId);

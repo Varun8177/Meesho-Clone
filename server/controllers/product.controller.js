@@ -78,6 +78,15 @@ const ProductController = {
       next(error);
     }
   },
+  getSearchResults: async (req, res, next) => {
+    const text = req.params.search || "";
+    try {
+      const products = await ProductServices.getSearchResultService(text);
+      res.status(200).send(products);
+    } catch (error) {
+      next(error);
+    }
+  },
 };
 
 module.exports = ProductController;

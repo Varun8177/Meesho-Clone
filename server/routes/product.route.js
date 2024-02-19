@@ -10,5 +10,6 @@ router.put("/:productId", EnsureAuth, ProductController.updateProduct);
 router.delete("/:productId", EnsureAuth, ProductController.deleteProduct);
 router.get("/", ProductController.getAllProducts);
 router.get("/home/random", ProductController.getRandomProducts);
+router.get("/search/:search", ProductController.getSearchResults);
 
 module.exports = { path, router };
