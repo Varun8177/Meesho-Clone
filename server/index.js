@@ -17,6 +17,7 @@ const upload = Multer({
 });
 
 const port = process.env.port;
+const hosts = process.env.hosts;
 
 const app = express();
 
@@ -24,7 +25,7 @@ connectToDatabase();
 
 app.use(
   cors({
-    origin: ["http://localhost:3000", "/localhost:/"],
+    origin: [hosts],
     methods: ["GET", "POST", `PUT`, `PATCH`, `DELETE`],
     credentials: true,
   })
