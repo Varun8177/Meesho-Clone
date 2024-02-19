@@ -7,10 +7,14 @@ const productsSlice = createSlice({
     products: [],
     singleProduct: null,
     error: false,
+    totalProducts: 0,
+    totalPages: 0,
   },
   reducers: {
     getProductsDataSuccess: (state, action) => {
-      state.products = action.payload;
+      state.products = action.payload.products;
+      state.totalProducts = action.payload.totalProducts;
+      state.totalPages = action.payload.totalPages;
       state.loading = false;
     },
     getSingleProductDataSuccess: (state, action) => {

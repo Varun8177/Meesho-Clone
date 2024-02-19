@@ -4,6 +4,20 @@ const ProductModel = require("../models/product.model");
 const CartModel = require("../models/cart.model");
 
 const ProductServices = {
+  getRandomProducts: async () => {
+    try {
+      const products = await ProductModel.aggregate([
+        { $sample: { size: 10 } },
+      ]);
+      return products;
+    } catch (error) {
+      if (error instanceof HttpException) {
+        throw error;
+      } else {
+        throw new HttpException(500, "Error fetching product");
+      }
+    }
+  },
   getAllProductsService: async (
     page = 1,
     perPage = 10,
@@ -41,6 +55,20 @@ const ProductServices = {
       throw new HttpException(500, "Error fetching all products");
     }
   },
+  getSearchResultService: async (text) => {
+    try {
+      const products = await ProductModel.find({
+        title: { $regex: text, $options: "i" },
+      });
+      return products;
+    } catch (error) {
+      if (error instanceof HttpException) {
+        throw error;
+      } else {
+        throw new HttpException(500, "Error fetching product");
+      }
+    }
+  },
   getProductService: async (productId) => {
     try {
       const isValidObjectId = mongoose.Types.ObjectId.isValid(productId);
@@ -57,7 +85,6 @@ const ProductServices = {
       const data = { ...product._doc, alreadyInCart: IsInCart ? true : false };
       return data;
     } catch (error) {
-      console.log(error);
       if (error instanceof HttpException) {
         throw error;
       } else {

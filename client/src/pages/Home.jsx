@@ -1,14 +1,34 @@
 import { Box, Flex, Image } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import CategoryPoster from "../components/home/CategoryPoster";
-import ProductHeader from "../components/products/ProductHeader";
+import ProductsLoadingScreen from "../components/constants/ProductsLoadingScreen";
+import axios from "axios";
 import FilterSortMenu from "../components/products/FilterSortMenu";
-// import ProductsLoadingScreen from "../components/constants/ProductsLoadingScreen";
+import ProductHeader from "../components/products/ProductHeader";
 import ProductCard from "../components/products/ProductCard";
 
+const baseurl = process.env.REACT_APP_BASE_URL;
+const CLOUDINARY_BASE_PATH = process.env.REACT_APP_CLOUDINARY_BASE_PATH;
+
 const Home = () => {
-  const CLOUDINARY_BASE_PATH = process.env.REACT_APP_CLOUDINARY_BASE_PATH;
-  const arr = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState([]);
+
+  const getRandomData = async () => {
+    setLoading(true);
+    try {
+      const res = await axios.get(`${baseurl}/products/home/random`);
+      setData(res.data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getRandomData();
+  }, []);
   return (
     <div>
       <Image
@@ -27,10 +47,6 @@ const Home = () => {
         maxW={"1220"}
       />
       <Box w={"87%"} m={"auto"} mt={{ base: "30px", sm: "30px", md: "-25px" }}>
-        <ProductHeader
-          subTitle={`Showing ${1}-${1 + 9} out of 10000 products`}
-          title="Products for you"
-        />
         <Flex
           mt={{ base: "50px", sm: "50px", md: "20px" }}
           p={0}
@@ -38,26 +54,30 @@ const Home = () => {
           w="100%"
           flexWrap="wrap"
         >
-          <FilterSortMenu
-            handleSort={() => {}}
-            options={["price - low to high", "price - low to high"]}
-            label={"Sort by"}
-            value="Price"
-          />
-          <Flex flexGrow={1} w={"70%"} minH="100vh" flexWrap="wrap" gap={4}>
-            {arr.map((item, i) => {
-              return (
-                <ProductCard
-                  image="https://images.meesho.com/images/products/169486565/zoqdu_400.jpg"
-                  key={i}
-                  rating={5}
-                  id={0}
-                  price={500}
-                  reviews={10}
-                  title="new dressed product with price $500"
-                />
-              );
-            })}
+          <Flex
+            flexGrow={1}
+            minH="100vh"
+            flexWrap="wrap"
+            gap={4}
+            justify="center"
+          >
+            {loading
+              ? new Array(10).fill(0).map((item, i) => {
+                  return <ProductsLoadingScreen key={i} />;
+                })
+              : data?.map((product, i) => {
+                  return (
+                    <ProductCard
+                      image={product.image}
+                      key={i}
+                      rating={product.rating}
+                      id={product._id}
+                      price={product.price}
+                      reviews={product.reviews}
+                      title={product.title}
+                    />
+                  );
+                })}
           </Flex>
         </Flex>
       </Box>
