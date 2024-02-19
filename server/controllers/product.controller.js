@@ -70,6 +70,14 @@ const ProductController = {
       next(error);
     }
   },
+  getRandomProducts: async (req, res, next) => {
+    try {
+      const products = await ProductServices.getRandomProducts();
+      res.status(200).send(products);
+    } catch (error) {
+      next(error);
+    }
+  },
 };
 
 module.exports = ProductController;

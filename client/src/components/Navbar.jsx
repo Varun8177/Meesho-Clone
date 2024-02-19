@@ -22,7 +22,7 @@ const Navbar = () => {
       position="sticky"
       top="0"
       bgColor={colorMode === "light" ? "white" : "black"}
-      // mb={{ base: "5px", lg: "20px" }}
+      mb={{ base: "5px", lg: "20px" }}
     >
       <Box
         color="white"
