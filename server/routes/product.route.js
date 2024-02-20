@@ -6,7 +6,7 @@ const path = "/products";
 
 router.post("/", EnsureAuth, ProductController.addProduct);
 router.get("/:productId", ProductController.getProduct);
-router.put("/:productId", EnsureAuth, ProductController.updateProduct);
+router.patch("/:productId", EnsureAuth, ProductController.updateProduct);
 router.delete("/:productId", EnsureAuth, ProductController.deleteProduct);
 router.get("/", ProductController.getAllProducts);
 router.get("/home/random", ProductController.getRandomProducts);

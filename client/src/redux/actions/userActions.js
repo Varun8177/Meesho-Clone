@@ -6,7 +6,11 @@ const baseurl = process.env.REACT_APP_BASE_URL;
 export const register = async (userdata, handleResponse) => {
   try {
     const res = await axios.post(`${baseurl}/users/register`, userdata);
-    handleResponse(res.data.message || "OTP has been sent", "", true);
+    handleResponse(
+      res.data.message || `OTP has been sent to ${userdata.email}`,
+      "",
+      true
+    );
   } catch (error) {
     if (axios.isAxiosError(error)) {
       if (error.response.data.message) {

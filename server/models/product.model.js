@@ -22,7 +22,7 @@ const productSchema = mongoose.Schema(
       required: [true, "Please provide a category"],
     },
     tag: {
-      type: String,
+      type: [String],
       required: [true, "please provide tag"],
     },
     image: {

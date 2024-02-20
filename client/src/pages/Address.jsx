@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Center,
   Flex,
   FormControl,
   Heading,
@@ -13,16 +14,10 @@ import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import UseResponseHandler from "../components/utils/UseResponseHandler";
 import { getToken } from "../components/utils/getToken";
+import { inputStyle } from "../components/utils/inputStyles";
+import BackBtnWrapper from "../components/constants/BackBtn";
 
 const baseurl = process.env.REACT_APP_BASE_URL;
-
-const inputStyle = {
-  mb: "25px",
-  borderX: "0",
-  borderTop: "0",
-  borderRadius: "0",
-  outline: "none",
-};
 
 const Address = () => {
   const navigate = useNavigate();
@@ -79,28 +74,17 @@ const Address = () => {
   };
 
   return (
-    <Box w={{ md: "90%", xl: "70%" }} m={"auto"}>
-      <Heading textAlign={{ base: "center", lg: "left" }}>Address</Heading>
-      <Flex
-        justifyContent={"space-between"}
-        m={"auto"}
-        direction={{
-          base: "column-reverse",
-          sm: "column-reverse",
-          md: "column-reverse",
-          lg: "row",
-        }}
-      >
+    <BackBtnWrapper>
+      <Center bg="rgb(253, 237, 236)" minH={"100vh"}>
         <Box
-          w={["100%", "100%", "750px", "750px"]}
           borderWidth="1px"
           borderRadius="lg"
           overflow="hidden"
           mt={"20px"}
           p={"45px"}
+          bgColor={"white"}
         >
           <form onSubmit={handleSaveAddress}>
-            {/* contact Input */}
             <Flex>
               <Box>Contact Details</Box>
               <Button
@@ -161,7 +145,7 @@ const Address = () => {
 
             <Heading fontSize={"lg"} mb={"20px"}>
               <Flex>
-                <Box>{/* <LinkIcon/>  */}Address</Box>
+                <Box>Address</Box>
               </Flex>
             </Heading>
 
@@ -244,9 +228,8 @@ const Address = () => {
             </Button>
           </form>
         </Box>
-        <Total showBtn={false} />
-      </Flex>
-    </Box>
+      </Center>
+    </BackBtnWrapper>
   );
 };
 

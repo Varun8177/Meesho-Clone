@@ -1,4 +1,12 @@
-import { Box, Button, Flex, Heading, Input } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Center,
+  Flex,
+  Heading,
+  Input,
+  Text,
+} from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import Captcha from "../components/payment/Captcha";
 import PaymentMethod from "../components/payment/PaymentMethod";
@@ -13,6 +21,7 @@ import {
 } from "../redux/actions/orderActions";
 import { useDispatch } from "react-redux";
 import { clearCartData } from "../redux/actions/cartActions";
+import BackBtnWrapper from "../components/constants/BackBtn";
 
 function generateCaptcha(length) {
   const characters =
@@ -57,93 +66,96 @@ const Payment = () => {
   }, [orderId]);
 
   return (
-    <Box w={"80%"} mt={["50%", "40%", 0, 0, 0]} m={"auto"}>
-      <Heading>Payment</Heading>
-      <Flex
-        mt={["50px", "50px", 0, 0, 0]}
-        justifyContent={"space-between"}
-        m={"auto"}
-        direction={{ base: "column", lg: "row" }}
-      >
-        <Box
-          w={["100%", "100%", "750px", "750px"]}
-          borderWidth="1px"
-          borderRadius="lg"
-          overflow="hidden"
-          mt={"20px"}
-          p={"45px"}
-          boxShadow="lg"
-          transition="transform 0.2s"
-          _hover={{ transform: "scale(1.02)" }}
+    <BackBtnWrapper>
+      <Center minH={"100vh"} bgColor={"rgb(253, 237, 236)"}>
+        <Flex
+          justifyContent={"space-between"}
+          m={"auto"}
+          direction={{ base: "column", lg: "row" }}
+          gap={4}
         >
-          <Flex w={"100%"} justifyContent={"space-between"}>
-            <Captcha captcha={captcha} />
-            <PaymentMethod />
-          </Flex>
-          <Flex
-            justifyContent="space-between"
-            alignItems="center"
-            mb="6"
-            as={"form"}
-            onSubmit={(e) => {
-              e.preventDefault();
-              if (captcha === text) {
-                //
-                const { page } = location.state;
-                if (page === "cart") {
-                  clearCartData(handleResponse, handleNextTask);
-                } else {
-                  handleNextTask();
-                }
-              } else {
-                handleResponse("please enter correct captcha", "", false);
-              }
-            }}
+          <Box
+            bg="white"
+            w={["100%", "100%", "750px", "750px"]}
+            borderWidth="1px"
+            borderRadius="lg"
+            overflow="hidden"
+            mt={"20px"}
+            p={"45px"}
+            boxShadow="lg"
+            transition="transform 0.2s"
+            _hover={{ transform: "scale(1.02)" }}
           >
-            <Input
-              placeholder="Enter the above Captcha"
-              variant="outline"
-              borderRadius="md"
-              px="3"
-              py="2"
-              width="70%"
-              _hover={{ borderColor: "gray.300" }}
-              _focus={{
-                borderColor: "green.400",
-                boxShadow: "0 0 0 1px green.400",
+            <Flex w={"100%"} justifyContent={"space-between"}>
+              <Captcha captcha={captcha} />
+              <PaymentMethod />
+            </Flex>
+            <Flex
+              justifyContent="space-between"
+              alignItems="center"
+              mb="6"
+              as={"form"}
+              onSubmit={(e) => {
+                e.preventDefault();
+                if (captcha === text) {
+                  //
+                  const { page } = location.state;
+                  if (page === "cart") {
+                    clearCartData(handleResponse, handleNextTask);
+                  } else {
+                    handleNextTask();
+                  }
+                } else {
+                  handleResponse("please enter correct captcha", "", false);
+                }
               }}
-              isRequired
-              value={text}
-              onChange={(e) => setText(e.target.value)}
-            />
-            <Button
-              colorScheme="pink"
-              px="6"
-              py="2"
-              borderRadius="md"
-              type="submit"
-              isLoading={loading}
             >
-              Proceed
-            </Button>
-          </Flex>
-          <PriceDetails />
-        </Box>
-        <Box
-          w={["100%", "100%", "450px", "450px"]}
-          borderWidth="1px"
-          borderRadius="lg"
-          overflow="hidden"
-          mt={"20px"}
-          p={"20px"}
-        >
-          <Box mb={4}>
-            <ShippingAddress />
-            <DeliveryAddress />
+              <Input
+                placeholder="Enter the above Captcha"
+                variant="outline"
+                borderRadius="md"
+                px="3"
+                py="2"
+                width="70%"
+                _hover={{ borderColor: "gray.300" }}
+                _focus={{
+                  borderColor: "green.400",
+                  boxShadow: "0 0 0 1px green.400",
+                }}
+                isRequired
+                value={text}
+                onChange={(e) => setText(e.target.value)}
+              />
+              <Button
+                colorScheme="pink"
+                px="6"
+                py="2"
+                borderRadius="md"
+                type="submit"
+                isLoading={loading}
+              >
+                Proceed
+              </Button>
+            </Flex>
+            <PriceDetails />
           </Box>
-        </Box>
-      </Flex>
-    </Box>
+          <Box
+            w={["100%", "100%", "450px", "450px"]}
+            borderWidth="1px"
+            borderRadius="lg"
+            overflow="hidden"
+            mt={"20px"}
+            p={"20px"}
+            bg="white"
+          >
+            <Box mb={4}>
+              <ShippingAddress />
+              <DeliveryAddress />
+            </Box>
+          </Box>
+        </Flex>
+      </Center>
+    </BackBtnWrapper>
   );
 };
 

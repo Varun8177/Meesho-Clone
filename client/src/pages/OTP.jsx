@@ -9,6 +9,7 @@ import {
   HStack,
   Button,
   useToast,
+  Center,
 } from "@chakra-ui/react";
 
 import React from "react";
@@ -19,6 +20,7 @@ import {
   verifyRegisterOtp,
   verifyloginOtp,
 } from "../redux/actions/userActions";
+import BackBtnWrapper from "../components/constants/BackBtn";
 
 export function Timer({ handleTimer }) {
   const [count, setCount] = React.useState(59);
@@ -89,12 +91,6 @@ export default function OTP() {
     setIsloading(false);
   };
 
-  const handleOTP = (e) => {
-    const { value, name } = e.target;
-    const newPin = otp.slice(0, name) + value + otp.slice(name + 1);
-    setOtp(newPin);
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     const { page, mobile } = location.state;
@@ -106,77 +102,93 @@ export default function OTP() {
   };
 
   return (
-    <Box>
-      <Box bgColor={"pink"} height={"635px"} mt={"-50px"} p={"50px"}>
-        <Box
-          w={"431px"}
-          border={"1px solid rgb(223, 223, 223)"}
-          m={"auto"}
-          borderRadius={"5px"}
-          bgColor={"white"}
-        >
-          <Stack>
-            <Image
-              borderTopRadius={"5px"}
-              w={"431px"}
-              src="https://images.meesho.com/images/marketing/1661417516766.webp"
-            />
-          </Stack>
-          {/* MObile Number */}
-          <Stack
-            mt={"20px"}
-            h={"308px"}
-            p={"20px"}
-            as="form"
-            onSubmit={handleSubmit}
+    <BackBtnWrapper>
+      <Center minH={"100vh"} bgColor={"rgb(253, 237, 236)"}>
+        <Box>
+          <Box
+            w={"431px"}
+            border={"1px solid rgb(223, 223, 223)"}
+            m={"auto"}
+            borderRadius={"5px"}
+            bgColor={"white"}
           >
-            <Heading fontSize={"2xl"}>Enter OTP</Heading>
-
-            <Text
-              color={"rgb(166, 153, 153)"}
-              fontWeight={"light"}
-              fontSize={"sm"}
-              cursor={"pointer"}
-              onClick={() => navigate("/login")}
+            <Stack>
+              <Image
+                borderTopRadius={"5px"}
+                w={"431px"}
+                src="https://images.meesho.com/images/marketing/1661417516766.webp"
+              />
+            </Stack>
+            {/* MObile Number */}
+            <Stack
+              mt={"20px"}
+              h={"308px"}
+              p={"20px"}
+              as="form"
+              onSubmit={handleSubmit}
             >
-              Change Number
-            </Text>
+              <Heading fontSize={"2xl"}>Enter OTP</Heading>
 
-            <HStack m={"auto"}>
-              <PinInput type="number" value={otp} onChange={setOtp}>
-                <PinInputField onChange={handleOTP} />
-                <PinInputField onChange={handleOTP} />
-                <PinInputField onChange={handleOTP} />
-                <PinInputField onChange={handleOTP} />
-                <PinInputField onChange={handleOTP} />
-                <PinInputField onChange={handleOTP} />
-              </PinInput>
-            </HStack>
-            <Button
-              textAlign={"center"}
-              bgColor="rgb(244, 51, 151)"
-              variant="outline"
-              color={"white"}
-              width={"100%"}
-              _hover={{ bg: "rgb(199, 60, 157)" }}
-              type="submit"
-              isLoading={isLoading}
-            >
-              Verify
-            </Button>
-            {timer || (
               <Text
-                color={"rgb(246, 93, 151)"}
+                color={"rgb(166, 153, 153)"}
+                fontWeight={"light"}
+                fontSize={"sm"}
                 cursor={"pointer"}
-                fontWeight={"bold"}
+                onClick={() => {
+                  const { page } = location.state;
+                  if (page === "login") {
+                    navigate("/login");
+                  } else if (page === "register") {
+                    navigate("/sign-up");
+                  } else {
+                    navigate("/");
+                  }
+                }}
               >
-                Resend OTP
+                Change email address
               </Text>
-            )}
-            {timer && <Timer handleTimer={handleTimer} />}
-          </Stack>
+
+              <HStack m={"auto"}>
+                <PinInput type="number" value={otp} onChange={setOtp}>
+                  <PinInputField required />
+                  <PinInputField required />
+                  <PinInputField required />
+                  <PinInputField required />
+                  <PinInputField required />
+                  <PinInputField required />
+                </PinInput>
+              </HStack>
+              <Button
+                textAlign={"center"}
+                bgColor="rgb(244, 51, 151)"
+                variant="outline"
+                color={"white"}
+                width={"100%"}
+                _hover={{ bg: "rgb(199, 60, 157)" }}
+                type="submit"
+                isLoading={isLoading}
+              >
+                Verify
+              </Button>
+              {timer || (
+                <Button
+                  variant="solid"
+                  bg="rgb(244, 51, 151)"
+                  w="fit-content"
+                  cursor={"pointer"}
+                  color="white"
+                  _hover={{ bg: "rgb(199, 60, 157)" }}
+                  onClick={() => setTimer(true)}
+                  isDisabled={timer}
+                >
+                  Resend OTP
+                </Button>
+              )}
+              {timer && <Timer handleTimer={handleTimer} />}
+            </Stack>
+          </Box>
         </Box>
-      </Box>
-    </Box>
+      </Center>
+    </BackBtnWrapper>
   );
 }

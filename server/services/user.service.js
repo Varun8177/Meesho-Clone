@@ -3,10 +3,13 @@ const jwt = require("jsonwebtoken");
 const HttpException = require("../exceptions/HttpException");
 const UserModel = require("../models/user.model");
 const twilio = require("twilio");
+const nodemailer = require("nodemailer");
 
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
 const twilioPhoneNumber = process.env.TWILIO_PHONE_NUMBER;
+const fromMail = process.env.MAIL;
+const mailPasscode = process.env.MAIL_PASSCODE;
 
 const UserServices = {
   getUserService: async (userId) => {
@@ -34,13 +37,26 @@ const UserServices = {
 
   registerUserService: async (registrationDetails) => {
     try {
-      const { mobile } = registrationDetails;
+      const { mobile, email } = registrationDetails;
 
       // Check if the email is already registered
-      const existingUser = await UserModel.findOne({ mobile });
+      const existingUser = await UserModel.findOne({
+        $or: [{ mobile }, { email }],
+      });
 
       if (existingUser) {
         if (existingUser.verified) {
+          if (existingUser.mobile === mobile) {
+            throw new HttpException(
+              404,
+              "mobile number already registered please login"
+            );
+          } else if (existingUser.email === email) {
+            throw new HttpException(
+              404,
+              "email already registered please login"
+            );
+          }
           throw new HttpException(404, "user already registered please login");
         } else {
           if (existingUser.verificationToken) {
@@ -51,7 +67,7 @@ const UserServices = {
             console.log(decodedToken);
             return "please enter the verification code send on your mobile number";
           } else {
-            const { otp } = await UserServices.sendOtp(mobile);
+            const { otp } = await UserServices.sendOtp(email);
 
             const token = jwt.sign({ otp }, process.env.jwtsecret, {
               expiresIn: "200s",
@@ -59,12 +75,12 @@ const UserServices = {
             await UserModel.findByIdAndUpdate(existingUser._id, {
               verificationToken: token,
             });
-            return `otp sent successfully to ${mobile}`;
+            return `otp sent successfully to ${email}`;
           }
         }
       }
 
-      const { otp } = await UserServices.sendOtp(mobile);
+      const { otp } = await UserServices.sendOtp(email);
 
       const token = jwt.sign({ otp }, process.env.jwtsecret, {
         expiresIn: "100s",
@@ -114,9 +130,9 @@ const UserServices = {
           user.mobile
         );
         console.log(decodedToken);
-        return "please enter the verification code send on your mobile number";
+        return "please enter the verification code send on your email";
       } else {
-        const { otp } = await UserServices.sendOtp(mobile);
+        const { otp } = await UserServices.sendOtp(user.email);
 
         const token = jwt.sign({ otp, user }, process.env.jwtsecret, {
           expiresIn: "200s",
@@ -136,21 +152,66 @@ const UserServices = {
       }
     }
   },
-  sendOtp: async (mobile) => {
-    const client = new twilio(accountSid, authToken);
+  sendOtp: async (email) => {
+    // const client = new twilio(accountSid, authToken);
     let otp = Math.floor(100000 + Math.random() * 900000);
+    // try {
+    //   const message = await client.messages.create({
+    //     body: otp,
+    //     from: twilioPhoneNumber,
+    //     to: `+91${mobile}`,
+    //   });
+    //   return { sid: message.sid, otp };
+    // } catch (error) {
+    //
+    // }
     try {
-      const message = await client.messages.create({
-        body: otp,
-        from: twilioPhoneNumber,
-        to: `+91${mobile}`,
+      const transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: fromMail,
+          pass: mailPasscode,
+        },
       });
-      return { sid: message.sid, otp };
+      console.log({ fromMail, email });
+      const mailOptions = await transporter.sendMail({
+        from: fromMail,
+        to: email,
+        subject: "This is megamart official service",
+        text: "Thank you for choosing us",
+        html: `
+            <table
+              style="width: 100%; background-color: #3b82f6; text-align: center; padding: 1rem;"
+            >
+              <tr>
+                <td>
+                  <p
+                    style="line-height: 1.25; font-size: 1.875rem; color: #fff; font-weight: 600; margin-bottom: 1rem;"
+                  >
+                    Here's your verification code
+                  </p>
+                  <p
+                    style="line-height: 1.25; font-size: 1.5rem; color: #dbdbdb; margin-bottom: 2rem; padding: 1rem;"
+                  >
+                    ${otp}
+                  </p>
+                  <img
+                    src="https://res.cloudinary.com/megamart/image/upload/v1689852385/megamart/login_img_c4a81e_i2mxoc.png"
+                    alt="login-image"
+                    style="max-width: 100%; height: auto;"
+                  />
+                </td>
+              </tr>
+            </table>
+          `,
+      });
+      return { otp };
     } catch (error) {
       console.log(error);
       throw new HttpException(400, "unable to send otp message");
     }
   },
+
   decodeToken: async (verificationToken, mobile) => {
     try {
       const decodedToken = jwt.verify(verificationToken, process.env.jwtsecret);
