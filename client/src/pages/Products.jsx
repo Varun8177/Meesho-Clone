@@ -1,7 +1,6 @@
 import { Box, Button, Flex, useToast } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import ProductHeader from "../components/products/ProductHeader";
-import FilterSortMenu from "../components/products/FilterSortMenu";
 import ProductCard from "../components/products/ProductCard";
 import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../redux/actions/productsAction";
@@ -52,7 +51,7 @@ const Products = () => {
         title="Products for you"
       />
       <Flex gap={4} mt="10px">
-        <FilterBox />
+        {/* <FilterBox /> */}
         <SortBox />
         <Button
           variant={"outline"}

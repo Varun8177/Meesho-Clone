@@ -3,14 +3,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentUser } from "../../redux/actions/userActions";
 import UseResponseHandler from "../utils/UseResponseHandler";
-
-const inputStyle = {
-  mb: "25px",
-  borderX: "0",
-  borderTop: "0",
-  borderRadius: "0",
-  outline: "none",
-};
+import { inputStyle } from "../utils/inputStyles";
 
 const UserUpdateForm = ({ ToggleShowDetails }) => {
   const { user } = useSelector((state) => state.userReducer);

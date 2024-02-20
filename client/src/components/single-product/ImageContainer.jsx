@@ -7,6 +7,7 @@ import { createUserOrders } from "../../redux/actions/orderActions.js";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { getToken } from "../utils/getToken.js";
+import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 
 const baseurl = process.env.REACT_APP_BASE_URL;
 
@@ -112,6 +113,8 @@ const ImageContainer = () => {
           ml={{ md: "10px" }}
           onClick={handleBuyNow}
           isLoading={buyNowLoading}
+          _hover={{ bg: "rgb(199, 60, 157)" }}
+          rightIcon={<MdKeyboardDoubleArrowRight size={30} />}
         >
           <Box as="span" marginRight={"10px"} />
           Buy now

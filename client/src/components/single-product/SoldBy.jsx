@@ -9,6 +9,7 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 import { MdEmail } from "react-icons/md";
+import { IoIosArrowRoundForward } from "react-icons/io";
 
 const SoldBy = () => {
   return (
@@ -25,7 +26,7 @@ const SoldBy = () => {
       <Box p="6">
         <Heading fontSize={"xl"}>Sold by</Heading>
       </Box>
-      <Stack ml={"17px"} color="rgb(102, 116, 142)">
+      <Stack mx={"17px"} color="rgb(102, 116, 142)">
         <Flex alignItems={"center"}>
           <IconButton
             mr={"20px"}
@@ -38,12 +39,11 @@ const SoldBy = () => {
         </Flex>
         <Button
           textAlign={"center"}
-          //   rightIcon={<ArrowForwardIcon />}
+          rightIcon={<IoIosArrowRoundForward size={30} />}
           bgColor="rgb(244, 51, 151)"
           variant="outline"
           color={"white"}
-          width={"80%"}
-          margin={"auto"}
+          _hover={{ bg: "rgb(199, 60, 157)" }}
         >
           View Shop
         </Button>

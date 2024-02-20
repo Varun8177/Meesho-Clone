@@ -9,20 +9,23 @@ import {
   InputLeftAddon,
   Input,
   Button,
-  useColorModeValue,
   useToast,
+  Center,
+  Flex,
 } from "@chakra-ui/react";
 import { Link, useNavigate } from "react-router-dom";
 import { register } from "../redux/actions/userActions";
+import { inputStyle } from "../components/utils/inputStyles";
+import BackBtnWrapper from "../components/constants/BackBtn";
 const CLOUDINARY_BASE_PATH = process.env.REACT_APP_CLOUDINARY_BASE_PATH;
 
 const Signup = () => {
   const [name, setName] = useState("");
   const [mobile, setMobile] = useState("");
+  const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const toast = useToast();
   const navigate = useNavigate();
-  const bgColor = useColorModeValue("rgb(253, 237, 236)", "gray.800");
 
   const handleResponse = (title, description, status = false) => {
     toast.closeAll();
@@ -48,12 +51,12 @@ const Signup = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
-    register({ mobile, name }, handleResponse);
+    register({ mobile, name, email }, handleResponse);
   };
 
   return (
-    <Box bgColor={bgColor}>
-      <Box p={"2%"} minH={"100vh"}>
+    <BackBtnWrapper>
+      <Center minH={"100vh"} bgColor={"rgb(253, 237, 236)"}>
         <Box
           w={{ base: "100%", md: "431px" }}
           border={"1px solid rgb(223, 223, 223)"}
@@ -69,10 +72,8 @@ const Signup = () => {
                 src={`${CLOUDINARY_BASE_PATH}/jlbrk8sxkwjws4kl7iwl`}
               />
             </Stack>
-            {/* MObile Number */}
             <Stack
               mt={{ base: "10px", md: "20px" }}
-              h={"308px"}
               p={"20px"}
               color="gray.700"
             >
@@ -90,21 +91,15 @@ const Signup = () => {
               <InputGroup>
                 <InputLeftAddon
                   children="Name"
-                  borderTop={"none"}
-                  borderLeft={"none"}
-                  borderRight={"none"}
-                  bgColor={"white"}
-                  borderRadius={"0"}
+                  {...inputStyle}
+                  bg="white"
                   mr={"10px"}
+                  mb={0}
                 />
                 <Input
                   placeholder="enter your name"
-                  borderTop={"none"}
-                  borderLeft={"none"}
-                  borderRight={"none"}
-                  borderRadius={"0"}
-                  borderBottomWidth={1}
-                  focusBorderColor={"white"}
+                  autoFocus
+                  {...inputStyle}
                   mb={"20px"}
                   isRequired
                   value={name}
@@ -114,46 +109,59 @@ const Signup = () => {
               <InputGroup>
                 <InputLeftAddon
                   children="In +91"
-                  borderTop={"none"}
-                  borderLeft={"none"}
-                  borderRight={"none"}
-                  bgColor={"white"}
-                  borderRadius={"0"}
+                  {...inputStyle}
+                  bg="white"
                   mr={"10px"}
+                  mb={0}
+                />
+                <Flex w="full" pos="relative">
+                  <Input
+                    type="number"
+                    placeholder="phone number"
+                    {...inputStyle}
+                    mb={"20px"}
+                    isRequired
+                    value={mobile}
+                    isDisabled={mobile.length === 10}
+                    onChange={(e) => setMobile(e.target.value)}
+                  />
+                  {mobile.length > 9 ? (
+                    <Button
+                      pos="absolute"
+                      right={0}
+                      top={0}
+                      variant="solid"
+                      colorScheme="pink"
+                      w="fit-content"
+                      onClick={() => setMobile("")}
+                      fontSize="x-small"
+                    >
+                      Change Number
+                    </Button>
+                  ) : null}
+                </Flex>
+              </InputGroup>
+              <InputGroup>
+                <InputLeftAddon
+                  children="Email"
+                  {...inputStyle}
+                  bg="white"
+                  mr={"10px"}
+                  mb={0}
                 />
                 <Input
-                  type="tel"
-                  placeholder="phone number"
-                  borderTop={"none"}
-                  borderLeft={"none"}
-                  borderRight={"none"}
-                  borderRadius={"0"}
-                  borderBottomWidth={1}
-                  focusBorderColor={"white"}
-                  _placeholder={{ color: "gray.400" }}
+                  type="email"
+                  placeholder="example@example.com"
+                  {...inputStyle}
                   mb={"20px"}
-                  value={mobile}
+                  value={email}
                   isRequired
-                  isDisabled={mobile.length === 10}
-                  onChange={(e) => setMobile(e.target.value)}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </InputGroup>
-              {mobile.length > 9 && (
-                <Text
-                  color={"rgb(166, 153, 153)"}
-                  fontWeight={"light"}
-                  fontSize={"sm"}
-                  cursor={"pointer"}
-                  onClick={() => setMobile("")}
-                >
-                  Change Number
-                </Text>
-              )}
               <Button
                 textAlign={"center"}
-                bgColor="rgb(244, 51, 151)"
-                variant="outline"
-                color={"white"}
+                colorScheme="pink"
                 width={"100%"}
                 type="submit"
                 isLoading={loading}
@@ -170,8 +178,8 @@ const Signup = () => {
             </Stack>
           </form>
         </Box>
-      </Box>
-    </Box>
+      </Center>
+    </BackBtnWrapper>
   );
 };
 

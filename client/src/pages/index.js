@@ -15,143 +15,43 @@ const Cart = lazy(() => import("./Cart"));
 const Pages = [
   {
     path: "/",
-    element: (
-      <Suspense
-        fallback={
-          <Flex h="70vh" alignItems="center" justify="center">
-            <Spinner size="xl" />
-          </Flex>
-        }
-      >
-        <Home />
-      </Suspense>
-    ),
+    element: <Home />,
   },
   {
     path: "/products/:category",
-    element: (
-      <Suspense
-        fallback={
-          <Flex h="70vh" alignItems="center" justify="center">
-            <Spinner size="xl" />
-          </Flex>
-        }
-      >
-        <Products />
-      </Suspense>
-    ),
+    element: <Products />,
   },
   {
     path: "/product/:productId",
-    element: (
-      <Suspense
-        fallback={
-          <Flex h="70vh" alignItems="center" justify="center">
-            <Spinner size="xl" />
-          </Flex>
-        }
-      >
-        <SingleProduct />
-      </Suspense>
-    ),
+    element: <SingleProduct />,
   },
   {
     path: "/login",
-    element: (
-      <Suspense
-        fallback={
-          <Flex h="70vh" alignItems="center" justify="center">
-            <Spinner size="xl" />
-          </Flex>
-        }
-      >
-        <Login />
-      </Suspense>
-    ),
+    element: <Login />,
   },
   {
     path: "/sign-up",
-    element: (
-      <Suspense
-        fallback={
-          <Flex h="70vh" alignItems="center" justify="center">
-            <Spinner size="xl" />
-          </Flex>
-        }
-      >
-        <Signup />
-      </Suspense>
-    ),
+    element: <Signup />,
   },
   {
     path: "/profile",
-    element: (
-      <Suspense
-        fallback={
-          <Flex h="70vh" alignItems="center" justify="center">
-            <Spinner size="xl" />
-          </Flex>
-        }
-      >
-        <Profile />
-      </Suspense>
-    ),
+    element: <Profile />,
   },
   {
     path: "/payment",
-    element: (
-      <Suspense
-        fallback={
-          <Flex h="70vh" alignItems="center" justify="center">
-            <Spinner size="xl" />
-          </Flex>
-        }
-      >
-        <Payment />
-      </Suspense>
-    ),
+    element: <Payment />,
   },
   {
     path: "/cart",
-    element: (
-      <Suspense
-        fallback={
-          <Flex h="70vh" alignItems="center" justify="center">
-            <Spinner size="xl" />
-          </Flex>
-        }
-      >
-        <Cart />
-      </Suspense>
-    ),
+    element: <Cart />,
   },
   {
     path: "/otp-verification",
-    element: (
-      <Suspense
-        fallback={
-          <Flex h="70vh" alignItems="center" justify="center">
-            <Spinner size="xl" />
-          </Flex>
-        }
-      >
-        <OTP />
-      </Suspense>
-    ),
+    element: <OTP />,
   },
   {
     path: "/address",
-    element: (
-      <Suspense
-        fallback={
-          <Flex h="70vh" alignItems="center" justify="center">
-            <Spinner size="xl" />
-          </Flex>
-        }
-      >
-        <Address />
-      </Suspense>
-    ),
+    element: <Address />,
   },
 ];
 
