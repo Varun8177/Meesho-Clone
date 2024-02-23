@@ -15,6 +15,9 @@ const Products = () => {
     (store) => store.productReducer
   );
   const [searchparams, setSearchparams] = useSearchParams();
+  const category = searchparams.get("category");
+  const sort = searchparams.get("order");
+  const tag = searchparams.getAll("tag");
   const [page, setPage] = useState(Number(searchparams.get("page")) || 1);
 
   const dispatch = useDispatch();
@@ -30,15 +33,17 @@ const Products = () => {
 
   useEffect(() => {
     const controller = new AbortController();
-    const category = searchparams.get("category");
-    const sort = searchparams.get("order");
+
     const options = {};
     if (category) options.category = category;
     if (sort) options.sort = sort;
+    if (tag) options.tag = tag;
+
     getProducts(handleResponse, dispatch, options, controller.signal);
     return () => {
       controller.abort();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchparams]);
 
   return (
@@ -51,19 +56,22 @@ const Products = () => {
         title="Products for you"
       />
       <Flex gap={4} mt="10px">
-        {/* <FilterBox /> */}
+        <FilterBox />
         <SortBox />
-        <Button
-          variant={"outline"}
-          cursor={"pointer"}
-          color={"GrayText"}
-          onClick={() => {
-            searchparams.delete("order");
-            setSearchparams(searchparams);
-          }}
-        >
-          clear
-        </Button>
+        {sort || tag.length > 0 ? (
+          <Button
+            variant={"outline"}
+            cursor={"pointer"}
+            color={"GrayText"}
+            onClick={() => {
+              searchparams.delete("order");
+              searchparams.delete("tag");
+              setSearchparams(searchparams);
+            }}
+          >
+            clear
+          </Button>
+        ) : null}
       </Flex>
       <Flex
         mt={{ base: "50px", sm: "50px", md: "20px" }}
@@ -87,6 +95,7 @@ const Products = () => {
                     price={product.price}
                     reviews={product.reviews}
                     title={product.title}
+                    tag={product.tag}
                   />
                 );
               })}

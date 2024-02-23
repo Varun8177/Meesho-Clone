@@ -18,7 +18,7 @@ const Pages = [
     element: <Home />,
   },
   {
-    path: "/products/:category",
+    path: "/products",
     element: <Products />,
   },
   {

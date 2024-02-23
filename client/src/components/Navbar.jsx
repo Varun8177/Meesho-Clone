@@ -17,7 +17,7 @@ const Navbar = () => {
   return (
     <Box
       w="100%"
-      zIndex="2"
+      zIndex="200"
       h={{ base: "auto", lg: "126px" }}
       position="sticky"
       top="0"

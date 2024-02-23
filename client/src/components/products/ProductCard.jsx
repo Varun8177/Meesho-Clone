@@ -1,21 +1,10 @@
-import {
-  AspectRatio,
-  Badge,
-  Box,
-  Flex,
-  IconButton,
-  Image,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
-} from "@chakra-ui/react";
+import { AspectRatio, Badge, Box, Flex, Image, Stack } from "@chakra-ui/react";
 import React from "react";
 import { FaStar } from "react-icons/fa6";
-import { HiDotsVertical } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
 import handleScrollTop from "../utils/handleScrollTop";
-import EditBox from "./EditBox";
+import OptionBox from "./OptionBox";
+import { useSelector } from "react-redux";
 
 const ProductCard = ({
   id = 0,
@@ -24,22 +13,32 @@ const ProductCard = ({
   rating = 0,
   reviews = 0,
   image = "",
+  tag,
+  showOptions = true,
 }) => {
+  const { user } = useSelector((state) => state.userReducer);
   const navigate = useNavigate();
   return (
     <Box
       borderWidth="1px"
       borderRadius="lg"
-      overflow="hidden"
       border="1px solid rgb(223, 223, 223)"
       cursor="pointer"
       width="230px"
       h="fit-content"
       pos="relative"
     >
-      <Box pos="absolute" right={0} top={0} zIndex={5}>
-        <EditBox />
-      </Box>
+      {showOptions && user && user?.role === "admin" && (
+        <Stack pos="absolute" right={0} top={0} zIndex={5}>
+          <OptionBox
+            id={id}
+            image={image}
+            price={price}
+            title={title}
+            tag={tag}
+          />
+        </Stack>
+      )}
       <Box
         onClick={() => {
           handleScrollTop();

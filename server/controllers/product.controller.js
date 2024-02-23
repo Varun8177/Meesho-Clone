@@ -28,11 +28,11 @@ const ProductController = {
     const productId = req.params.productId;
     const updatedProductDetails = req.body;
     try {
-      await ProductServices.updateProductService(
+      const product = await ProductServices.updateProductService(
         productId,
         updatedProductDetails
       );
-      res.status(200).send("Product updated successfully");
+      res.status(200).send(product);
     } catch (error) {
       next(error);
     }
