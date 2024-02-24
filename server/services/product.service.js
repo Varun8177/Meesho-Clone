@@ -26,10 +26,7 @@ const ProductServices = {
     sort
   ) => {
     const query = { category };
-    if (tag) {
-      query.tag = tag;
-    }
-
+    console.log(query);
     try {
       const totalProducts = await ProductModel.countDocuments(query);
       const totalPages = Math.ceil(totalProducts / perPage);
@@ -40,12 +37,18 @@ const ProductServices = {
         sortCriteria.price = sort === "desc" ? -1 : 1;
       }
 
+      if (tag) {
+        query.tag = { $in: tag };
+      }
+
       const products = await ProductModel.find(query)
         .sort(sortCriteria)
         .skip((page - 1) * perPage)
         .limit(perPage);
 
+      const tags = await ProductModel.distinct("tag", { category });
       return {
+        filterOptions: tags,
         products,
         currentPage: page,
         totalPages,
@@ -124,12 +127,9 @@ const ProductServices = {
       if (!isValidObjectId) {
         throw new HttpException(400, "Please provide a valid product id");
       }
-
       const updatedProduct = await ProductModel.findByIdAndUpdate(
         productId,
-        {
-          updatedProductDetails,
-        },
+        updatedProductDetails,
         { new: true }
       );
 

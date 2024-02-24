@@ -1,58 +1,59 @@
 import { Flex, Hide, Show } from "@chakra-ui/react";
-import { NavLink } from "react-router-dom";
-import styles from "./Navlink.module.css";
-
+import { Link as ReactRouterLink, useLocation } from "react-router-dom";
+import { Link as ChakraLink, LinkProps } from "@chakra-ui/react";
 const Navlinks = () => {
+  const location = useLocation();
   const XLlinks = [
     {
-      path: "products/women-ethnic?category=WOMEN_ETHNIC",
+      path: "products?category=WOMEN_ETHNIC",
       title: "Women Ethnic",
     },
     {
-      path: "products/women-western?category=WOMEN_WESTERN",
+      path: "products?category=WOMEN_WESTERN",
       title: "Women Western",
     },
-    { path: "products/men?category=MEN", title: "Men" },
-    { path: "products/kids?category=KIDS", title: "Kids" },
+    { path: "products?category=MEN", title: "Men" },
+    { path: "products?category=KIDS", title: "Kids" },
     {
-      path: "products/home-&-kitchen?category=HOME_AND_KITCHEN",
+      path: "products?category=HOME_AND_KITCHEN",
       title: "Home & Kitchen",
     },
     {
-      path: "products/beauty-&-health?category=BEAUTY_AND_HEALTH",
+      path: "products?category=BEAUTY_AND_HEALTH",
       title: "Beauty & Health",
     },
     {
-      path: "products/jewellery-&-accessories?category=JEWELLERY_AND_ACCESSORIES",
+      path: "products?category=JEWELLERY_AND_ACCESSORIES",
       title: "Jewellery & Accessories",
     },
     {
-      path: "products/bags-&-footwear?category=BAGS_AND_FOOTWEAR",
+      path: "products?category=BAGS_AND_FOOTWEAR",
       title: "Bags & Footwear",
     },
-    { path: "products/electronics?category=ELECTRONICS", title: "Electronics" },
+    { path: "products?category=ELECTRONICS", title: "Electronics" },
   ];
   const MDlinks = [
     {
-      path: "products/women-ethnic?category=WOMEN_ETHNIC",
+      path: "products?category=WOMEN_ETHNIC",
       title: "Women Ethnic",
     },
     {
-      path: "products/women-western?category=WOMEN_WESTERN",
+      path: "products?category=WOMEN_WESTERN",
       title: "Women Western",
     },
-    { path: "products/men?category=MEN", title: "Men" },
-    { path: "products/kids?category=KIDS", title: "Kids" },
+    { path: "products?category=MEN", title: "Men" },
+    { path: "products?category=KIDS", title: "Kids" },
     {
-      path: "products/home-&-kitchen?category=HOME_AND_KITCHEN",
+      path: "products?category=HOME_AND_KITCHEN",
       title: "Home & Kitchen",
     },
     {
-      path: "products/beauty-&-health?category=BEAUTY_AND_HEALTH",
+      path: "products?category=BEAUTY_AND_HEALTH",
       title: "Beauty & Health",
     },
-    { path: "products/electronics?category=ELECTRONICS", title: "Electronics" },
+    { path: "products?category=ELECTRONICS", title: "Electronics" },
   ];
+
   return (
     <Flex
       justifyContent={"space-between"}
@@ -66,15 +67,19 @@ const Navlinks = () => {
       <Show above="xl">
         {XLlinks.map((link) => {
           return (
-            <NavLink
-              className={({ isActive }) => {
-                return isActive ? styles.active : styles.default;
-              }}
-              key={link.path}
+            <ChakraLink
+              as={ReactRouterLink}
               to={link.path}
+              color={
+                link.path.includes(location.search) &&
+                location.pathname === "/products"
+                  ? "rgb(244, 51, 151)"
+                  : "black"
+              }
+              _hover={{ textDecorationLine: "none" }}
             >
               {link.title}
-            </NavLink>
+            </ChakraLink>
           );
         })}
       </Show>
@@ -82,15 +87,18 @@ const Navlinks = () => {
         <Show above="md">
           {MDlinks.map((link) => {
             return (
-              <NavLink
-                className={({ isActive }) => {
-                  return isActive ? styles.active : styles.default;
-                }}
-                key={link.path}
+              <ChakraLink
+                as={ReactRouterLink}
                 to={link.path}
+                color={
+                  link.path.includes(location.search)
+                    ? "rgb(244, 51, 151)"
+                    : "black"
+                }
+                _hover={{ textDecorationLine: "none" }}
               >
                 {link.title}
-              </NavLink>
+              </ChakraLink>
             );
           })}
         </Show>

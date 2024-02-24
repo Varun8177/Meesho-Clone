@@ -75,6 +75,8 @@ const Home = () => {
                       price={product.price}
                       reviews={product.reviews}
                       title={product.title}
+                      tag={product.tag}
+                      showOptions={false}
                     />
                   );
                 })}

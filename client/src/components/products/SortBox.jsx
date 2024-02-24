@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import {
+  Box,
   Button,
   Flex,
   Modal,
@@ -19,15 +20,20 @@ const SortBox = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [searchparams, setSearchParams] = useSearchParams();
   const order = searchparams.get("order");
-  const [selected, setSelected] = useState(order, "");
+  const [selected, setSelected] = useState(order || "");
+
   const handleSort = (val) => {
     if (!val) {
+      setSelected("");
       searchparams.delete("order");
     } else {
+      setSelected(val);
       searchparams.set("order", val);
     }
+    onClose();
     setSearchParams(searchparams);
   };
+
   useEffect(() => {
     if (order) {
       setSelected(order);
@@ -35,57 +41,68 @@ const SortBox = () => {
       setSelected("");
     }
   }, [order]);
+
   return (
     <>
-      <Button
-        variant={"outline"}
-        cursor={"pointer"}
-        onClick={onOpen}
-        leftIcon={<RxCaretSort />}
-        color={"GrayText"}
-      >
-        sort
-      </Button>
+      <Box pos="relative">
+        <Button
+          variant={"outline"}
+          cursor={"pointer"}
+          onClick={onOpen}
+          leftIcon={<RxCaretSort />}
+          color={"GrayText"}
+        >
+          sort
+        </Button>
+        {selected && (
+          <Box
+            bgColor="red.400"
+            pos="absolute"
+            top={-1}
+            right={-1}
+            rounded="full"
+            color="white"
+            fontSize="xx-small"
+            fontWeight="bold"
+            p="2"
+          />
+        )}
+      </Box>
       <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose}>
         <ModalOverlay bg="blackAlpha.900" />
         <ModalContent alignItems={"center"}>
-          <ModalHeader>sort</ModalHeader>
+          <ModalHeader>SORT BY PRICE</ModalHeader>
           <ModalCloseButton _hover={{ bgColor: "white" }} />
           <ModalBody>
-            <Text as={"b"} color={"GrayText"}>
-              Price
-            </Text>
-            <Flex gap={"20px"} w={"400px"} my={"20px"} flexWrap={"wrap"}>
-              {["asc", "desc"]?.map((item, i) => (
+            <Flex
+              gap={"20px"}
+              w={"400px"}
+              my={"20px"}
+              flexWrap={"wrap"}
+              justify="center"
+            >
+              {[
+                { name: "price - low to high", value: "asc" },
+                { name: "price - high to low", value: "desc" },
+              ]?.map((item, i) => (
                 <Button
                   key={item}
                   variant={"outline"}
                   cursor={"pointer"}
-                  bgColor={selected === item ? "red.400" : "blackAlpha"}
-                  color={selected === item ? "white" : "GrayText"}
+                  bgColor={selected === item.value ? "red.400" : "blackAlpha"}
+                  color={selected === item.value ? "white" : "GrayText"}
                   _hover={{
-                    bgColor: selected === item ? "red.400" : "blackAlpha",
-                    color: selected === item ? "white" : "GrayText",
+                    bgColor: selected === item.value ? "red.400" : "blackAlpha",
+                    color: selected === item.value ? "white" : "GrayText",
                   }}
                   onClick={() => {
-                    setSelected(item);
+                    handleSort(item.value);
                   }}
                 >
-                  {item}
+                  {item.name}
                 </Button>
               ))}
             </Flex>
-            <Button
-              bgColor={"red.400"}
-              _hover={{ bgColor: "red.400" }}
-              color={"white"}
-              onClick={() => {
-                handleSort(selected);
-                onClose();
-              }}
-            >
-              apply
-            </Button>
           </ModalBody>
         </ModalContent>
       </Modal>
