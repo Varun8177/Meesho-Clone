@@ -8,6 +8,7 @@ import ProductsLoadingScreen from "../components/constants/ProductsLoadingScreen
 import { useSearchParams } from "react-router-dom";
 import FilterBox from "../components/products/FilterBox";
 import SortBox from "../components/products/SortBox";
+import handleScrollTop from "../components/utils/handleScrollTop";
 
 const Products = () => {
   const toast = useToast();
@@ -33,13 +34,14 @@ const Products = () => {
 
   useEffect(() => {
     const controller = new AbortController();
-
+    handleScrollTop();
     const options = {};
     if (category) options.category = category;
     if (sort) options.sort = sort;
     if (tag) options.tag = tag;
 
     getProducts(handleResponse, dispatch, options, controller.signal);
+
     return () => {
       controller.abort();
     };

@@ -10,8 +10,8 @@ const BackBtnWrapper = ({ path = "/", content = "back to home", children }) => {
       <Box pos="fixed" top={0} p={4}>
         <Button
           textAlign="center"
-          bgColor="rgb(244, 51, 151)"
           variant="outline"
+          bgColor="rgb(244, 51, 151)"
           color={"white"}
           _hover={{ bg: "rgb(199, 60, 157)" }}
           leftIcon={<TbArrowBackUp />}

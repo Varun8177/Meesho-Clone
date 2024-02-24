@@ -14,6 +14,7 @@ function App() {
     "/address",
     "/otp-verification",
     "/payment",
+    "/create-product",
   ];
   return (
     <div className="App">
