@@ -51,8 +51,8 @@ const ProductController = {
   },
 
   getAllProducts: async (req, res, next) => {
-    const page = parseInt(req.query.page) || 1;
-    const perPage = parseInt(req.query.perPage) || 10;
+    const page = Number(req.query.page) || 1;
+    const perPage = Number(req.query.perPage) || 15;
     const category = req.query.category;
     const tag = req.query.tag || "";
     const sort = req.query.sort || "";

@@ -94,7 +94,7 @@ const CreateProduct = () => {
           },
         }
       );
-      navigate(`/product/${res.data._id}`);
+      // navigate(`/product/${res.data._id}`);
     } catch (error) {
       if (error.response.data.message) {
         handleResponse(String(error.response.data.message), "");
@@ -103,14 +103,14 @@ const CreateProduct = () => {
       }
     } finally {
       setLoading(false);
-      setDetails({
-        title: "",
-        price: "",
-        image: null,
-        tag: [],
-        rating: "4.8",
-        reviews: "10",
-      });
+      // setDetails({
+      //   title: "",
+      //   price: "",
+      //   image: null,
+      //   tag: [],
+      //   rating: "4.8",
+      //   reviews: "10",
+      // });
     }
   };
 

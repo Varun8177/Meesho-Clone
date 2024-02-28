@@ -71,6 +71,9 @@ const Categories = () => {
             w={"100%"}
             cursor={"pointer"}
             key={link.path + index + link.title}
+            onClick={() => {
+              navigate(link.path);
+            }}
           >
             <Button
               key={link.path}
@@ -81,9 +84,6 @@ const Categories = () => {
               textAlign="left"
               w={"fit-content"}
               leftIcon={link.icon}
-              onClick={() => {
-                navigate(link.path);
-              }}
             >
               {link.title}
             </Button>

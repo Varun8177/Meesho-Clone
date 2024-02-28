@@ -27,6 +27,7 @@ const ProductCard = ({
       width="230px"
       h="fit-content"
       pos="relative"
+      overflow="hidden"
     >
       {showOptions && user && user?.role === "admin" && (
         <Stack pos="absolute" right={0} top={0} zIndex={5}>

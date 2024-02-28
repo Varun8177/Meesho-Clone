@@ -7,7 +7,7 @@ const ProductServices = {
   getRandomProducts: async () => {
     try {
       const products = await ProductModel.aggregate([
-        { $sample: { size: 10 } },
+        { $sample: { size: 60 } },
       ]);
       return products;
     } catch (error) {
@@ -20,13 +20,16 @@ const ProductServices = {
   },
   getAllProductsService: async (
     page = 1,
-    perPage = 10,
+    perPage = 15,
     category,
     tag,
     sort
   ) => {
     const query = { category };
-    console.log(query);
+
+    if (tag) {
+      query.tag = { $in: tag };
+    }
     try {
       const totalProducts = await ProductModel.countDocuments(query);
       const totalPages = Math.ceil(totalProducts / perPage);
@@ -35,10 +38,6 @@ const ProductServices = {
 
       if (sort) {
         sortCriteria.price = sort === "desc" ? -1 : 1;
-      }
-
-      if (tag) {
-        query.tag = { $in: tag };
       }
 
       const products = await ProductModel.find(query)
