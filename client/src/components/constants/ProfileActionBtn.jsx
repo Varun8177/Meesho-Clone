@@ -1,6 +1,7 @@
 import { Box, Button, Flex } from "@chakra-ui/react";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import handleScrollTop from "../utils/handleScrollTop";
 
 const ProfileActionBtn = ({ path, icon, title, sidebar = false }) => {
   const navigate = useNavigate();
@@ -14,6 +15,7 @@ const ProfileActionBtn = ({ path, icon, title, sidebar = false }) => {
       _hover={{ bg: "gray.200" }}
       leftIcon={icon}
       onClick={() => {
+        handleScrollTop();
         navigate(path);
       }}
     >
@@ -26,7 +28,10 @@ const ProfileActionBtn = ({ path, icon, title, sidebar = false }) => {
       textAlign="center"
       cursor="pointer"
       flexDir="column"
-      onClick={() => navigate(path)}
+      onClick={() => {
+        handleScrollTop();
+        navigate(path);
+      }}
     >
       {icon}
       <Box>{title}</Box>

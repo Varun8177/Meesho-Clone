@@ -5,7 +5,6 @@ import { useSearchParams } from "react-router-dom";
 
 const Pagination = ({ activePage = 1, totalPages, handlePageChange }) => {
   const [searchparams, setSearchparams] = useSearchParams();
-  const pageParam = searchparams.get("page");
   const [pagesArray, setPagesArray] = useState([]);
 
   let minLenth = 10;
@@ -96,7 +95,7 @@ const Pagination = ({ activePage = 1, totalPages, handlePageChange }) => {
         icon={<FaChevronRight color="#C4CDD5" />}
         size="sm"
         onClick={() => handlePage(activePage + 1)}
-        isDisabled={pagesArray.includes(totalPages)}
+        isDisabled={activePage === totalPages}
       />
     </Flex>
   );

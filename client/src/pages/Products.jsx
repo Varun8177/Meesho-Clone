@@ -85,14 +85,14 @@ const Products = () => {
 
       <Flex flexGrow={1} justify="left" minH="100vh" flexWrap="wrap" gap={4}>
         {loading
-          ? new Array(10)
+          ? new Array(15)
               .fill(0)
-              .map((_, i) => <ProductsLoadingScreen key={i} />)
-          : products?.map((product, i) => {
+              .map((_, i) => <ProductsLoadingScreen key={i + "loader"} />)
+          : products?.map((product) => {
               return (
                 <ProductCard
                   image={product.image}
-                  key={i}
+                  key={product._id}
                   rating={product.rating}
                   id={product._id}
                   price={product.price}
