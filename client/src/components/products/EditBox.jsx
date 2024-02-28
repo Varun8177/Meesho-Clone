@@ -59,6 +59,7 @@ const EditBox = ({ handleClose }) => {
               mb="2"
               onChange={(e) => setTitle(e.target.value)}
               type="text"
+              isRequired
               placeholder="please enter the product name here"
             />
             <Input
@@ -67,6 +68,7 @@ const EditBox = ({ handleClose }) => {
               color="gray.500"
               mb="2"
               type="number"
+              isRequired
               onChange={(e) => setPrice(e.target.value)}
               placeholder="please enter the product price here"
             />
@@ -117,7 +119,7 @@ const EditBox = ({ handleClose }) => {
             {item}
           </Button>
         ))}
-        <Checkbox isRequired my="10px">
+        <Checkbox isRequired my="10px" size="sm">
           I accept the terms and conditions for editing this product
         </Checkbox>
 

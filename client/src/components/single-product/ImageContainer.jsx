@@ -13,6 +13,7 @@ const baseurl = process.env.REACT_APP_BASE_URL;
 
 const ImageContainer = () => {
   const { singleProduct } = useSelector((state) => state.productReducer);
+  const { user } = useSelector((state) => state.userReducer);
   const [cartLoading, setCartLoading] = useState(false);
   const [buyNowLoading, setBuyNowLoading] = useState(false);
   const { handleResponse } = UseResponseHandler();
@@ -42,7 +43,6 @@ const ImageContainer = () => {
         createUserOrders(dataToSend, handleResponse, handleNavigation);
       }
     } catch (error) {
-      console.log(error);
       if (error.response.data.message) {
         handleResponse(String(error.response.data.message), "");
       } else {
@@ -56,8 +56,12 @@ const ImageContainer = () => {
   const handleCartLoading = (val) => setCartLoading(val);
 
   const handleAddToCart = async () => {
-    handleCartLoading(true);
-    AddToCart(dispatch, singleProduct._id, handleCartLoading, handleResponse);
+    if (user) {
+      handleCartLoading(true);
+      AddToCart(dispatch, singleProduct._id, handleCartLoading, handleResponse);
+    } else {
+      handleResponse("", "please login to add product to cart");
+    }
   };
 
   const handleNavigation = (id) => {
@@ -70,7 +74,11 @@ const ImageContainer = () => {
   };
 
   const handleBuyNow = () => {
-    getAddressData();
+    if (user) {
+      getAddressData();
+    } else {
+      handleResponse("", "please login to make purchase");
+    }
   };
 
   return (

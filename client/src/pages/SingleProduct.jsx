@@ -1,4 +1,4 @@
-import { Box, Flex, Spinner, useToast } from "@chakra-ui/react";
+import { Box, Flex, Spinner } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import ImageContainer from "../components/single-product/ImageContainer";
 import Description from "../components/single-product/Description";
@@ -8,25 +8,17 @@ import SoldBy from "../components/single-product/SoldBy";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getSingleProduct } from "../redux/actions/productsAction";
+import UseResponseHandler from "../components/utils/UseResponseHandler";
 
 const SingleProduct = () => {
   const { productId } = useParams();
   const { loading } = useSelector((state) => state.productReducer);
   const dispatch = useDispatch();
-  const toast = useToast();
-
-  const handleResponse = (title, description, status = false) => {
-    toast.closeAll();
-    toast({
-      title,
-      description,
-      status: "error",
-      position: "top-left",
-    });
-  };
+  const { handleResponse } = UseResponseHandler();
 
   useEffect(() => {
     getSingleProduct(handleResponse, dispatch, productId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [productId]);
 
   return (
