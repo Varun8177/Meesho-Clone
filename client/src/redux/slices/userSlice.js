@@ -8,8 +8,12 @@ const UserSlice = createSlice({
     error: false,
   },
   reducers: {
+    startLoading: (state) => {
+      state.loading = true;
+    },
     getUserDataSuccess: (state, action) => {
       state.user = action.payload;
+      state.loading = false;
     },
     logoutSuccess: (state) => {
       state.user = null;
@@ -17,6 +21,7 @@ const UserSlice = createSlice({
   },
 });
 
-export const { getUserDataSuccess, logoutSuccess } = UserSlice.actions;
+export const { getUserDataSuccess, logoutSuccess, startLoading } =
+  UserSlice.actions;
 
 export default UserSlice.reducer;

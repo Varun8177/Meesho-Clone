@@ -173,15 +173,14 @@ const UserServices = {
           pass: mailPasscode,
         },
       });
-      console.log({ fromMail, email });
-      const mailOptions = await transporter.sendMail({
+      await transporter.sendMail({
         from: fromMail,
         to: email,
-        subject: "This is megamart official service",
+        subject: "This is shoperz official service",
         text: "Thank you for choosing us",
         html: `
             <table
-              style="width: 100%; background-color: #3b82f6; text-align: center; padding: 1rem;"
+              style="width: 100%; background-color: rgb(244, 51, 151); text-align: center; padding: 1rem;"
             >
               <tr>
                 <td>
@@ -196,7 +195,7 @@ const UserServices = {
                     ${otp}
                   </p>
                   <img
-                    src="https://res.cloudinary.com/megamart/image/upload/v1689852385/megamart/login_img_c4a81e_i2mxoc.png"
+                    src="https://res.cloudinary.com/megamart/image/upload/f_auto,q_auto/v1/shoperz/gcammfhm41mnf0fetggp"
                     alt="login-image"
                     style="max-width: 100%; height: auto;"
                   />

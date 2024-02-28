@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { CgProfile } from "react-icons/cg";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { Flex } from "@chakra-ui/react";
@@ -47,20 +47,20 @@ const ProfileActions = ({ sidebar = false }) => {
     >
       {user
         ? links.private.map((item) => (
-            <ProfileActionBtn {...item} key={item.path} sidebar />
+            <ProfileActionBtn {...item} key={"sidebar" + item.path} sidebar />
           ))
         : links.public.map((item, i) => (
-            <ProfileActionBtn {...item} key={item.path} sidebar />
+            <ProfileActionBtn {...item} key={"sidebar" + item.path} sidebar />
           ))}
     </Flex>
   ) : (
     <>
       {user
         ? links.private.map((item, i) => (
-            <ProfileActionBtn {...item} key={item.path} />
+            <ProfileActionBtn {...item} key={item.path + "navbar" + i} />
           ))
         : links.public.map((item, i) => (
-            <ProfileActionBtn {...item} key={item.path} />
+            <ProfileActionBtn {...item} key={item.path + "navbar" + i} />
           ))}
     </>
   );

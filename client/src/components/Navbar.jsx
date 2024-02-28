@@ -36,6 +36,7 @@ const Navbar = () => {
           m="auto"
           alignItems="auto"
           bgColor={colorMode === "light" ? "white" : "black"}
+          pt={showSidebar ? "10px" : "0"}
         >
           {/* Logo section & search bar */}
           <Flex
@@ -49,18 +50,19 @@ const Navbar = () => {
               </Suspense>
             )}
             {/* logo */}
-            <Image
-              src={`${CLOUDINARY_BASE_PATH}/gcammfhm41mnf0fetggp`}
-              alt="logo"
-              height="50px"
-              w="136px"
-              mt="10px"
-              onClick={() => {
-                navigate("/");
-                handleScrollTop();
-              }}
-              cursor="pointer"
-            />
+            {!showSidebar && (
+              <Image
+                src={`${CLOUDINARY_BASE_PATH}/gcammfhm41mnf0fetggp`}
+                alt="logo"
+                height="50px"
+                w="136px"
+                onClick={() => {
+                  navigate("/");
+                  handleScrollTop();
+                }}
+                cursor="pointer"
+              />
+            )}
             <Searchbar />
           </Flex>
           {showAppPanel && (

@@ -65,7 +65,7 @@ const Navlinks = () => {
       direction={{ base: "column", sm: "column", md: "row", lg: "row" }}
     >
       <Show above="xl">
-        {XLlinks.map((link) => {
+        {XLlinks.map((link, index) => {
           return (
             <ChakraLink
               as={ReactRouterLink}
@@ -77,6 +77,7 @@ const Navlinks = () => {
                   : "black"
               }
               _hover={{ textDecorationLine: "none" }}
+              key={link + index + "xl-links"}
             >
               {link.title}
             </ChakraLink>
@@ -85,17 +86,19 @@ const Navlinks = () => {
       </Show>
       <Hide above="xl">
         <Show above="md">
-          {MDlinks.map((link) => {
+          {MDlinks.map((link, index) => {
             return (
               <ChakraLink
                 as={ReactRouterLink}
                 to={link.path}
                 color={
-                  link.path.includes(location.search)
+                  link.path.includes(location.search) &&
+                  location.pathname === "/products"
                     ? "rgb(244, 51, 151)"
                     : "black"
                 }
                 _hover={{ textDecorationLine: "none" }}
+                key={link + index + "md-links"}
               >
                 {link.title}
               </ChakraLink>

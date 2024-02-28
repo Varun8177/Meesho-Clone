@@ -6,6 +6,7 @@ import {
   DrawerContent,
   DrawerOverlay,
   Flex,
+  IconButton,
   useDisclosure,
 } from "@chakra-ui/react";
 import { GiHamburgerMenu } from "react-icons/gi";
@@ -14,25 +15,25 @@ import SidebarHeader from "./sidebar/SidebarHeader";
 import Categories from "./sidebar/Categories";
 import LogoutButton from "./sidebar/LogoutButton";
 import ProfileActions from "./constants/ProfileActions";
+import { RiAddFill } from "react-icons/ri";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Sidebar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef();
+  const { user } = useSelector((store) => store.userReducer);
+  const navigate = useNavigate();
 
   return (
     <Flex align="center" justifyContent={"space-around"}>
-      <Button
+      <IconButton
         ref={btnRef}
-        bgColor="white"
         onClick={onOpen}
-        cursor="pointer"
-        size="sm"
-        _hover={{ bg: "gray.100" }}
-        _active={{ bg: "gray.200" }}
-        outline="none"
-      >
-        <GiHamburgerMenu color="black" />
-      </Button>
+        icon={<GiHamburgerMenu color="black" size="25px" />}
+        mr={"10px"}
+        bg="white"
+      />
       <Drawer
         isOpen={isOpen}
         placement="left"
@@ -45,6 +46,20 @@ const Sidebar = () => {
           <SidebarHeader onClose={onClose} />
           <DrawerBody p="0" pb="5" mt="auto" textAlign="center">
             <ProfileActions sidebar />
+            {user?.role === "admin" && (
+              <Button
+                leftIcon={<RiAddFill size="25px" />}
+                onClick={() => {
+                  navigate("/create-product");
+                }}
+                bg="rgb(244, 51, 151)"
+                _hover={{ bg: "rgb(199, 60, 157)" }}
+                color="white"
+              >
+                Add Product
+              </Button>
+            )}
+
             <Categories />
             <LogoutButton onLogout={() => {}} />
           </DrawerBody>

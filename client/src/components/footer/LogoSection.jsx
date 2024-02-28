@@ -1,18 +1,19 @@
 import { Image, Stack, Text } from "@chakra-ui/react";
-import React, { memo } from "react";
+import React from "react";
 import { FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
 import SocialButton from "../constants/SocialButton";
 const CLOUDINARY_BASE_PATH = process.env.REACT_APP_CLOUDINARY_BASE_PATH;
 
-const Logo = memo(() => (
+const Logo = () => (
   <Image
     height={32}
     src={`${CLOUDINARY_BASE_PATH}/gcammfhm41mnf0fetggp`}
     mb="-50px"
     ml={"-30px"}
     loading="lazy"
+    objectFit="contain"
   />
-));
+);
 
 const LogoSection = () => {
   const socialButtons = [

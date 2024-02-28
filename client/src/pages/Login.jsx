@@ -11,6 +11,7 @@ import {
   Button,
   useToast,
   Center,
+  Flex,
 } from "@chakra-ui/react";
 import { Link, useNavigate } from "react-router-dom";
 import { login } from "../redux/actions/userActions";
@@ -75,46 +76,57 @@ const Login = () => {
             as="form"
             onSubmit={handleLogin}
           >
-            <Heading
-              fontSize={{ base: "xl", md: "2xl" }}
-              fontWeight="bold"
-              color="gray.700"
-              textAlign={{ base: "center", md: "left" }}
-              ml={{ md: "10px" }}
-              mb={{ base: "10px", md: 0 }}
-            >
-              Log in
-            </Heading>
-            {mobile.length > 9 && (
-              <Text
-                color={"rgb(166, 153, 153)"}
-                fontWeight={"light"}
-                fontSize={"sm"}
-                cursor={"pointer"}
-                onClick={() => setMobile("")}
+            <Box mb="20px">
+              <Heading
+                fontSize={{ base: "xl", md: "2xl" }}
+                fontWeight="bold"
+                color="gray.700"
+                textAlign={{ base: "center", md: "left" }}
               >
-                Change Number
+                Hello Again!
+              </Heading>
+              <Text color="GrayText" fontSize="small">
+                welcome back
               </Text>
-            )}
-            <InputGroup>
+            </Box>
+            <InputGroup size="sm">
               <InputLeftAddon
-                children="IN +91"
+                children="In +91"
                 {...inputStyle}
                 bg="white"
                 mr={"10px"}
                 mb={0}
               />
-              <Input
-                autoFocus
-                type="tel"
-                placeholder="phone number"
-                {...inputStyle}
-                mb={"20px"}
-                isRequired
-                value={mobile}
-                onChange={(e) => setMobile(e.target.value)}
-                isDisabled={mobile.length > 9}
-              />
+              <Flex w="full" pos="relative">
+                <Input
+                  type="number"
+                  placeholder="phone number"
+                  {...inputStyle}
+                  mb={"20px"}
+                  isRequired
+                  value={mobile}
+                  isDisabled={mobile.length === 10}
+                  onChange={(e) => setMobile(e.target.value)}
+                  size="small"
+                />
+                {mobile.length > 9 ? (
+                  <Button
+                    pos="absolute"
+                    right={0}
+                    top={0}
+                    variant="solid"
+                    colorScheme="pink"
+                    w="fit-content"
+                    onClick={() => setMobile("")}
+                    size="small"
+                    fontSize="x-small"
+                    px="4"
+                    py="2"
+                  >
+                    Change Number
+                  </Button>
+                ) : null}
+              </Flex>
             </InputGroup>
             <Button
               textAlign={"center"}
@@ -125,10 +137,11 @@ const Login = () => {
               _hover={{ bg: "rgb(199, 60, 157)" }}
               type="submit"
               isLoading={loading}
+              loadingText="sending otp..."
             >
               Send OTP
             </Button>
-            <Text m={"auto"}>
+            <Text m={"auto"} color="GrayText" fontSize="small">
               Don't have an account yet? Signup
               <Link
                 style={{ color: "blue", marginLeft: "5px" }}
@@ -136,16 +149,6 @@ const Login = () => {
               >
                 here
               </Link>
-            </Text>
-            <Text m={"auto"}>
-              If you're an admin, click
-              <Link
-                style={{ color: "blue", marginLeft: "5px", marginRight: "5px" }}
-                to={"/admin-login"}
-              >
-                here
-              </Link>
-              to login.
             </Text>
           </Stack>
         </Box>

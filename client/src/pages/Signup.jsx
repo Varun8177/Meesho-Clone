@@ -72,23 +72,21 @@ const Signup = () => {
                 src={`${CLOUDINARY_BASE_PATH}/jlbrk8sxkwjws4kl7iwl`}
               />
             </Stack>
-            <Stack
-              mt={{ base: "10px", md: "20px" }}
-              p={"20px"}
-              color="gray.700"
-            >
-              <Heading
-                fontSize={{ base: "xl", md: "2xl" }}
-                fontWeight="bold"
-                color="gray.700"
-                textAlign={{ base: "center", md: "left" }}
-                ml={{ md: "10px" }}
-                mb={{ base: "10px", md: 0 }}
-              >
-                Sign Up to view your profile
-              </Heading>
+            <Stack p={"20px"} color="gray.700">
+              <Box mb="20px">
+                <Heading
+                  fontSize={{ base: "xl", md: "2xl" }}
+                  color="gray.700"
+                  textAlign={{ base: "center", md: "left" }}
+                >
+                  Create Your Account
+                </Heading>
+                <Text color="GrayText" fontSize="small">
+                  Start your journey with us by creating your account today.
+                </Text>
+              </Box>
 
-              <InputGroup>
+              <InputGroup size="sm">
                 <InputLeftAddon
                   children="Name"
                   {...inputStyle}
@@ -106,7 +104,7 @@ const Signup = () => {
                   onChange={(e) => setName(e.target.value)}
                 />
               </InputGroup>
-              <InputGroup>
+              <InputGroup size="sm">
                 <InputLeftAddon
                   children="In +91"
                   {...inputStyle}
@@ -124,6 +122,7 @@ const Signup = () => {
                     value={mobile}
                     isDisabled={mobile.length === 10}
                     onChange={(e) => setMobile(e.target.value)}
+                    size="small"
                   />
                   {mobile.length > 9 ? (
                     <Button
@@ -134,14 +133,17 @@ const Signup = () => {
                       colorScheme="pink"
                       w="fit-content"
                       onClick={() => setMobile("")}
+                      size="small"
                       fontSize="x-small"
+                      px="4"
+                      py="2"
                     >
                       Change Number
                     </Button>
                   ) : null}
                 </Flex>
               </InputGroup>
-              <InputGroup>
+              <InputGroup size="sm">
                 <InputLeftAddon
                   children="Email"
                   {...inputStyle}
@@ -165,11 +167,13 @@ const Signup = () => {
                 width={"100%"}
                 type="submit"
                 isLoading={loading}
+                fontSize="small"
                 _hover={{ bg: "rgb(199, 60, 157)" }}
+                loadingText="sending otp..."
               >
                 Send OTP
               </Button>
-              <Text m={"auto"} color={"black"}>
+              <Text m={"auto"} color="GrayText" fontSize="small">
                 Already have an account? Login{" "}
                 <Link style={{ color: "blue" }} to={"/login"}>
                   here

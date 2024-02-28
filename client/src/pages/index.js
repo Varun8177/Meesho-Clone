@@ -1,7 +1,7 @@
-import { Flex, Spinner } from "@chakra-ui/react";
-import { Suspense, lazy } from "react";
+import { lazy } from "react";
 import OTP from "./OTP";
 import Address from "./Address";
+import CreateProduct from "./CreateProduct";
 
 const Home = lazy(() => import("./Home"));
 const Products = lazy(() => import("./Products"));
@@ -24,6 +24,10 @@ const Pages = [
   {
     path: "/product/:productId",
     element: <SingleProduct />,
+  },
+  {
+    path: "/create-product",
+    element: <CreateProduct />,
   },
   {
     path: "/login",

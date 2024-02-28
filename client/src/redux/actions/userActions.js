@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getUserDataSuccess } from "../slices/userSlice";
+import { getUserDataSuccess, startLoading } from "../slices/userSlice";
 import { getToken } from "../../components/utils/getToken";
 const baseurl = process.env.REACT_APP_BASE_URL;
 
@@ -79,6 +79,7 @@ export const verifyloginOtp = async (otp, mobile, dispatch, handleResponse) => {
 };
 
 export const getCurrentUser = async (token, dispatch) => {
+  dispatch(startLoading());
   try {
     const res = await axios.get(`${baseurl}/users/me`, {
       headers: {

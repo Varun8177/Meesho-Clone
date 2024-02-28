@@ -3,8 +3,6 @@ import React, { useEffect, useState } from "react";
 import CategoryPoster from "../components/home/CategoryPoster";
 import ProductsLoadingScreen from "../components/constants/ProductsLoadingScreen";
 import axios from "axios";
-import FilterSortMenu from "../components/products/FilterSortMenu";
-import ProductHeader from "../components/products/ProductHeader";
 import ProductCard from "../components/products/ProductCard";
 
 const baseurl = process.env.REACT_APP_BASE_URL;

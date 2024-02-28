@@ -15,23 +15,43 @@ import { useNavigate } from "react-router-dom";
 const Categories = () => {
   const navigate = useNavigate();
   const links = [
-    { path: "/women-ethnic", title: "Women Ethnic", icon: <FaFemale /> },
-    { path: "/women-western", title: "Women Western", icon: <FaFemale /> },
-    { path: "/men", title: "Men", icon: <FaMale /> },
-    { path: "/kids", title: "Kids", icon: <FaChild /> },
-    { path: "/home-&-kitchen", title: "Home & Kitchen", icon: <FaHome /> },
-    { path: "/beauty-&-health", title: "Beauty & Health", icon: <FaHeart /> },
     {
-      path: "/jewellery-&-accessories",
+      path: "/products?category=WOMEN_ETHNIC",
+      title: "Women Ethnic",
+      icon: <FaFemale />,
+    },
+    {
+      path: "/products?category=WOMEN_WESTERN",
+      title: "Women Western",
+      icon: <FaFemale />,
+    },
+    { path: "/products?category=MEN", title: "Men", icon: <FaMale /> },
+    { path: "/products?category=KIDS", title: "Kids", icon: <FaChild /> },
+    {
+      path: "/products?category=HOME_AND_KITCHEN",
+      title: "Home & Kitchen",
+      icon: <FaHome />,
+    },
+    {
+      path: "/products?category=BEAUTY_AND_HEALTH",
+      title: "Beauty & Health",
+      icon: <FaHeart />,
+    },
+    {
+      path: "/products?category=JEWELLERY_AND_ACCESSORIES",
       title: "Jewellery & Accessories",
       icon: <FaRing />,
     },
     {
-      path: "/bags-&-footwear",
+      path: "/products?category=BAGS_AND_FOOTWEAR",
       title: "Bags & Footwear",
       icon: <GiShoppingBag />,
     },
-    { path: "/electronics", title: "Electronics", icon: <FaTv /> },
+    {
+      path: "/products?category=ELECTRONICS",
+      title: "Electronics",
+      icon: <FaTv />,
+    },
   ];
   return (
     <div>
@@ -45,12 +65,15 @@ const Categories = () => {
         </Thead>
       </Table>
       <Stack spacing={5} textAlign="left">
-        {links.map((link) => (
+        {links.map((link, index) => (
           <Box
             _hover={{ bg: "gray.200" }}
             w={"100%"}
             cursor={"pointer"}
-            key={link.path}
+            key={link.path + index + link.title}
+            onClick={() => {
+              navigate(link.path);
+            }}
           >
             <Button
               key={link.path}
@@ -61,9 +84,6 @@ const Categories = () => {
               textAlign="left"
               w={"fit-content"}
               leftIcon={link.icon}
-              onClick={() => {
-                navigate(link.path);
-              }}
             >
               {link.title}
             </Button>

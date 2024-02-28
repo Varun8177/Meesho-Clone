@@ -1,7 +1,6 @@
 import {
   Box,
   Center,
-  Image,
   Input,
   InputGroup,
   InputLeftElement,
@@ -49,6 +48,7 @@ const Searchbar = () => {
     return () => {
       clearTimeout(timer);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [text]);
 
   return (
@@ -87,7 +87,7 @@ const Searchbar = () => {
       {text && (
         <Box
           w="full"
-          h="200px"
+          maxH="200px"
           pos="absolute"
           bg="white"
           top="100%"
@@ -121,6 +121,7 @@ const Searchbar = () => {
               >
                 <Text
                   fontWeight="bold"
+                  fontSize="small"
                   color="black"
                   _hover={{ color: "blue.500" }}
                 >
