@@ -1,5 +1,4 @@
-import { Flex, Spinner } from "@chakra-ui/react";
-import { Suspense, lazy } from "react";
+import { lazy } from "react";
 import OTP from "./OTP";
 import Address from "./Address";
 import CreateProduct from "./CreateProduct";

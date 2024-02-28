@@ -121,7 +121,7 @@ const CreateProduct = () => {
 
   return (
     <BackBtnWrapper>
-      <Center minH={"100vh"} bg="rgb(253, 237, 236)">
+      <Center minH={"100vh"} bg="rgb(253, 237, 236)" px="10px">
         <Box
           borderWidth="1px"
           borderRadius="lg"
