@@ -1,98 +1,87 @@
-# Shoperz Meesho-Clone
+![image](https://github.com/Varun8177/Meesho-Clone/assets/112754116/d1b8c200-00e4-4aaf-b680-e3a0630232a9)
 
-## Description
+# Shoperz: Meesho-Clone
 
 Shoperz is an online shopping site that allows users to buy high-quality fashion, electronics, home, and kitchen products at the lowest prices. This project is a clone of the popular e-commerce website Meesho.
 
 ## Live Link
 
-Visit the live website [here](https://shoperz-co.netlify.app/) and start shopping!
-### Home Page
-![image](https://user-images.githubusercontent.com/112754116/230299872-0ad995de-adc0-46ac-aa98-24c129704e0b.png)
+Visit the live website [here](https://meesho-clone-frontend.vercel.app) and start shopping!
 
-## Tech Stack
-
-- React.js
-- JavaScript
-- CSS
-- React Router DOM
-- Chakra UI
-- Geolocation API
-- MockAPI.io
 
 ## Key Features
 
 Features:
-- User authentication and authorization
+- User authentication and authorization (secured using email otp verification).
 - Products divided into categories (Men, Women, Kids, etc.)
-- Filter and sort functionality on all products pages
-- Detailed single product page with size selection, add to cart, and buy options
-- Product recommendations on single product page
-- Search functionality on every page
-- Cart page with options to update quantity and delete items, and total calculation
-- Address page with autofill option and total price calculation
-- Payment page with captcha for secure checkout
-- Profile section for user details and order history
-- Feedback section for users to provide feedback and queries to admins
-- Admin section for CRUD operations on products and user details
-- Admin login page with mobile number authentication. Please use the code ```8177836651``` to access the dashboard.
-- Admin can view and resolve user feedback and access details of all users
+- Filter and sort functionality on all products pages.
+- Detailed single product page with add to cart, and buy options.
+- Search functionality on every page.
+- Cart page with options to update quantity and delete items, and total calculation.
+- Payment page with captcha for secure checkout.
+- Profile section for user details and order history.
+- Admin can edit , delete or add products to the platform. 
 
 ## Installation and Usage
 
 To install and run the project locally, follow these steps:
 
 1. Clone the repository: `git clone https://github.com/Varun8177/hollow-idea-9446.git`
-2. Install the dependencies: `npm install`
-3. Start the development server: `npm start`
+2. Install the dependencies: 
+   - open terminal in client folder and write command - `npm install`
+   - open terminal in server folder and write command - `npm install`
+3. Add Environment variables
+  - client
+```
+     REACT_APP_CLOUDINARY_BASE_PATH - your cloudinary base path
+     REACT_APP_BASE_URL - your api base url
+```
+   - server
+```
+     NODE_ENV=development
+     mongoURL=MongoDB connection string for development environment
+     port=Port number for the server (default: 8080)
+     jwtsecret=Secret key for JWT authentication
+     TWILIO_ACCOUNT_SID=Twilio account SID for SMS services
+     TWILIO_AUTH_TOKEN=Twilio authentication token
+     TWILIO_PHONE_NUMBER=Twilio phone number for sending SMS
+     cloud_name=Cloudinary cloud name
+     api_key=Cloudinary API key
+     api_secret=Cloudinary API secret
+     hosts=Allowed hosts for CORS (Cross-Origin Resource Sharing)
+     MAIL=Email address for SMTP mailer
+     MAIL_PASSCODE=Password for SMTP mailer
+```
+
+4. Start the development server: 
+    - client : `npm start`
+    - server : `npm run dev`
 
 ## Screenshots
+signup page
+![image](https://github.com/Varun8177/Meesho-Clone/assets/112754116/b5522526-0754-4f63-b395-fd0e55577bcb)
 
-### Products Page
-![Products_page](https://user-images.githubusercontent.com/112754116/230301748-b2643677-cc99-4344-a985-d79d6b35dc75.png)
+login page
+![image](https://github.com/Varun8177/Meesho-Clone/assets/112754116/f6a170fb-8312-4b4d-b500-73d02f47ee82)
 
-- Users can filter products by categories and sort by price
-- Clicking on a product will take the user to the single product page where they can view more information and purchase the product
+user profile page
+![image](https://github.com/Varun8177/Meesho-Clone/assets/112754116/eac3bf2c-b985-4b82-9f28-64af1a073ce8)
 
-### Single Product Page
-![Single_Product_page](https://user-images.githubusercontent.com/112754116/230302064-c553363d-9aa6-4ab6-ba6f-9d45018c8f47.png)
+products page
+![image](https://github.com/Varun8177/Meesho-Clone/assets/112754116/e41cce10-7fa3-4d48-b3a0-62d7cd167ed7)
 
-- Displays detailed information about the selected product
-- Allows the user to add the product to their cart and proceed to checkout
+product details page
+![image](https://github.com/Varun8177/Meesho-Clone/assets/112754116/09f58de7-69aa-4102-b5ca-a4b83e438f6d)
 
-### Cart Page
-![Cart_page](https://user-images.githubusercontent.com/112754116/230302685-b93e71ec-0504-432f-b969-d03c9d545157.png)
+cart page
+![image](https://github.com/Varun8177/Meesho-Clone/assets/112754116/454b5ed4-1016-4d4a-b81b-edbe185cc2db)
 
-- Displays a summary of the items in the user's cart
-- Allows the user to update the quantity of items or remove them from the cart
-- Proceeding to checkout will take the user to the address page
+payments page
+![image](https://github.com/Varun8177/Meesho-Clone/assets/112754116/ce06d16a-767c-4991-9013-ec2878246448)
 
-### Address Page
-![Address_Page](https://user-images.githubusercontent.com/112754116/230302919-55b4a861-8027-4546-8a5a-8c561fbafde0.png)
+order history page
+![image](https://github.com/Varun8177/Meesho-Clone/assets/112754116/1a24927d-6fbf-4e65-8ea1-d042fbb4d1a6)
 
-- Allows the user to enter their shipping address and select a payment method
-- Proceeding with the purchase will complete the order and display a confirmation message
-
-### User Dashboard
-![User_dashboard](https://user-images.githubusercontent.com/112754116/230303372-2046335a-f88e-45ad-b4d0-5dcaa68cca3a.png)
-
-- Displays the user's order history and allows them to view the details of each order
-- Can update their address and profile details
-- Logout from the website
-
-### Admin Dashboard
-![Admin_dashboard](https://user-images.githubusercontent.com/112754116/230304090-bb696ba4-5e47-4d72-87e8-b0b226580030.png)
-
-- Allows the administrator to manage products and orders
-- Can add, edit, or delete products, as well as view and update any product.
-- Get feedbacks from any user.
-- Gets data of recently joined users.
-- Can add a new admin
-
-
-## Acknowledgements
-
-This project was completed as part of the Unit 4 Construct Week at Masai School.
 
 ## Author
 
