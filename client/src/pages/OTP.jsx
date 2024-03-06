@@ -93,6 +93,7 @@ export default function OTP() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setIsloading(true);
     const { page, mobile } = location.state;
     if (page === "login") {
       verifyloginOtp(+otp, mobile, dispatch, handleResponse);

@@ -87,7 +87,9 @@ export const createUserOrders = async (
         Authorization: `Bearer ${getToken()}`,
       },
     });
-    handleNavigation(res.data._id);
+    if (res?.data?._id) {
+      handleNavigation(res.data._id);
+    }
   } catch (error) {
     handleResponse(
       error.response?.data?.message || "Something went wrong. Please try again."

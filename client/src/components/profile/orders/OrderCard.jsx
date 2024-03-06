@@ -29,7 +29,12 @@ const OrderCard = ({ deliveryAddress, products, _id, createdAt }) => {
           onClick={onOpen}
         >
           <Box pos="relative">
-            <Image src={products[0].image} w={"100px"} />
+            <Image
+              src={products[0].image}
+              w={"100px"}
+              h="100px"
+              objectFit="cover"
+            />
             {products.length > 1 && <MoreProductsOverlay />}
           </Box>
           <AddressCard {...deliveryAddress} OrderVersion />

@@ -13,9 +13,11 @@ const CreateOrder = ({ selectedAddress }) => {
 
   const handleNavigation = (id) => {
     setLoading(false);
-    navigate(`/payment?orderId=${id}`, {
-      state: { page: "cart" },
-    });
+    if (id) {
+      navigate(`/payment?orderId=${id}`, {
+        state: { page: "cart" },
+      });
+    }
   };
 
   const CreateOrderRequest = async () => {
